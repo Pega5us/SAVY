@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
+    <title>Document</title>
+    
+</head>
+<body>
+    <h1>HTML5 local video file player example</h1>
+    <div id="message"></div>
+    <input id="input" type="file" accept="video/*" />
+    <video id = "video"></video>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <div id="custom-seekbar">
+        <span></span>
+    </div>
+    <Button id = "play" onclick="playVideo()">Play</Button>
+    <Button id = "pause" onclick="pauseVideo()">Pause</Button>
+    <script type="text/javascript" src="index.js"></script>
+</body>
+</html>
