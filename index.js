@@ -8,7 +8,7 @@ app.use(express.static('public'));
 
 //Run the server
 const server = app.listen(PORT,()=>{
-    console.log('Server running at'+PORT);
+    console.log('Server running at '+PORT);
 });
 
 // setup sockets
