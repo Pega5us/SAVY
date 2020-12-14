@@ -1,38 +1,206 @@
-video,
-input {
-  display: block;
+body {
+  background-color: pink;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.header {
+  display: flex;
+  flex: 0.2;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  box-shadow: 5px 10px 18px red;
+  background-color: rgb(255, 0, 98);
+  border-radius: 7px;
+}
+.header > h1 {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-weight: 800;
+  text-shadow: 3px 2px 3px hotpink;
+  color: black;
+
+  font-size: 40px;
+}
+.content {
+  margin-top: 15px;
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  box-sizing: border-box;
+  box-shadow: 5px 10px 18px red;
+  background-color: rgb(255, 0, 98);
+  border-radius: 7px;
+}
+.input {
+  display: flex;
+  flex: 0.1;
+  margin-bottom: 10px;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+#input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+#input + label {
+  margin-top: 5px;
+  margin-left: 5px;
+  font-size: 1.25em;
+  font-weight: 700;
+  color: Black;
+  border: inset 1.5px black;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background-color: white;
+  display: inline-block;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
-input {
+#input:focus + label,
+#input + label:hover {
+  background-color: hotpink;
+  box-shadow: 0 12px 16px 0 rgba(255, 0, 98, 0.24),
+    0 17px 50px 0 rgba(255, 0, 98, 0.19);
+}
+video {
+  display: flex;
+
+  flex: auto;
+  max-width: 100%;
+  max-height: 100%;
+
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: inset medium red;
+}
+/* input {
+  display: flex;
+  flex: auto;
   width: 100%;
-}
+  font-size: 18px;
+ border-radius: 4px;
+ cursor: pointer;
+ font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+ ;
+ font-weight: 900;
 
-.info {
+} */
+
+/* .info {
   background-color: aqua;
-}
+} */
 
-.error {
+/* .error {
   background-color: red;
   color: white;
-}
-#custom-seekbar
-{  
+} */
+#custom-seekbar {
   cursor: pointer;
   height: 10px;
   margin-bottom: 10px;
-  outline: thin solid orange;
+  outline: inset medium rgb(255, 105, 210);
   overflow: hidden;
   position: relative;
-  width: 400px;
+  width: auto;
+  margin-left: 4px;
+  background-color: blanchedalmond;
 }
-#custom-seekbar span
-{
-  background-color: orange;
+
+#custom-seekbar > span {
+  background-color: yellowgreen;
   position: absolute;
   top: 0;
   left: 0;
   height: 10px;
   width: 0px;
 }
+.play {
+  display: flex;
+  flex: 0.1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 4px;
+  margin-bottom: 4px;
+}
+.play1 {
+  display: flex;
+  flex: 0.1;
+  justify-content: flex-start;
+}
+#play {
+  display: block;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-weight: 900;
+}
+.pause {
+  display: flex;
+  flex: 0.2;
+  justify-content: flex-start;
+}
+#pause {
+  display: block;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-weight: 900;
+}
+button,
+input {
+  transition-duration: 0.4s;
+}
+button:hover {
+  background-color: hotpink;
+  box-shadow: 0 12px 16px 0 rgba(255, 0, 98, 0.24),
+    0 17px 50px 0 rgba(255, 0, 98, 0.19);
+}
+/* .as-console-wrapper{ display: none !important;} */
+.container {
+  display: inline-block;
+  cursor: pointer;
+  margin-right: 5px;
+}
 
-.as-console-wrapper{ display: none !important;}
+.bar1,
+.bar2,
+.bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: #333;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+
+.change .bar1 {
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.change .bar2 {
+  opacity: 0;
+}
+
+.change .bar3 {
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-8px, -8px);
+}
