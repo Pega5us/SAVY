@@ -13,6 +13,13 @@ const server = app.listen(PORT, () => {
 // setup sockets
 const io = socket(server);
 
+rooms = []
+
+app.get("/:roomno", (req, res) => {
+  const roomno = req.params
+  console.log(roomno);
+})
+
 io.on("connection", (socket) => {
   console.log("Connected");
   socket.on("update", (data) => {
