@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="https://sync-player666.herokuapp.com/getPlayerCSS" />
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
+    <title>SAVY</title>
+  </head>
+  <body>
+    <div class="header">
+      <h1>SAVY Player</h1>
+      <div class="container" onclick="myFunction(this)">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
+    </div>
+    <div class="content">
+      <div id="message"></div>
+      <div class="input">
+        <input id="input" type="file" accept="video/*" />
+        <label for="input">Choose a File</label>
+      </div>
+      <video id="video"></video>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+      <div id="custom-seekbar">
+        <span></span>
+      </div>
+      <div class="play">
+        <div class="play1">
+          <button id="play" onclick="playVideo()">Play</button>
+        </div>
+        <div class="pause">
+          <button id="pause" onclick="pauseVideo()">Pause</button>
+        </div>
+      </div>
+      <script type="text/javascript" src="https://sync-player666.herokuapp.com/getPlayerJS"></script>
+      <script>
+        function myFunction(x) {
+          x.classList.toggle("change");
+        }
+      </script>
+    </div>
+  </body>
+</html>

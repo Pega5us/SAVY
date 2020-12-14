@@ -1,80 +1,23 @@
-const socket = io();
-const video = document.getElementById("video");
-const slider = document.getElementById("custom-seekbar");
+// Client
 
-let URL = window.URL || window.webkitURL;
-const displayMessage = function (message, isError) {
-	let element = document.getElementById("message");
-	element.innerHTML = message;
-	element.className = isError ? "error" : "info";
-};
+let initialUrl = "http://localhost:5000";
 
-const playSelectedFile = function (event) {
-	let file = this.files[0];
-	let type = file.type;
-	let videoNode = document.querySelector("video");
-	let canPlay = videoNode.canPlayType(type);
-	if (canPlay === "") canPlay = "no";
-	let message = 'Can play type "' + type + '": ' + canPlay;
-	let isError = canPlay === "no";
-	displayMessage(message, isError);
-
-	if (isError) {
-		return;
-	}
-
-	let fileURL = URL.createObjectURL(file);
-	videoNode.src = fileURL;
-};
-
-let inputNode = document.getElementById("input");
-inputNode.addEventListener("change", playSelectedFile, false);
-
-video.ontimeupdate = function () {
-	var percentage = (video.currentTime / video.duration) * 100;
-	$("#custom-seekbar span").css("width", percentage + "%");
-	socket.emit("update", percentage);
-};
-
-$("#custom-seekbar").on("click", function (e) {
-	var offset = $(this).offset();
-	var left = e.pageX - offset.left;
-	var totalWidth = $("#custom-seekbar").width();
-	var percentage = left / totalWidth;
-	var vidTime = video.duration * percentage;
-	video.currentTime = vidTime;
-	playVideo();
-});
-
-// play event added
-function playVideo() {
-	socket.emit("play");
-	video.play();
-	let fraction = video.currentTime / video.duration;
-	video.currentTime = video.duration * fraction;
-	socket.emit("slider", video.currentTime);
+function create() {
+	let response = httpGet(`${initialUrl}/getRoomNumber`);
+    let url = `${initialUrl}/room/${response}`;
+	window.location.href = url;
 }
 
-// pause event handled
-function pauseVideo() {
-	socket.emit("pause");
-	video.pause();
+function join() {
+    const input = document.getElementById("input")
+    const response = input.value;
+    let url = `${initialUrl}/room/${response}`;
+    window.location.href = url;
 }
 
-// socket events handled
-socket.on("update", (data) => {
-	console.log("Recieved data", data);
-	$("#custom-seekbar span").css("width", data + "%");
-});
-
-socket.on("play", () => {
-	video.play();
-});
-
-socket.on("pause", () => {
-	video.pause();
-});
-
-socket.on("slider", (data) => {
-	video.currentTime = data;
-});
+function httpGet(theUrl) {
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.open("GET", theUrl, false); // false for synchronous request
+	xmlHttp.send(null);
+	return xmlHttp.responseText;
+}
