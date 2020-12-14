@@ -4,15 +4,15 @@ let initialUrl = "https://sync-player666.herokuapp.com";
 
 function create() {
 	let response = httpGet(`${initialUrl}/getRoomNumber`);
-    let url = `${initialUrl}/room/${response}`;
+	let url = `${initialUrl}/room/${response}`;
 	window.location.href = url;
 }
 
 function join() {
-    const input = document.getElementById("input")
-    const response = input.value;
-    let url = `${initialUrl}/room/${response}`;
-    window.location.href = url;
+	const input = document.getElementById("input")
+	const response = input.value;
+	let url = `${initialUrl}/room/${response}`;
+	window.location.href = url;
 }
 
 function httpGet(theUrl) {
