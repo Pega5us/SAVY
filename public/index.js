@@ -1,6 +1,6 @@
 // Client
 
-let initialUrl = "http://localhost:5000";
+let initialUrl = "https://sync-player666.herokuapp.com/";
 
 function create() {
 	let response = httpGet(`${initialUrl}/getRoomNumber`);
