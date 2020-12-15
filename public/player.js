@@ -67,6 +67,21 @@ function pauseVideo() {
   video.pause();
 }
 
+//play event handled
+video.onplaying = () => {
+	socket.emit("play", roomno);
+	socket.emit("seeked", video.currentTime, roomno);
+}
+
+// pause event handled
+video.onpause = () => {
+	socket.emit("pause", roomno);
+}
+
+// seeking event handled
+video.onseeked = () => {
+	socket.emit("seeked", video.currentTime, roomno);
+}
 // socket events handled
 socket.on("update", (data) => {
   console.log("Recieved data", data);
@@ -80,6 +95,13 @@ socket.on("play", () => {
 socket.on("pause", () => {
   video.pause();
 });
+
+socket.on("seeked", (data) => {
+	if( Math.abs(video.currentTime-data) > 1)
+	{
+		video.currentTime = data;
+	}
+})
 
 socket.on("slider", (data) => {
   video.currentTime = data;
