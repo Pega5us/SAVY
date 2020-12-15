@@ -1,8 +1,10 @@
 const express = require("express");
 const socket = require("socket.io");
+const join = require("path").join;
+const url = require("url")
+
 const app = express();
 var PORT = process.env.PORT || 5000;
-const join = require("path").join;
 
 app.use(express.static("public"));
 
@@ -16,7 +18,19 @@ const io = socket(server);
 
 rooms = [];
 
-app.get("/room/:roomno", (req, res) => {
+const isAuthenticated = (req, res, next) => {
+	const queryObject = url.parse(req.url, true).query
+	const curr_url = req.url.split("/")
+	let roomno = curr_url[curr_url.length - 1]
+	if (roomno.includes("?")) roomno = roomno.split("?")[0]
+	if (queryObject.username) {
+		return next()
+	} else {
+		return res.redirect(`http://localhost:5000/?roomno=${roomno}`)
+	}
+}
+
+app.get("/room/:roomno", isAuthenticated, (req, res) => {
   const roomno = req.params.roomno;
   res.sendFile(join(__dirname, "public", "player.html"));
 });
@@ -45,8 +59,11 @@ app.get("/getPlayerJS", (req, res) => {
 io.on("connection", (socket) => {
 	console.log("Connected");
 
-	socket.on("joinroom", (roomno) => {
+	socket.on("joinroom", (roomno, username) => {
 		socket.join(roomno)
+		socket.to(roomno).emit("new user", username)
+		socket.username = username
+		socket.roomno = roomno
 		rooms.push(roomno);
 	})
 	socket.on("update", (data, roomno) => {
@@ -65,4 +82,7 @@ io.on("connection", (socket) => {
 	socket.on("slider", (data, roomno) => {
 		socket.to(roomno).emit("slider", data);
 	});
+	socket.on("disconnect", () => {
+		socket.to(socket.roomno).emit("left room", socket.username)
+	})
 });

@@ -1,9 +1,10 @@
 let temp_arr = window.location.pathname.split("/");
 let roomno = temp_arr[temp_arr.length - 1];
-console.log(roomno);
+
+let current_username = new URLSearchParams(window.location.search).get("username");
 
 const socket = io();
-socket.emit("joinroom", roomno);
+socket.emit("joinroom", roomno, current_username);
 
 const video = document.getElementById("video");
 const slider = document.getElementById("custom-seekbar");
@@ -106,3 +107,11 @@ socket.on("seeked", (data) => {
 socket.on("slider", (data) => {
   video.currentTime = data;
 });
+
+socket.on("new user", (username) => {
+  console.log(username + " has joined");
+})
+
+socket.on("left room", (username) => {
+  console.log(username + " has left")
+})
