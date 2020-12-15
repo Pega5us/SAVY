@@ -43,23 +43,26 @@ app.get("/getPlayerJS", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("Connected");
+	console.log("Connected");
 
-  socket.on("joinroom", (roomno) => {
-    socket.join(roomno);
-    rooms.push(roomno);
-  });
-  socket.on("update", (data, roomno) => {
-    console.log(data);
-    socket.to(roomno).emit("update", data);
-  });
-  socket.on("play", (roomno) => {
-    socket.to(roomno).emit("play");
-  });
-  socket.on("pause", (roomno) => {
-    socket.to(roomno).emit("pause");
-  });
-  socket.on("slider", (data, roomno) => {
-    socket.to(roomno).emit("slider", data);
-  });
+	socket.on("joinroom", (roomno) => {
+		socket.join(roomno)
+		rooms.push(roomno);
+	})
+	socket.on("update", (data, roomno) => {
+		console.log(data);
+		socket.to(roomno).emit("update", data);
+	});
+	socket.on("play", (roomno) => {
+		socket.to(roomno).emit("play");
+	});
+	socket.on("pause", (roomno) => {
+		socket.to(roomno).emit("pause");
+	});
+	socket.on("seeked", (data, roomno) => {
+		socket.to(roomno).emit("seeked", data);
+	})
+	socket.on("slider", (data, roomno) => {
+		socket.to(roomno).emit("slider", data);
+	});
 });
