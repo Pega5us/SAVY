@@ -1,0 +1,154 @@
+video {
+  overflow: hidden;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+.header {
+  display: flex;
+  position: relative;
+  align-self: center;
+  box-shadow: 5px 10px 18px red;
+  border-radius: 6px;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  display: flex;
+  position: relative;
+  align-self: center;
+  box-shadow: 5px 10px 18px red;
+  border-radius: 6px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-bottom: 80px;
+}
+.container > h2 {
+  text-shadow: -2px 2px 6px red, 2px 2px 6px red;
+  color: black;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-weight: 700;
+
+  justify-content: center;
+  align-items: center;
+}
+.header > h1 {
+  text-shadow: -2px 2px 6px red, 2px 2px 6px red;
+  color: black;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  justify-content: center;
+  align-items: center;
+}
+.content,
+.content1 {
+  display: flex;
+  position: relative;
+  align-self: center;
+  box-shadow: 5px 10px 18px red;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 40px;
+  margin-left: 100px;
+  margin-right: 100px;
+  flex-direction: row;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.content1 {
+  margin-left: 200px;
+  margin-right: 200px;
+  justify-content: center;
+  align-items: center;
+}
+i {
+  cursor: pointer;
+}
+label {
+  display: flex;
+  flex: 0.5;
+  text-shadow: -2px 2px 6px red, 2px 2px 6px red;
+  color: black;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  justify-content: flex-end;
+  align-items: center;
+}
+.inputarea {
+  display: flex;
+  flex: 0.5;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+input {
+  display: flex;
+  flex: 0.6;
+  padding: 5px;
+  margin-bottom: 2px;
+  border-radius: 5px;
+  border-style: none;
+  box-shadow: 5px 10px 18px red;
+  background-color: black;
+  text-shadow: 0px 0px 8px red, 2px 2px 8px red;
+  font-size: 20px;
+  margin-left: 140px;
+  margin-right: 140px;
+}
+.inputarea > button {
+  display: flex;
+  flex: 0.4;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  margin-left: 150px;
+  margin-right: 150px;
+  font-size: 20px;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  text-shadow: 0px 0px 8px red, 2px 2px 8px red;
+  border-radius: 5px;
+  border-style: none;
+  box-shadow: 5px 10px 18px red;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-weight: 800;
+}
+button:hover {
+  box-shadow: none;
+}
+button {
+  transition-duration: 0.5 sec;
+  transition-delay: 1 sec;
+  transition-timing-function: ease;
+}
+.content1 > button {
+  font-size: 20px;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  text-shadow: 0px 0px 8px red, 2px 2px 8px red;
+  border-radius: 5px;
+  border-style: none;
+  box-shadow: 5px 10px 18px red;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-weight: 800;
+  transition-duration: 0.5 sec;
+  transition-delay: 1 sec;
+  transition-timing-function: ease;
+}
+.btn:hover {
+  box-shadow: none;
+}

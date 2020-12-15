@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>SAVY</title>
-</head>
-<body>
-	<input type="text" id="input"/>
-	<button onclick="join()">Join</button>
-	<button onclick="create()">Create</button>
-	<script src="index.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="index.css" />
+    <title>SAVY Player</title>
+  </head>
+  <body>
+    <video autoplay muted loop>
+      <source src="videoplayback.mp4" type="video/mp4" />
+    </video>
+    <div class="header">
+      <h1><i class="fab fa-galactic-senate"></i>Savy Player</h1>
+    </div>
+    <div class="container"><h2>The Dark Shall Rise!!</h2></div>
+    <div class="content">
+      <label for="room-no">Enter Your Dark World :</label>
+      <div class="inputarea">
+        <input type="text" />
+        <button onclick="join()">Enter</button>
+      </div>
+    </div>
+    <div class="content1">
+      <button onclick="create()" class="btn">Create Your Evil World</button>
+    </div>
+    <script src="index.js"></script>
+  </body>
 </html>
