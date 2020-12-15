@@ -110,9 +110,13 @@ socket.on("slider", (data) => {
 });
 
 socket.on("new user", (username) => {
-	console.log(username + " has joined");
+	Notification.requestPermission().then(function () {
+		new Notification(`${username} joined the room`);
+	});
 });
 
 socket.on("left room", (username) => {
-	console.log(username + " has left");
+	Notification.requestPermission().then(function () {
+		new Notification(`${username} left the room`);
+	});
 });

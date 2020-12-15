@@ -1,6 +1,6 @@
 // Client
 
-let initialUrl = "https://sync-player666.herokuapp.com";
+let initialUrl = "http://localhost:5000";
 
 let current_roomno = new URLSearchParams(window.location.search).get("roomno");
 if (current_roomno) {
