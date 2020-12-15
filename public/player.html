@@ -1,67 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      id="css"
-      rel="stylesheet"
-      type="text/css"
-      href="https://sync-player666.herokuapp.com/getPlayerDarkCSS"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <title>SAVY</title>
-  </head>
-  <body>
-    <div class="header">
-      <h1>
-        <i class="fa fa-mars-double" id="font_awesome" onclick="change()"></i
-        >SAVY Player
-      </h1>
-    </div>
-    <div class="content">
-      <div id="message"></div>
-      <div class="input">
-        <input id="input" type="file" accept="video/*" />
-        <label for="input">Choose a File</label>
-      </div>
-      <video id="video" controls></video>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-      <div id="custom-seekbar">
-        <span></span>
-      </div>
-      <div class="play">
-        <div class="play1">
-          <button id="play" onclick="playVideo()">Play</button>
-        </div>
-        <div class="pause">
-          <button id="pause" onclick="pauseVideo()">Pause</button>
-        </div>
-      </div>
-      <script
-        type="text/javascript"
-        src="https://sync-player666.herokuapp.com/getPlayerJS"
-      ></script>
-      <script>
-        function change() {
-          var icon = document.getElementById("font_awesome");
-          var css = document.getElementById("css");
-          if (icon.getAttribute("class") == "fa fa-mars-double") {
-            icon.setAttribute("class", "fa fa-venus-double");
-            css.setAttribute(
-              "href",
-              "https://sync-player666.herokuapp.com/getPlayerCSS"
-            );
-          } else {
-            icon.setAttribute("class", "fa fa-mars-double");
-            css.setAttribute(
-              "href",
-              "https://sync-player666.herokuapp.com/getPlayerDarkCSS"
-            );
-          }
-        }
-      </script>
-    </div>
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			id="css"
+			rel="stylesheet"
+			type="text/css"
+			href="https://sync-player666.herokuapp.com/getPlayerDarkCSS"
+		/>
+		<script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
+		<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+		<title>SAVY</title>
+	</head>
+	<body>
+		<div class="header">
+			<h1>
+				<i
+					class="fa fa-mars-double"
+					id="font_awesome"
+					onclick="change()"
+				></i
+				>SAVY Player
+			</h1>
+		</div>
+		<div class="content">
+			<div id="message"></div>
+			<div class="input">
+				<input id="input" type="file" accept="video/*" />
+				<label for="input">Choose a File</label>
+			</div>
+			<video id="video" controls></video>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+			<div id="custom-seekbar">
+				<span></span>
+			</div>
+			<div class="play">
+				<div class="play1">
+					<button id="play" onclick="playVideo()">Play</button>
+				</div>
+				<div class="pause">
+					<button id="pause" onclick="pauseVideo()">Pause</button>
+				</div>
+			</div>
+			<script
+				type="text/javascript"
+				src="https://sync-player666.herokuapp.com/getPlayerJS"
+			></script>
+			<script>
+				function change() {
+					var icon = document.getElementById("font_awesome");
+					var css = document.getElementById("css");
+					if (icon.getAttribute("class") == "fa fa-mars-double") {
+						icon.setAttribute("class", "fa fa-venus-double");
+						css.setAttribute(
+							"href",
+							"https://sync-player666.herokuapp.com/getPlayerCSS"
+						);
+					} else {
+						icon.setAttribute("class", "fa fa-mars-double");
+						css.setAttribute(
+							"href",
+							"https://sync-player666.herokuapp.com/getPlayerDarkCSS"
+						);
+					}
+				}
+			</script>
+		</div>
+	</body>
 </html>

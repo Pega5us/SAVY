@@ -1,95 +1,95 @@
 i {
-  cursor: pointer;
+	cursor: pointer;
 }
 body {
-  background-color: black;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+	background-color: black;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
 }
 .header {
-  display: flex;
-  flex: 0.2;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  box-shadow: 5px 10px 18px rgb(0, 119, 255);
-  background-color: black;
-  border-radius: 7px;
+	display: flex;
+	flex: 0.2;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	box-shadow: 5px 10px 18px rgb(0, 119, 255);
+	background-color: black;
+	border-radius: 7px;
 }
 .header > h1 {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-weight: 800;
-  text-shadow: 3px 2px 3px turquoise;
-  color: yellow;
+	display: flex;
+	flex: 1;
+	align-items: center;
+	justify-content: center;
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	font-weight: 800;
+	text-shadow: 3px 2px 3px turquoise;
+	color: yellow;
 
-  font-size: 40px;
+	font-size: 40px;
 }
 .content {
-  margin-top: 15px;
-  display: flex;
-  flex: auto;
-  flex-direction: column;
-  box-sizing: border-box;
-  box-shadow: 5px 10px 18px rgb(0, 119, 255);
-  background-color: black;
-  border-radius: 7px;
+	margin-top: 15px;
+	display: flex;
+	flex: auto;
+	flex-direction: column;
+	box-sizing: border-box;
+	box-shadow: 5px 10px 18px rgb(0, 119, 255);
+	background-color: black;
+	border-radius: 7px;
 }
 .input {
-  display: flex;
-  flex: 0.1;
-  margin-bottom: 10px;
-  flex-direction: row;
-  justify-content: flex-start;
+	display: flex;
+	flex: 0.1;
+	margin-bottom: 10px;
+	flex-direction: row;
+	justify-content: flex-start;
 }
 #input {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
 }
 #input + label {
-  margin-top: 5px;
-  margin-left: 5px;
-  font-size: 1.25em;
-  font-weight: 700;
-  color: Black;
-  border: inset 1.5px black;
-  box-sizing: border-box;
-  border-radius: 4px;
-  background-color: white;
-  display: inline-block;
-  cursor: pointer;
-  transition-duration: 0.4s;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  color: yellow;
-  text-shadow: 3px 2px 3px turquoise;
-  background-color: black;
+	margin-top: 5px;
+	margin-left: 5px;
+	font-size: 1.25em;
+	font-weight: 700;
+	color: Black;
+	border: inset 1.5px black;
+	box-sizing: border-box;
+	border-radius: 4px;
+	background-color: white;
+	display: inline-block;
+	cursor: pointer;
+	transition-duration: 0.4s;
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	color: yellow;
+	text-shadow: 3px 2px 3px turquoise;
+	background-color: black;
 }
 
 #input:focus + label,
 #input + label {
-  box-shadow: 5px 5px 8px 0.25px rgb(0, 119, 255);
+	box-shadow: 5px 5px 8px 0.25px rgb(0, 119, 255);
 }
 video {
-  display: flex;
+	display: flex;
 
-  flex: auto;
-  max-width: 100%;
-  max-height: 100%;
+	flex: auto;
+	max-width: 100%;
+	max-height: 100%;
 
-  margin-bottom: 10px;
-  border-radius: 4px;
-  border: inset medium turquoise;
+	margin-bottom: 10px;
+	border-radius: 4px;
+	border: inset medium turquoise;
 }
 /* input {
   display: flex;
@@ -113,80 +113,80 @@ video {
   color: white;
 } */
 #custom-seekbar {
-  cursor: pointer;
-  height: 10px;
-  margin-bottom: 10px;
-  outline: inset mediumturquoise;
-  overflow: hidden;
-  position: relative;
-  width: auto;
-  margin-left: 4px;
+	cursor: pointer;
+	height: 10px;
+	margin-bottom: 10px;
+	outline: inset mediumturquoise;
+	overflow: hidden;
+	position: relative;
+	width: auto;
+	margin-left: 4px;
 }
 
 #custom-seekbar > span {
-  background-color: skyblue;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 10px;
-  width: 0px;
+	background-color: skyblue;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 10px;
+	width: 0px;
 }
 .play {
-  display: flex;
-  flex: 0.1;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin-left: 4px;
-  margin-bottom: 4px;
+	display: flex;
+	flex: 0.1;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin-left: 4px;
+	margin-bottom: 4px;
 }
 .play1 {
-  display: flex;
-  flex: 0.1;
-  justify-content: center;
+	display: flex;
+	flex: 0.1;
+	justify-content: center;
 }
 #play {
-  display: block;
-  font-size: 18px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-weight: 900;
-  color: yellow;
-  text-shadow: 3px 2px 3px turquoise;
-  background-color: black;
+	display: block;
+	font-size: 18px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	font-weight: 900;
+	color: yellow;
+	text-shadow: 3px 2px 3px turquoise;
+	background-color: black;
 }
 .pause {
-  display: flex;
-  flex: 0.2;
-  justify-content: center;
+	display: flex;
+	flex: 0.2;
+	justify-content: center;
 }
 #pause {
-  display: block;
-  font-size: 18px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-weight: 900;
-  color: yellow;
-  text-shadow: 3px 2px 3px turquoise;
-  background-color: black;
+	display: block;
+	font-size: 18px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	font-weight: 900;
+	color: yellow;
+	text-shadow: 3px 2px 3px turquoise;
+	background-color: black;
 }
 button,
 input {
-  transition-duration: 0.4s;
+	transition-duration: 0.4s;
 }
 #input + label:hover {
-  text-shadow: 0 0 0 black;
+	text-shadow: 0 0 0 black;
 }
 #play:hover,
 #pause:hover {
-  text-shadow: 0 0 0 black;
+	text-shadow: 0 0 0 black;
 }
 button {
-  background-color: turquoise;
-  box-shadow: 5px 5px 8px 0.25px rgb(0, 119, 255);
+	background-color: turquoise;
+	box-shadow: 5px 5px 8px 0.25px rgb(0, 119, 255);
 }
 /* .as-console-wrapper{ display: none !important;} */

@@ -4,7 +4,7 @@ let initialUrl = "https://sync-player666.herokuapp.com";
 
 let current_roomno = new URLSearchParams(window.location.search).get("roomno");
 if (current_roomno) {
-	document.getElementById("input").value = current_roomno
+	document.getElementById("input").value = current_roomno;
 }
 
 function create() {
