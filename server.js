@@ -16,19 +16,23 @@ const server = app.listen(PORT, () => {
 // setup sockets
 const io = socket(server);
 
-rooms = [];
+rooms = {};
 
 const isAuthenticated = (req, res, next) => {
 	const queryObject = url.parse(req.url, true).query;
 	const curr_url = req.url.split("/");
 	let roomno = curr_url[curr_url.length - 1];
 	if (roomno.includes("?")) roomno = roomno.split("?")[0];
+
+	// Sending response if the room number is invalid
+	if (!rooms.hasOwnProperty(roomno))
+		return res.sendFile(join(__dirname, "public", "roomInvalid.html"));
+
+	// Sending response if the username is not provided
 	if (queryObject.username) {
 		return next();
 	} else {
-		return res.redirect(
-			`https://sync-player666.herokuapp.com/?roomno=${roomno}`
-		);
+		return res.redirect(`https://sync-player666.herokuapp.com/?roomno=${roomno}`);
 	}
 };
 
@@ -42,7 +46,8 @@ app.get("/getRoomNumber", (req, res) => {
 	let roomno;
 	do {
 		roomno = Math.floor(Math.random() * 10000 + 100000);
-	} while (rooms.includes(roomno));
+	} while (rooms.hasOwnProperty(roomno));
+	rooms[roomno] = [];
 	res.send(`${roomno}`);
 });
 
@@ -66,7 +71,8 @@ io.on("connection", (socket) => {
 		socket.to(roomno).emit("new user", username);
 		socket.username = username;
 		socket.roomno = roomno;
-		rooms.push(roomno);
+		rooms[roomno].push(username);
+		io.in(socket.roomno).emit("user_array", rooms[socket.roomno]);
 	});
 	socket.on("update", (data, roomno) => {
 		console.log(data);
@@ -86,5 +92,16 @@ io.on("connection", (socket) => {
 	});
 	socket.on("disconnect", () => {
 		socket.to(socket.roomno).emit("left room", socket.username);
+		console.log("disconnected " + socket.username);
+		if (rooms.hasOwnProperty(socket.roomno)) {
+			rooms[socket.roomno].splice(
+				rooms[socket.roomno].indexOf(socket.username),
+				1
+			);
+		}
+		socket.to(socket.roomno).emit("user_array", rooms[socket.roomno]);
+		setTimeout(() => {
+			if (rooms.hasOwnProperty(socket.roomno) && rooms[socket.roomno].length === 0) delete rooms[socket.roomno];
+		}, 5000);
 	});
 });
