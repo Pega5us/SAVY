@@ -5,7 +5,7 @@ let initialUrl = "https://sync-player666.herokuapp.com";
 let current_roomno = new URLSearchParams(window.location.search).get("roomno");
 if (current_roomno) {
 	let username = localStorage.getItem("username");
-	if (username !== "") {
+	if (username !== null) {
 		const redirect_url = `${initialUrl}/room/${current_roomno}?username=${username}`;
 		window.location.href = redirect_url;
 	}
