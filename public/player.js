@@ -120,3 +120,8 @@ socket.on("left room", (username) => {
 		new Notification(`${username} left the room`);
 	});
 });
+
+socket.on("user_array", user_array => {
+	// Getting the array of users in room
+	console.log(user_array);
+})

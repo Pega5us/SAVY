@@ -23,14 +23,16 @@ const isAuthenticated = (req, res, next) => {
 	const curr_url = req.url.split("/");
 	let roomno = curr_url[curr_url.length - 1];
 	if (roomno.includes("?")) roomno = roomno.split("?")[0];
+
+	// Sending response if the room number is invalid
 	if (!rooms.hasOwnProperty(roomno))
-		return res.redirect(`https://sync-player666.herokuapp.com`);
+		return res.sendFile(join(__dirname, "public", "roomInvalid.html"));
+
+	// Sending response if the username is not provided
 	if (queryObject.username) {
 		return next();
 	} else {
-		return res.redirect(
-			`https://sync-player666.herokuapp.com/?roomno=${roomno}`
-		);
+		return res.redirect(`https://sync-player666.herokuapp.com/?roomno=${roomno}`);
 	}
 };
 
@@ -45,7 +47,7 @@ app.get("/getRoomNumber", (req, res) => {
 	do {
 		roomno = Math.floor(Math.random() * 10000 + 100000);
 	} while (rooms.hasOwnProperty(roomno));
-	rooms[roomno] = 0;
+	rooms[roomno] = [];
 	res.send(`${roomno}`);
 });
 
@@ -69,7 +71,8 @@ io.on("connection", (socket) => {
 		socket.to(roomno).emit("new user", username);
 		socket.username = username;
 		socket.roomno = roomno;
-		rooms[roomno]++;
+		rooms[roomno].push(username);
+		io.in(socket.roomno).emit("user_array", rooms[socket.roomno]);
 	});
 	socket.on("update", (data, roomno) => {
 		console.log(data);
@@ -89,7 +92,13 @@ io.on("connection", (socket) => {
 	});
 	socket.on("disconnect", () => {
 		socket.to(socket.roomno).emit("left room", socket.username);
-		rooms[socket.roomno]--;
-		if (rooms[socket.roomno] === 0) delete rooms[socket.roomno];
+		rooms[socket.roomno].splice(
+			rooms[socket.roomno].indexOf(socket.username),
+			1
+		);
+		socket.to(socket.roomno).emit("user_array", rooms[socket.roomno]);
+		setTimeout(() => {
+			if (rooms[socket.roomno].length === 0) delete rooms[socket.roomno];
+		}, 30000);
 	});
 });
