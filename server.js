@@ -92,13 +92,16 @@ io.on("connection", (socket) => {
 	});
 	socket.on("disconnect", () => {
 		socket.to(socket.roomno).emit("left room", socket.username);
-		rooms[socket.roomno].splice(
-			rooms[socket.roomno].indexOf(socket.username),
-			1
-		);
+		console.log("disconnected " + socket.username);
+		if (rooms.hasOwnProperty(socket.roomno)) {
+			rooms[socket.roomno].splice(
+				rooms[socket.roomno].indexOf(socket.username),
+				1
+			);
+		}
 		socket.to(socket.roomno).emit("user_array", rooms[socket.roomno]);
 		setTimeout(() => {
-			if (rooms[socket.roomno].length === 0) delete rooms[socket.roomno];
-		}, 30000);
+			if (rooms.hasOwnProperty(socket.roomno) && rooms[socket.roomno].length === 0) delete rooms[socket.roomno];
+		}, 5000);
 	});
 });
