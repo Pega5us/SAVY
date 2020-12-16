@@ -4,7 +4,7 @@ let initialUrl = "https://sync-player666.herokuapp.com";
 
 let current_roomno = new URLSearchParams(window.location.search).get("roomno");
 if (current_roomno) {
-	document.getElementById("input").value = current_roomno
+	document.getElementById("input").value = current_roomno;
 }
 
 function create() {
@@ -14,11 +14,12 @@ function create() {
 		let url = `${initialUrl}/room/${response}?username=${username}`;
 		window.location.href = url;
 	} else {
-		swal({
-			title: "Enter your username first!",
-			icon: "warning",
-			dangerMode: true,
-		});
+		document.getElementById("username").style.boxShadow =
+			"5px 10px 18px darkblue";
+		setTimeout(function () {
+			document.getElementById("username").style.boxShadow =
+				"5px 10px 18px red";
+		}, 2000);
 	}
 }
 
@@ -29,11 +30,32 @@ function join() {
 		let url = `${initialUrl}/room/${roomno}?username=${username}`;
 		window.location.href = url;
 	} else {
-		swal({
-			title: "Enter full details!",
-			icon: "warning",
-			dangerMode: true,
-		});
+		if (username == "" && roomno == "") {
+			document.getElementById("username").style.boxShadow =
+				"5px 10px 18px darkblue";
+			document.getElementById("input").style.boxShadow =
+				"5px 10px 18px darkblue";
+			setTimeout(function () {
+				document.getElementById("username").style.boxShadow =
+					"5px 10px 18px red";
+				document.getElementById("input").style.boxShadow =
+					"5px 10px 18px red";
+			}, 2000);
+		} else if (username == "" && roomno !== "") {
+			document.getElementById("username").style.boxShadow =
+				"5px 10px 18px darkblue";
+			setTimeout(function () {
+				document.getElementById("username").style.boxShadow =
+					"5px 10px 18px red";
+			}, 2000);
+		} else {
+			document.getElementById("input").style.boxShadow =
+				"5px 10px 18px darkblue";
+			setTimeout(function () {
+				document.getElementById("input").style.boxShadow =
+					"5px 10px 18px red";
+			}, 2000);
+		}
 	}
 }
 
