@@ -63,17 +63,27 @@ app.get("/getPlayerJS", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-	socket.on("joinroom", (roomno, username) => {
-
-		if(rooms[roomno].array.length > 0){
-			let isAllowed ;
-			io.to(rooms[roomno].host).emit("user permission", username);
-			socket.on("ispermitted", permission => isAllowed = permission)
-			if (!isAllowed)
-				window.location.href = "http://localhost:5000"
+	socket.on("ask permission", (roomno, username) => {
+		console.log(socket.id + " has asked to enter the room");
+		if (rooms[roomno].array.length === 0)
+			io.to(socket.id).emit("enter room", true),
+				console.log(socket.id + " was first so allowed");
+		else {
+			io.to(rooms[roomno].host).emit(
+				"user permission",
+				username,
+				socket.id
+			);
 		}
+	});
+	
+	socket.on("isAllowed", (isAllowed, socketId) => {
+		console.log(socketId + " " + isAllowed);
+		if (isAllowed) io.to(socketId).emit("enter room", true);
+		else io.to(socketId).emit("enter room", false);
+	});
 
-
+	socket.on("joinroom", (roomno, username) => {
 		socket.join(roomno);
 		socket.to(roomno).emit("new user", username);
 		socket.username = username;
@@ -106,34 +116,38 @@ io.on("connection", (socket) => {
 	});
 	socket.on("disconnect", () => {
 		socket.to(socket.roomno).emit("left room", socket.username);
-		if (rooms.hasOwnProperty(socket.roomno)) {
-			rooms[socket.roomno].array.splice(
-				rooms[socket.roomno].array.findIndex((x) => x.id === socket.id),
-				1
+		if (rooms.hasOwnProperty(socket.roomno) && rooms[socket.roomno].array) {
+			if (rooms.hasOwnProperty(socket.roomno)) {
+				rooms[socket.roomno].array.splice(
+					rooms[socket.roomno].array.findIndex(
+						(x) => x.id === socket.id
+					),
+					1
+				);
+			}
+			// Transfer host
+			if (
+				rooms[socket.roomno].array.length > 0 &&
+				rooms[socket.roomno].host === socket.id
+			)
+				rooms[socket.roomno].host = rooms[socket.roomno].array[0].id;
+			socket.to(socket.roomno).emit(
+				"user_array",
+				rooms[socket.roomno].array.map((obj) => obj.username)
 			);
-		}
-		// Transfer host
-		if (
-			rooms[socket.roomno].array.length > 0 &&
-			rooms[socket.roomno].host === socket.id
-		)
-			rooms[socket.roomno].host = rooms[socket.roomno].array[0].id;
-		socket.to(socket.roomno).emit(
-			"user_array",
-			rooms[socket.roomno].array.map((obj) => obj.username)
-		);
-		if (rooms[socket.roomno].array.length === 0) {
-			setTimeout(
-				(roomno) => {
-					if (
-						rooms.hasOwnProperty(roomno) &&
-						rooms[roomno].array.length === 0
-					)
-						delete rooms[socket.roomno];
-				},
-				10000,
-				socket.roomno
-			);
+			if (rooms[socket.roomno].array.length === 0) {
+				setTimeout(
+					(roomno) => {
+						if (
+							rooms.hasOwnProperty(roomno) &&
+							rooms[roomno].array.length === 0
+						)
+							delete rooms[socket.roomno];
+					},
+					10000,
+					socket.roomno
+				);
+			}
 		}
 	});
 });

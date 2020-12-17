@@ -6,7 +6,25 @@ let current_username = new URLSearchParams(window.location.search).get(
 );
 
 const socket = io();
-socket.emit("joinroom", roomno, current_username);
+
+//Asking permission to enter the room
+socket.emit("ask permission", roomno, current_username);
+
+// Listenting for host reply
+socket.on("enter room", (isAllowed) => {
+	// allowed to enter the room
+	if (isAllowed) socket.emit("joinroom", roomno, current_username);
+	// not allowed to enter the room
+	else window.location.href = "http://localhost:5000";
+});
+
+// For host to allow a user
+socket.on("user permission", (username, socketId) => {
+	console.log(socketId + " asking permission");
+	setTimeout(() => {
+		socket.emit("isAllowed", false, socketId);
+	}, 4000);
+});
 
 const video = document.getElementById("video");
 const slider = document.getElementById("custom-seekbar");
@@ -121,7 +139,7 @@ socket.on("left room", (username) => {
 	});
 });
 
-socket.on("user_array", user_array => {
+socket.on("user_array", (user_array) => {
 	// Getting the array of users in room
 	console.log(user_array);
-})
+});
