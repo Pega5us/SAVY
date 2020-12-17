@@ -32,7 +32,9 @@ const isAuthenticated = (req, res, next) => {
 	if (queryObject.username) {
 		return next();
 	} else {
-		return res.redirect(`https://sync-player666.herokuapp.com/?roomno=${roomno}`);
+		return res.redirect(
+			`https://sync-player666.herokuapp.com/?roomno=${roomno}`
+		);
 	}
 };
 
@@ -101,7 +103,11 @@ io.on("connection", (socket) => {
 		}
 		socket.to(socket.roomno).emit("user_array", rooms[socket.roomno]);
 		setTimeout(() => {
-			if (rooms.hasOwnProperty(socket.roomno) && rooms[socket.roomno].length === 0) delete rooms[socket.roomno];
+			if (
+				rooms.hasOwnProperty(socket.roomno) &&
+				rooms[socket.roomno].length === 0
+			)
+				delete rooms[socket.roomno];
 		}, 5000);
 	});
 });

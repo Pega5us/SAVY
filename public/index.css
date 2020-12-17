@@ -1,173 +1,342 @@
 body {
-	min-width: 1006px;
-}
-video {
-	overflow: hidden;
-	position: fixed;
-	right: 0;
-	bottom: 0;
-	min-width: 100%;
-	min-height: 100%;
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	background-color: rgba(250, 245, 245, 0.61);
 }
 .header {
 	display: flex;
-	position: relative;
-	align-self: center;
-	box-shadow: 5px 10px 18px red;
-	border-radius: 6px;
-	justify-content: center;
-	align-items: center;
-}
-.container {
-	display: flex;
-	position: relative;
-	align-self: center;
-	box-shadow: 5px 10px 18px red;
-	border-radius: 6px;
-	justify-content: center;
-	align-items: center;
-	margin-top: 40px;
-	margin-left: 40px;
-	margin-right: 40px;
-	margin-bottom: 80px;
-}
-.container > h2 {
-	text-shadow: -2px 2px 6px red, 2px 2px 6px red;
-	color: black;
-	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-	font-weight: 700;
-
-	justify-content: center;
-	align-items: center;
-}
-.header > h1 {
-	text-shadow: -2px 2px 6px red, 2px 2px 6px red;
-	color: black;
-	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-	font-weight: 700;
-	font-size: 40px;
-	justify-content: center;
-	align-items: center;
-}
-.content,
-.content1,
-.content2 {
-	display: flex;
-	position: relative;
-	align-self: center;
-	box-shadow: 5px 10px 18px red;
-	border-radius: 6px;
-	overflow: hidden;
-	margin-top: 40px;
-	margin-left: 100px;
-	margin-right: 100px;
+	flex: 0.2;
 	flex-direction: row;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	padding-left: 2px;
-	padding-right: 2px;
-}
-.content1 {
-	margin-left: 200px;
-	margin-right: 200px;
-	justify-content: center;
-	align-items: center;
-}
-i {
-	cursor: pointer;
-}
-.content2 > label {
-	display: flex;
-	flex: 0.8;
-}
+	box-sizing: border-box;
 
-label {
+	border-radius: 4px;
+}
+.header > .icon {
 	display: flex;
-	flex: 0.5;
-	text-shadow: -2px 2px 6px red, 2px 2px 6px red;
-	color: rgba(255, 255, 255, 0.548);
-	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-	font-weight: 700;
-	font-size: 20px;
+	flex: 0.4;
 	justify-content: flex-end;
 	align-items: center;
+	margin-right: 10px;
 }
-.inputarea {
+.icon > h2 > i,
+.heading > h1 {
+	cursor: pointer;
+}
+.header > .heading {
 	display: flex;
 	flex: 0.5;
 	justify-content: flex-start;
-	flex-direction: column;
-}
-input {
-	display: flex;
-	flex: 0.6;
-	padding: 5px;
-	margin-bottom: 2px;
-	border-radius: 5px;
-	border-style: none;
-	box-shadow: 5px 10px 18px red;
-	background-color: black;
-	text-shadow: 0px 0px 8px red, 2px 2px 8px red;
-	font-size: 20px;
-	margin-left: 140px;
-	margin-right: 140px;
-	color: rgba(255, 255, 255, 0.548);
-}
-.username {
-	margin-left: 200px;
-	margin-right: 200px;
-	display: flex;
-	flex: 0.2;
-	justify-self: center;
-}
-.inputarea > button {
-	display: flex;
-	flex: 0.4;
-	margin-top: 30px;
-	margin-bottom: 10px;
-	margin-left: 150px;
-	margin-right: 150px;
-	font-size: 20px;
-	justify-content: center;
 	align-items: center;
-	background-color: black;
-	text-shadow: 0px 0px 8px red, 2px 2px 8px red;
-	border-radius: 5px;
-	border-style: none;
-	box-shadow: 5px 10px 18px red;
 	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
 		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 	font-weight: 800;
+	flex-direction: row;
 }
-button:hover {
-	box-shadow: none;
+.learn_more {
+	display: flex;
+	flex: 0.1;
+	justify-content: flex-end;
+	align-items: center;
+	margin-left: 10px;
 }
-button {
-	transition-duration: 0.5 sec;
-	transition-delay: 1 sec;
-	transition-timing-function: ease;
-	color: rgba(255, 255, 255, 0.548);
-}
-.content1 > button {
-	font-size: 20px;
+.learn_more > a {
 	justify-content: center;
 	align-items: center;
-	background-color: black;
-	text-shadow: 0px 0px 10px red, 2px 2px 8px red;
-	border-radius: 5px;
-	border-style: none;
-	box-shadow: 5px 10px 18px red;
+	text-decoration: none;
+	color: #00897b;
 	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
 		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-	font-weight: 1200;
-	transition-duration: 0.5 sec;
-	transition-delay: 1 sec;
-	transition-timing-function: ease;
-	color: rgba(255, 255, 255, 0.548);
+	font-weight: 400;
+	font-size: 14px;
 }
-.btn:hover {
-	box-shadow: none;
+@media all and (max-width: 780px) {
+	.body {
+		display: flex;
+		flex: 0.8;
+		flex-direction: column;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		margin-left: 20px;
+		margin-right: 20px;
+		justify-content: center;
+		align-items: center;
+	}
+	.body > .content {
+		display: flex;
+		flex: 0.5;
+		flex-direction: column;
+	}
+	.description {
+		display: flex;
+		flex: 0.6;
+	}
+	.description > .description_header {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+	}
+	.description_header > h1 {
+		display: flex;
+		flex: 0.6;
+		align-items: center;
+		justify-content: center;
+		font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+			"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	}
+	.description_header > h3 {
+		display: flex;
+		flex: 0.4;
+		align-items: center;
+		justify-content: center;
+		margin-left: 40px;
+		margin-right: 40px;
+		margin-top: -7px;
+		margin-bottom: 20px;
+		font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+			"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	}
+	.username_input {
+		display: flex;
+		flex: 0.4;
+		flex-direction: column;
+		margin-top: 20px;
+	}
+	.input_field {
+		display: flex;
+		flex: 0.5;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 10px;
+	}
+	.id_link {
+		margin-top: 10px;
+		display: flex;
+		flex: 0.5;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+	}
+	.input_field > label,
+	.id_link > label {
+		display: flex;
+		flex: 0.3;
+		font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+			"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+		align-items: center;
+		justify-content: flex-end;
+	}
+	.input_field > input,
+	.id_link > input {
+		display: flex;
+		flex: 0.3;
+		margin-left: 20px;
+		margin-right: 20px;
+		max-width: 170px;
+		align-items: center;
+		justify-content: center;
+		border: solid 0.02px grey;
+		border-radius: 4px;
+		padding-top: 6px;
+		padding-bottom: 6px;
+		font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+			"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	}
+	.input_field > input:focus-visible,
+	.id_link > input:focus {
+		border: thin 1px orange;
+	}
+	.input_field > button,
+	.id_link > button {
+		display: flex;
+		flex: 0.3;
+		align-items: center;
+		justify-content: flex-start;
+		max-width: 100px;
+		background-color: #00897b;
+		border: none;
+
+		border-radius: 4px;
+		padding-top: 6px;
+		padding-bottom: 6px;
+		color: white;
+		font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+			"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+		font-weight: 500;
+	}
+	.input_field > button:hover,
+	.id_link > button:hover {
+		background-color: #00796b;
+		cursor: pointer;
+	}
+	.input_field > button:disabled,
+	.id_link > button:disabled {
+		background-color: none;
+	}
+	.box {
+		margin-top: 15px;
+		display: flex;
+		flex: 0.6;
+		box-sizing: border-box;
+		box-shadow: 2px 2px 2px 2px rgba(128, 128, 128);
+		-webkit-box-shadow: 2px 2px 2px 2px rgba(128, 128, 128);
+		-moz-box-shadow: 2px 2px 2px 2px rgba(128, 128, 128);
+		background-color: white;
+		border-radius: 6px;
+		align-items: center;
+		justify-content: center;
+	}
+	.box > h3 {
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+}
+
+@media all and (min-width: 780px) {
+	.body {
+		display: flex;
+		flex: 0.8;
+		flex-direction: row;
+		margin-top: 80px;
+		margin-bottom: 60px;
+		margin-left: 20px;
+		margin-right: 60px;
+		justify-content: center;
+		align-items: center;
+	}
+	.body > .content {
+		display: flex;
+		flex: 0.5;
+		flex-direction: column;
+		margin-right: 40px;
+	}
+	.description {
+		display: flex;
+		flex: 0.6;
+		flex-direction: column;
+		justify-content: flex-end;
+		align-items: center;
+	}
+	.description > .description_header {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+	.description_header > h1 {
+		display: flex;
+		flex: 0.6;
+		align-items: center;
+		justify-content: center;
+		font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+			"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	}
+	.description_header > h3 {
+		display: flex;
+		flex: 0.4;
+		align-items: center;
+		justify-content: center;
+		max-width: 350px;
+		margin-right: 40px;
+		margin-left: 20px;
+		margin-top: -7px;
+		font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+			"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	}
+	.username_input {
+		display: flex;
+		flex: 0.4;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin-top: 20px;
+	}
+	.input_field {
+		display: flex;
+		flex: 0.5;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 10px;
+		margin-right: 10px;
+	}
+	.id_link {
+		margin-top: 10px;
+		display: flex;
+		flex: 0.5;
+		flex-direction: row;
+		align-items: center;
+	}
+	.input_field > label,
+	.id_link > label {
+		display: flex;
+		flex: 0.4;
+		font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+			"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+		align-items: center;
+		justify-content: flex-start;
+	}
+	.input_field > input,
+	.id_link > input {
+		display: flex;
+		flex: 0.3;
+		margin-left: 20px;
+		margin-right: 20px;
+		max-width: 170px;
+		align-items: center;
+		justify-content: center;
+		border: solid 0.02px grey;
+		border-radius: 4px;
+		padding-top: 6px;
+		padding-bottom: 6px;
+		font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+			"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	}
+
+	.input_field > button,
+	.id_link > button {
+		display: flex;
+		flex: 0.3;
+		align-items: center;
+		justify-content: flex-start;
+		min-width: 100px;
+		max-width: 100px;
+		background-color: #00897b;
+		border: none;
+		border-radius: 4px;
+		padding-top: 6px;
+		padding-bottom: 6px;
+		color: white;
+		font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+			"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+		font-weight: 500;
+	}
+	.input_field > button:hover,
+	.id_link > button:hover {
+		background-color: #00796b;
+		cursor: pointer;
+	}
+	.input_field > button:disabled,
+	.id_link > button:disabled {
+		background-color: none;
+	}
+	.box {
+		margin-top: 15px;
+		display: flex;
+		flex: 0.6;
+		box-sizing: border-box;
+		box-shadow: 2px 2px 2px 2px rgba(128, 128, 128);
+		-webkit-box-shadow: 2px 2px 2px 2px rgba(128, 128, 128);
+		-moz-box-shadow: 2px 2px 2px 2px rgba(128, 128, 128);
+		background-color: white;
+		border-radius: 6px;
+		align-items: center;
+		justify-content: center;
+	}
+	.box > h3 {
+		margin-left: 5px;
+		margin-right: 5px;
+	}
 }

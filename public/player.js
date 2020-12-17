@@ -1,15 +1,31 @@
 let temp_arr = window.location.pathname.split("/");
 let roomno = temp_arr[temp_arr.length - 1];
-
+let arr = [];
 let current_username = new URLSearchParams(window.location.search).get(
 	"username"
 );
+let room_URL = `https://sync-player666.herokuapp.com/room/${roomno}`;
+
+let spanEle = document.getElementById("roomNo");
+spanEle.innerText += roomno;
 
 const socket = io();
 socket.emit("joinroom", roomno, current_username);
 
 const video = document.getElementById("video");
 const slider = document.getElementById("custom-seekbar");
+
+function copyLink() {
+	console.log(room_URL);
+	let para = document.createElement("textarea");
+	para.id = "copiedLink";
+	para.value = room_URL;
+	document.body.appendChild(para);
+	let ele = document.getElementById("copiedLink");
+	ele.select();
+	document.execCommand("copy");
+	document.body.removeChild(para);
+}
 
 let URL = window.URL || window.webkitURL;
 const displayMessage = function (message, isError) {
@@ -121,7 +137,20 @@ socket.on("left room", (username) => {
 	});
 });
 
-socket.on("user_array", user_array => {
+socket.on("user_array", (user_array) => {
 	// Getting the array of users in room
+	document.getElementById("no_of_members").innerText = user_array.length;
+	let z = document.getElementById("sidePanel");
+	z.innerHTML = "";
+	let h = document.createElement("h3");
+	let txt = document.createTextNode("Connected Users:");
+	h.appendChild(txt);
+	z.appendChild(h);
+	for (var i = 0; i < user_array.length; i++) {
+		let para = document.createElement("p");
+		let node = document.createTextNode(user_array[i]);
+		para.appendChild(node);
+		z.appendChild(para);
+	}
 	console.log(user_array);
-})
+});

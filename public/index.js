@@ -26,10 +26,9 @@ function create() {
 		window.location.href = url;
 	} else {
 		document.getElementById("username").style.boxShadow =
-			"5px 10px 18px darkblue";
+			"5px 10px 18px #00897b";
 		setTimeout(function () {
-			document.getElementById("username").style.boxShadow =
-				"5px 10px 18px red";
+			document.getElementById("username").style.boxShadow = "none";
 		}, 2000);
 	}
 }
@@ -44,28 +43,24 @@ function join() {
 	} else {
 		if (username == "" && roomno == "") {
 			document.getElementById("username").style.boxShadow =
-				"5px 10px 18px darkblue";
+				"5px 10px 18px #00897b";
 			document.getElementById("input").style.boxShadow =
-				"5px 10px 18px darkblue";
+				"5px 10px 18px #00897b";
 			setTimeout(function () {
-				document.getElementById("username").style.boxShadow =
-					"5px 10px 18px red";
-				document.getElementById("input").style.boxShadow =
-					"5px 10px 18px red";
+				document.getElementById("username").style.boxShadow = "none";
+				document.getElementById("input").style.boxShadow = "none";
 			}, 2000);
 		} else if (username == "" && roomno !== "") {
 			document.getElementById("username").style.boxShadow =
-				"5px 10px 18px darkblue";
+				"5px 10px 18px #00897b";
 			setTimeout(function () {
-				document.getElementById("username").style.boxShadow =
-					"5px 10px 18px red";
+				document.getElementById("username").style.boxShadow = "none";
 			}, 2000);
 		} else {
 			document.getElementById("input").style.boxShadow =
-				"5px 10px 18px darkblue";
+				"5px 10px 18px #00897b";
 			setTimeout(function () {
-				document.getElementById("input").style.boxShadow =
-					"5px 10px 18px red";
+				document.getElementById("input").style.boxShadow = "none";
 			}, 2000);
 		}
 	}
