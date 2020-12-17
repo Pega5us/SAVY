@@ -1,12 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Room Number Invalid</h1>
-    <h1>Go to <a href="http://localhost:5000">Homepage</a></h1>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="icon"
+			type="image/png"
+			href="https://img.icons8.com/fluent/30/000000/walter-white.png"
+		/>
+		<title>Savy Player</title>
+		<style>
+			body {
+				margin: 20px;
+				margin-top: 70px;
+				font-family: "Lucida Sans", "Lucida Sans Regular",
+					"Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana,
+					sans-serif;
+			}
+			h1,
+			a,
+			.ele {
+				text-align: center;
+			}
+			.ele {
+				margin-top: 20px;
+			}
+			h1 {
+				font-weight: 500;
+			}
+			button {
+				width: 201px;
+				height: 35.53px;
+				padding: 0px 24px;
+				border-radius: 5px;
+				border: none;
+				background-color: #00897b;
+				font-size: 13px;
+				color: white;
+				font-weight: 700;
+			}
+			button:hover {
+				background-color: #00796b;
+				cursor: pointer;
+			}
+		</style>
+		<script>
+			function func() {
+				window.location.href = "http://localhost:5000";
+			}
+		</script>
+	</head>
+	<body>
+		<h1>Room Number Invalid</h1>
+		<div class="ele">
+			<button onclick="func()">Return to Home Screen</button>
+		</div>
+	</body>
 </html>

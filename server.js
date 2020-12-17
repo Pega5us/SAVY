@@ -25,8 +25,11 @@ const isAuthenticated = (req, res, next) => {
 	if (roomno.includes("?")) roomno = roomno.split("?")[0];
 
 	// Sending response if the room number is invalid
-	if (!rooms.hasOwnProperty(roomno))
+	console.log("isAuthenticated");
+	if (!rooms.hasOwnProperty(roomno)) {
+		console.log(1);
 		return res.sendFile(join(__dirname, "public", "roomInvalid.html"));
+	}
 
 	// Sending response if the username is not provided
 	if (queryObject.username) {
@@ -65,14 +68,17 @@ app.get("/getPlayerJS", (req, res) => {
 io.on("connection", (socket) => {
 	socket.on("ask permission", (roomno, username) => {
 		console.log(socket.id + " has asked to enter the room");
-		if (rooms[roomno].array.length === 0)
-			io.to(socket.id).emit("enter room", true);
+		if (!rooms.hasOwnProperty(roomno)) socket.emit("room does not exist");
 		else {
-			io.to(rooms[roomno].host).emit(
-				"user permission",
-				username,
-				socket.id
-			);
+			if (rooms[roomno].array.length === 0)
+				io.to(socket.id).emit("enter room", true);
+			else {
+				io.to(rooms[roomno].host).emit(
+					"user permission",
+					username,
+					socket.id
+				);
+			}
 		}
 	});
 
@@ -116,14 +122,10 @@ io.on("connection", (socket) => {
 	socket.on("disconnect", () => {
 		socket.to(socket.roomno).emit("left room", socket.username);
 		if (rooms.hasOwnProperty(socket.roomno) && rooms[socket.roomno].array) {
-			if (rooms.hasOwnProperty(socket.roomno)) {
-				rooms[socket.roomno].array.splice(
-					rooms[socket.roomno].array.findIndex(
-						(x) => x.id === socket.id
-					),
-					1
-				);
-			}
+			rooms[socket.roomno].array.splice(
+				rooms[socket.roomno].array.findIndex((x) => x.id === socket.id),
+				1
+			);
 			// Transfer host
 			if (
 				rooms[socket.roomno].array.length > 0 &&
@@ -134,14 +136,17 @@ io.on("connection", (socket) => {
 				"user_array",
 				rooms[socket.roomno].array.map((obj) => obj.username)
 			);
+			// If no one is in room
 			if (rooms[socket.roomno].array.length === 0) {
 				setTimeout(
 					(roomno) => {
 						if (
 							rooms.hasOwnProperty(roomno) &&
 							rooms[roomno].array.length === 0
-						)
-							delete rooms[socket.roomno];
+						) {
+							delete rooms[roomno];
+							console.log("Room deleted " + roomno);
+						}
 					},
 					10000,
 					socket.roomno
