@@ -66,7 +66,7 @@ io.on("connection", (socket) => {
 	socket.on("ask permission", (roomno, username) => {
 		console.log(socket.id + " has asked to enter the room");
 		if (rooms[roomno].array.length === 0)
-			io.to(socket.id).emit("enter room", true)
+			io.to(socket.id).emit("enter room", true);
 		else {
 			io.to(rooms[roomno].host).emit(
 				"user permission",
@@ -75,7 +75,7 @@ io.on("connection", (socket) => {
 			);
 		}
 	});
-	
+
 	socket.on("isAllowed", (isAllowed, socketId) => {
 		console.log(socketId + " " + isAllowed);
 		if (isAllowed) io.to(socketId).emit("enter room", true);
