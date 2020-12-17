@@ -4,7 +4,7 @@ let arr = [];
 let current_username = new URLSearchParams(window.location.search).get(
 	"username"
 );
-let room_URL = `http://localhost:5000/room/${roomno}`;
+let room_URL = `https://sync-player666.herokuapp.com/room/${roomno}`;
 
 let spanEle = document.getElementById("roomNo");
 spanEle.innerText += roomno;
@@ -17,7 +17,7 @@ socket.emit("ask permission", roomno, current_username);
 
 // Room does not exist
 socket.on("room does not exist", () => {
-	window.location.href = "http://localhost:5000";
+	window.location.href = "https://sync-player666.herokuapp.com";
 });
 
 // Listenting for host reply
@@ -25,7 +25,7 @@ socket.on("enter room", (isAllowed) => {
 	// allowed to enter the room
 	if (isAllowed) socket.emit("joinroom", roomno, current_username);
 	// not allowed to enter the room
-	else window.location.href = "http://localhost:5000";
+	else window.location.href = "https://sync-player666.herokuapp.com";
 });
 
 // For host to allow a user
