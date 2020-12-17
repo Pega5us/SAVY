@@ -148,7 +148,7 @@ io.on("connection", (socket) => {
 							console.log("Room deleted " + roomno);
 						}
 					},
-					10000,
+					600000,
 					socket.roomno
 				);
 			}
