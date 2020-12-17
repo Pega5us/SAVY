@@ -32,22 +32,21 @@ const isAuthenticated = (req, res, next) => {
 	if (queryObject.username) {
 		return next();
 	} else {
-		return res.redirect(`https://sync-player666.herokuapp.com/?roomno=${roomno}`);
+		return res.redirect(`http://localhost:5000/?roomno=${roomno}`);
 	}
 };
 
 app.get("/room/:roomno", isAuthenticated, (req, res) => {
-	const roomno = req.params.roomno;
 	res.sendFile(join(__dirname, "public", "player.html"));
 });
 
 app.get("/getRoomNumber", (req, res) => {
-	console.log("Get Room");
 	let roomno;
 	do {
 		roomno = Math.floor(Math.random() * 10000 + 100000);
 	} while (rooms.hasOwnProperty(roomno));
-	rooms[roomno] = [];
+	rooms[roomno] = {};
+	rooms[roomno].array = [];
 	res.send(`${roomno}`);
 });
 
@@ -64,18 +63,33 @@ app.get("/getPlayerJS", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-	console.log("Connected");
-
 	socket.on("joinroom", (roomno, username) => {
+
+		if(rooms[roomno].array.length > 0){
+			let isAllowed ;
+			io.to(rooms[roomno].host).emit("user permission", username);
+			socket.on("ispermitted", permission => isAllowed = permission)
+			if (!isAllowed)
+				window.location.href = "http://localhost:5000"
+		}
+
+
 		socket.join(roomno);
 		socket.to(roomno).emit("new user", username);
 		socket.username = username;
 		socket.roomno = roomno;
-		rooms[roomno].push(username);
-		io.in(socket.roomno).emit("user_array", rooms[socket.roomno]);
+		rooms[roomno].array.push({
+			username,
+			id: socket.id,
+		});
+		if (rooms[socket.roomno].array.length === 1)
+			rooms[socket.roomno].host = socket.id;
+		io.in(socket.roomno).emit(
+			"user_array",
+			rooms[socket.roomno].array.map((obj) => obj.username)
+		);
 	});
 	socket.on("update", (data, roomno) => {
-		console.log(data);
 		socket.to(roomno).emit("update", data);
 	});
 	socket.on("play", (roomno) => {
@@ -92,16 +106,34 @@ io.on("connection", (socket) => {
 	});
 	socket.on("disconnect", () => {
 		socket.to(socket.roomno).emit("left room", socket.username);
-		console.log("disconnected " + socket.username);
 		if (rooms.hasOwnProperty(socket.roomno)) {
-			rooms[socket.roomno].splice(
-				rooms[socket.roomno].indexOf(socket.username),
+			rooms[socket.roomno].array.splice(
+				rooms[socket.roomno].array.findIndex((x) => x.id === socket.id),
 				1
 			);
 		}
-		socket.to(socket.roomno).emit("user_array", rooms[socket.roomno]);
-		setTimeout(() => {
-			if (rooms.hasOwnProperty(socket.roomno) && rooms[socket.roomno].length === 0) delete rooms[socket.roomno];
-		}, 5000);
+		// Transfer host
+		if (
+			rooms[socket.roomno].array.length > 0 &&
+			rooms[socket.roomno].host === socket.id
+		)
+			rooms[socket.roomno].host = rooms[socket.roomno].array[0].id;
+		socket.to(socket.roomno).emit(
+			"user_array",
+			rooms[socket.roomno].array.map((obj) => obj.username)
+		);
+		if (rooms[socket.roomno].array.length === 0) {
+			setTimeout(
+				(roomno) => {
+					if (
+						rooms.hasOwnProperty(roomno) &&
+						rooms[roomno].array.length === 0
+					)
+						delete rooms[socket.roomno];
+				},
+				10000,
+				socket.roomno
+			);
+		}
 	});
 });
