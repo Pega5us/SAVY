@@ -21,9 +21,7 @@ socket.on("enter room", (isAllowed) => {
 // For host to allow a user
 socket.on("user permission", (username, socketId) => {
 	console.log(socketId + " asking permission");
-	setTimeout(() => {
-		socket.emit("isAllowed", false, socketId);
-	}, 4000);
+	socket.emit("isAllowed", true, socketId);
 });
 
 const video = document.getElementById("video");
