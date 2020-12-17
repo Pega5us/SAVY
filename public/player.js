@@ -116,7 +116,7 @@ socket.on("pause", () => {
 });
 
 socket.on("seeked", (data) => {
-	if (Math.abs(video.currentTime - data) > 1) {
+	if (Math.abs(video.currentTime - data) > 3) {
 		video.currentTime = data;
 	}
 });
