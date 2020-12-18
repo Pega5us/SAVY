@@ -35,7 +35,7 @@ const isAuthenticated = (req, res, next) => {
 	if (queryObject.username) {
 		return next();
 	} else {
-		return res.redirect(`https://sync-player666.herokuapp.com/?roomno=${roomno}`);
+		return res.redirect(`http://localhost:5000/?roomno=${roomno}`);
 	}
 };
 

@@ -9,7 +9,8 @@
 			type="image/png"
 			href="https://img.icons8.com/fluent/30/000000/walter-white.png"
 		/>
-		<link rel="stylesheet" href="https://sync-player666.herokuapp.com/getPlayerCSS" />
+		<link rel="stylesheet" href="https://cdn.plyr.io/3.6.3/plyr.css" />
+		<link rel="stylesheet" href="http://localhost:5000/getPlayerCSS" />
 		<link
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -27,7 +28,7 @@
 			</div>
 			<div class="main_heading">
 				<h1>
-					<a href="https://sync-player666.herokuapp.com"
+					<a href="http://localhost:5000"
 						><i class="fa fa-play"></i>&nbspSAVY Player</a
 					>
 				</h1>
@@ -49,8 +50,16 @@
 					</button></span
 				>
 			</div>
-			<video id="video" controls></video>
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+			<video id="video" playsinline controls >
+				<!-- <source src="../assets/movie.mp4" type="video/mp4" /> -->
+				<!-- <source src="/path/to/video.webm" type="video/webm" /> -->
+			
+				<!-- Captions are optional -->
+				<!-- <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default /> -->
+			</video>
+			<script src="https://cdn.plyr.io/3.6.3/plyr.js"></script>
+			<!-- <video id="video" controls></video> -->
+			<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script> -->
 		</div>
 		<script>
 			function handle() {
@@ -67,7 +76,7 @@
 		</script>
 		<script
 			type="text/javascript"
-			src="https://sync-player666.herokuapp.com/getPlayerJS"
+			src="http://localhost:5000/getPlayerJS"
 		></script>
 	</body>
 </html>

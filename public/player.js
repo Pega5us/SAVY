@@ -1,10 +1,11 @@
+
 let temp_arr = window.location.pathname.split("/");
 let roomno = temp_arr[temp_arr.length - 1];
 let arr = [];
 let current_username = new URLSearchParams(window.location.search).get(
 	"username"
 );
-let room_URL = `https://sync-player666.herokuapp.com/room/${roomno}`;
+let room_URL = `http://localhost:5000/room/${roomno}`;
 
 let spanEle = document.getElementById("roomNo");
 spanEle.innerText += roomno;
@@ -17,7 +18,7 @@ socket.emit("ask permission", roomno, current_username);
 
 // Room does not exist
 socket.on("room does not exist", () => {
-	window.location.href = "https://sync-player666.herokuapp.com";
+	window.location.href = "http://localhost:5000";
 });
 
 // Listenting for host reply
@@ -25,7 +26,7 @@ socket.on("enter room", (isAllowed) => {
 	// allowed to enter the room
 	if (isAllowed) socket.emit("joinroom", roomno, current_username);
 	// not allowed to enter the room
-	else window.location.href = "https://sync-player666.herokuapp.com";
+	else window.location.href = "http://localhost:5000";
 });
 
 // For host to allow a user
@@ -34,7 +35,7 @@ socket.on("user permission", (username, socketId) => {
 	socket.emit("isAllowed", true, socketId);
 });
 
-const video = document.getElementById("video");
+// const video = document.getElementById("video");
 const slider = document.getElementById("custom-seekbar");
 
 function copyLink() {
@@ -55,74 +56,77 @@ const displayMessage = function (message, isError) {
 	element.innerHTML = message;
 	element.className = isError ? "error" : "info";
 };
+const video = new Plyr("#video");
 
 const playSelectedFile = function (event) {
 	let file = this.files[0];
-	let type = file.type;
-	let videoNode = document.querySelector("video");
-	let canPlay = videoNode.canPlayType(type);
-	if (canPlay === "") canPlay = "no";
-	let message = 'Can play type "' + type + '": ' + canPlay;
-	let isError = canPlay === "no";
-	displayMessage(message, isError);
-
-	if (isError) {
-		return;
-	}
-
 	let fileURL = URL.createObjectURL(file);
-	videoNode.src = fileURL;
+	video.source = {
+		type: "video",
+		title: "Example title",
+		sources: [
+			{
+				src: fileURL,
+				type: file.type,
+				size: 720,
+			},
+		],
+	};
 };
 
 let inputNode = document.getElementById("input");
 inputNode.addEventListener("change", playSelectedFile, false);
 
-video.ontimeupdate = function () {
-	var percentage = (video.currentTime / video.duration) * 100;
-	$("#custom-seekbar span").css("width", percentage + "%");
-	socket.emit("update", percentage, roomno);
-};
+// video.ontimeupdate = function () {
+// 	var percentage = (video.currentTime / video.duration) * 100;
+// 	$("#custom-seekbar span").css("width", percentage + "%");
+// 	socket.emit("update", percentage, roomno);
+// };
 
-$("#custom-seekbar").on("click", function (e) {
-	var offset = $(this).offset();
-	var left = e.pageX - offset.left;
-	var totalWidth = $("#custom-seekbar").width();
-	var percentage = left / totalWidth;
-	var vidTime = video.duration * percentage;
-	video.currentTime = vidTime;
-	playVideo();
-});
+// $("#custom-seekbar").on("click", function (e) {
+// 	var offset = $(this).offset();
+// 	var left = e.pageX - offset.left;
+// 	var totalWidth = $("#custom-seekbar").width();
+// 	var percentage = left / totalWidth;
+// 	var vidTime = video.duration * percentage;
+// 	video.currentTime = vidTime;
+// 	playVideo();
+// });
 
 // play event added
-function playVideo() {
-	socket.emit("play", roomno);
-	video.play();
-	let fraction = video.currentTime / video.duration;
-	video.currentTime = video.duration * fraction;
-	socket.emit("slider", video.currentTime, roomno);
-}
+// function playVideo() {
+// 	socket.emit("play", roomno);
+// 	video.play();
+// 	let fraction = video.currentTime / video.duration;
+// 	video.currentTime = video.duration * fraction;
+// 	socket.emit("slider", video.currentTime, roomno);
+// }
 
-// pause event handled
-function pauseVideo() {
-	socket.emit("pause", roomno);
-	video.pause();
-}
+// // pause event handled
+// function pauseVideo() {
+// 	socket.emit("pause", roomno);
+// 	video.pause();
+// }
 
 //play event handled
-video.onplaying = () => {
+video.on("playing", (event) => {
+	console.log("video playing");
 	socket.emit("play", roomno);
 	socket.emit("seeked", video.currentTime, roomno);
-};
+});
 
 // pause event handled
-video.onpause = () => {
+video.on("pause", (event) => {
+	console.log("video paused");
 	socket.emit("pause", roomno);
-};
+});
 
 // seeking event handled
-video.onseeked = () => {
+video.on("seeked", (event) => {
+	console.log("video seeked");
 	socket.emit("seeked", video.currentTime, roomno);
-};
+});
+
 // socket events handled
 socket.on("update", (data) => {
 	console.log("Recieved data", data);
@@ -133,13 +137,12 @@ socket.on("play", () => {
 	video.play();
 });
 
-
 socket.on("pause", () => {
 	video.pause();
 });
 
 socket.on("seeked", (data) => {
-	if (Math.abs(video.currentTime - data) > 5) {
+	if (Math.abs(video.currentTime - data) > 1) {
 		video.currentTime = data;
 	}
 });
