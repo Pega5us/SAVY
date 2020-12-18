@@ -151,7 +151,7 @@ socket.on("seeked", (data) => {
 	setTimeout(() => {
 		canSeek = true;
 		console.log("after 5sec canSeek " + canSeek);
-	}, 1000);
+	}, 5000);
 });
 
 socket.on("slider", (data) => {
