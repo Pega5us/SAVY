@@ -11,6 +11,7 @@ spanEle.innerText += roomno;
 document.getElementById("userDetail").innerText += current_username;
 
 const socket = io();
+let d = new Date();
 
 //Asking permission to enter the room
 socket.emit("ask permission", roomno, current_username);
@@ -110,7 +111,7 @@ inputNode.addEventListener("change", playSelectedFile, false);
 let canSeek = true;
 //play event handled
 video.on("playing", (event) => {
-	console.log("video playing");
+	console.log("video playing", d.getTime());
 
 	if (canSeek) {
 		socket.emit("play", roomno);
@@ -126,9 +127,9 @@ video.on("pause", (event) => {
 
 // seeking event handled
 video.on("seeked", (event) => {
-	console.log("seeked event and canSeek " + canSeek);
+	console.log("seeked event and canSeek " + canSeek, d.getTime());
 	if (canSeek) {
-		console.log("Manually seek happened");
+		console.log("Manually seek happened", d.getTime());
 		socket.emit("seeked", video.currentTime, roomno);
 	}
 });
@@ -140,6 +141,11 @@ socket.on("update", (data) => {
 });
 
 socket.on("play", () => {
+	canSeek = false;
+	setTimeout(() => {
+		canSeek = true;
+		console.log("after 5sec canSeek " + canSeek, d.getTime());
+	}, 500);
 	video.play();
 });
 
@@ -148,13 +154,16 @@ socket.on("pause", () => {
 });
 
 socket.on("seeked", (data) => {
+	console.log("making canseek false", d.getTime());
 	canSeek = false;
-	console.log("listening seeking event and canSeek " + canSeek);
+	let was_video_playing = video.playing;
+	console.log("listening seeking event and canSeek " + canSeek, d.getTime());
 	video.currentTime = data;
+	if (was_video_playing) video.play();
 	setTimeout(() => {
 		canSeek = true;
-		console.log("after 5sec canSeek " + canSeek);
-	}, 5000);
+		console.log("after 5sec canSeek " + canSeek, d.getTime());
+	}, 500);
 });
 
 socket.on("slider", (data) => {
