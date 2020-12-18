@@ -111,8 +111,11 @@ let canSeek = true;
 //play event handled
 video.on("playing", (event) => {
 	console.log("video playing");
-	socket.emit("play", roomno);
-	if (canSeek) socket.emit("seeked", video.currentTime, roomno);
+
+	if (canSeek) {
+		socket.emit("play", roomno);
+		socket.emit("seeked", video.currentTime, roomno);
+	}
 });
 
 // pause event handled
@@ -123,9 +126,9 @@ video.on("pause", (event) => {
 
 // seeking event handled
 video.on("seeked", (event) => {
-	console.log("video seeked");
+	console.log("seeked event and canSeek " + canSeek);
 	if (canSeek) {
-		console.log("1st seek happened");
+		console.log("Manually seek happened");
 		socket.emit("seeked", video.currentTime, roomno);
 	}
 });
