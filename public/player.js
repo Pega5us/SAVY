@@ -4,7 +4,7 @@ let arr = [];
 let current_username = new URLSearchParams(window.location.search).get(
 	"username"
 );
-let room_URL = `http://localhost:5000/room/${roomno}`;
+let room_URL = `https://sync-player666.herokuapp.com/room/${roomno}`;
 
 let spanEle = document.getElementById("roomNo");
 spanEle.innerText += roomno;
@@ -17,7 +17,7 @@ socket.emit("ask permission", roomno, current_username);
 
 // Room does not exist
 socket.on("room does not exist", () => {
-	window.location.href = "http://localhost:5000";
+	window.location.href = "https://sync-player666.herokuapp.com";
 });
 
 // Listenting for host reply
@@ -25,7 +25,7 @@ socket.on("enter room", (isAllowed) => {
 	// allowed to enter the room
 	if (isAllowed) socket.emit("joinroom", roomno, current_username);
 	// not allowed to enter the room
-	else window.location.href = "http://localhost:5000";
+	else window.location.href = "https://sync-player666.herokuapp.com";
 });
 
 // For host to allow a user
@@ -121,14 +121,13 @@ video.on("pause", (event) => {
 	socket.emit("pause", roomno);
 });
 
-
 // seeking event handled
 video.on("seeked", (event) => {
 	console.log("video seeked");
 	if (canSeek) {
 		console.log("1st seek happened");
 		socket.emit("seeked", video.currentTime, roomno);
-}
+	}
 });
 
 // socket events handled
@@ -146,13 +145,13 @@ socket.on("pause", () => {
 });
 
 socket.on("seeked", (data) => {
-		canSeek = false;
-		console.log("listening seeking event and canSeek "+ canSeek);
-		video.currentTime = data;
-		setTimeout(() => {
-			canSeek = true; 
-			console.log("after 5sec canSeek "+ canSeek);
-		}, 1000);
+	canSeek = false;
+	console.log("listening seeking event and canSeek " + canSeek);
+	video.currentTime = data;
+	setTimeout(() => {
+		canSeek = true;
+		console.log("after 5sec canSeek " + canSeek);
+	}, 1000);
 });
 
 socket.on("slider", (data) => {
