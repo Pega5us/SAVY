@@ -1,4 +1,3 @@
-
 let temp_arr = window.location.pathname.split("/");
 let roomno = temp_arr[temp_arr.length - 1];
 let arr = [];
@@ -108,11 +107,12 @@ inputNode.addEventListener("change", playSelectedFile, false);
 // 	video.pause();
 // }
 
+let canSeek = true;
 //play event handled
 video.on("playing", (event) => {
 	console.log("video playing");
 	socket.emit("play", roomno);
-	socket.emit("seeked", video.currentTime, roomno);
+	if (canSeek) socket.emit("seeked", video.currentTime, roomno);
 });
 
 // pause event handled
@@ -121,10 +121,14 @@ video.on("pause", (event) => {
 	socket.emit("pause", roomno);
 });
 
+
 // seeking event handled
 video.on("seeked", (event) => {
 	console.log("video seeked");
-	socket.emit("seeked", video.currentTime, roomno);
+	if (canSeek) {
+		console.log("1st seek happened");
+		socket.emit("seeked", video.currentTime, roomno);
+}
 });
 
 // socket events handled
@@ -142,9 +146,13 @@ socket.on("pause", () => {
 });
 
 socket.on("seeked", (data) => {
-	if (Math.abs(video.currentTime - data) > 1) {
+		canSeek = false;
+		console.log("listening seeking event and canSeek "+ canSeek);
 		video.currentTime = data;
-	}
+		setTimeout(() => {
+			canSeek = true; 
+			console.log("after 5sec canSeek "+ canSeek);
+		}, 1000);
 });
 
 socket.on("slider", (data) => {
