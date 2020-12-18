@@ -1,6 +1,9 @@
 // Client
 
-let initialUrl = "https://sync-player666.herokuapp.com";
+let initialUrl = "http://localhost:5000";
+
+let errorMessageDiv = document.getElementById("roomNotFoundErrorMessage");
+errorMessageDiv.style.display = "none";
 
 let current_roomno = new URLSearchParams(window.location.search).get("roomno");
 if (current_roomno) {
@@ -38,8 +41,17 @@ function join() {
 	localStorage.setItem("username", username);
 	const roomno = document.getElementById("input").value;
 	if (username !== "" && roomno !== "") {
-		let url = `${initialUrl}/room/${roomno}?username=${username}`;
-		window.location.href = url;
+		let roomList = httpGet(`${initialUrl}/getRoomList`);
+		if (roomList.includes(roomno)) {
+			console.log("room found");
+			let url = `${initialUrl}/room/${roomno}?username=${username}`;
+			window.location.href = url;
+		} else
+			errorMessageDiv.style.display =
+				"block";
+			setTimeout(() => {
+				errorMessageDiv.style.display = "none";
+			}, 2500);
 	} else {
 		if (username == "" && roomno == "") {
 			document.getElementById("username").style.boxShadow =

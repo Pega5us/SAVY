@@ -35,9 +35,7 @@ const isAuthenticated = (req, res, next) => {
 	if (queryObject.username) {
 		return next();
 	} else {
-		return res.redirect(
-			`https://sync-player666.herokuapp.com/?roomno=${roomno}`
-		);
+		return res.redirect(`http://localhost:5000/?roomno=${roomno}`);
 	}
 };
 
@@ -54,6 +52,10 @@ app.get("/getRoomNumber", (req, res) => {
 	rooms[roomno].array = [];
 	res.send(`${roomno}`);
 });
+
+app.get("/getRoomList", (req, res) => {
+	res.send(Object.keys(rooms));
+})
 
 app.get("/getPlayerCSS", (req, res) => {
 	res.sendFile(join(__dirname, "public", "player.css"));
