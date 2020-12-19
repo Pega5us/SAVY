@@ -20,6 +20,8 @@ socket.on("room does not exist", () => {
 	window.location.href = "https://sync-player666.herokuapp.com";
 });
 
+$(".toast").toast("show");
+
 // Listenting for host reply
 socket.on("enter room", (isAllowed) => {
 	// allowed to enter the room
@@ -29,21 +31,47 @@ socket.on("enter room", (isAllowed) => {
 });
 
 // For host to allow a user
-socket.on("user permission", (username, socketId) => {
+askingPermissionUsers = [];
+
+document.getElementById("decline-btn").onclick = () => {
+	socket.emit("isAllowed", false, askingPermissionUsers[0].socketId);
+	askingPermissionUsers.splice(0, 1);
+	if (askingPermissionUsers.length !== 0) {
+		console.log("declined");
+		setTimeout(() => {
+			Utility();
+		}, 500);
+	}
+};
+document.getElementById("accept-btn").onclick = () => {
+	socket.emit("isAllowed", true, askingPermissionUsers[0].socketId);
+	askingPermissionUsers.splice(0, 1);
+	if (askingPermissionUsers.length !== 0) {
+		setTimeout(() => {
+			Utility();
+		}, 500);
+		console.log("accepted");
+	}
+};
+
+function Utility() {
 	document.getElementById(
 		"modal-body"
-	).innerText = `${username} wants to join the room`;
-	document.getElementById("decline-btn").onclick = () => {
-		socket.emit("isAllowed", false, socketId);
-	};
-	document.getElementById("accept-btn").onclick = () => {
-		socket.emit("isAllowed", true, socketId);
-	};
+	).innerText = `${askingPermissionUsers[0].username} wants to join the room`;
+
 	$("#exampleModal").modal({
 		backdrop: "static",
 		keyboard: false,
 	});
-	$("exampleModal").modal("show");
+	$("#exampleModal").modal("show");
+}
+
+socket.on("user permission", (username, socketId) => {
+	askingPermissionUsers.push({ username, socketId });
+	if (askingPermissionUsers.length !== 0)
+		setTimeout(() => {
+			Utility();
+		}, 500);
 });
 
 // const video = document.getElementById("video");
@@ -149,16 +177,74 @@ socket.on("seeked", (data) => {
 	}, 500);
 });
 
+const toastContainer = document.getElementById("toast-container");
 socket.on("new user", (username) => {
-	Notification.requestPermission().then(function () {
-		new Notification(`${username} joined the room`);
-	});
+	console.log("adding div for toast");
+	toastContainer.innerHTML += `<div class="toast" data-autohide="false">
+					<div class="toast-header">
+						<svg
+							class="rounded mr-2"
+							width="20"
+							height="20"
+							xmlns="http://www.w3.org/2000/svg"
+							preserveAspectRatio="xMidYMid slice"
+							focusable="false"
+							role="img"
+						>
+							<rect fill="#007aff" width="100%" height="100%" />
+						</svg>
+						<strong class="mr-auto">Bootstrap</strong>
+						<button
+							type="button"
+							class="ml-2 mb-1 close"
+							data-dismiss="toast"
+							aria-label="Close"
+						>
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="toast-body">
+						${username} has joined the room.
+					</div>
+				</div>`;
+	$(".toast").toast("show");
+	setTimeout(() => {
+		toastContainer.innerHTML = "";
+	}, 5000);
 });
 
 socket.on("left room", (username) => {
-	Notification.requestPermission().then(function () {
-		new Notification(`${username} left the room`);
-	});
+	toastContainer.innerHTML += `<div class="toast" data-autohide="false">
+					<div class="toast-header">
+						<svg
+							class="rounded mr-2"
+							width="20"
+							height="20"
+							xmlns="http://www.w3.org/2000/svg"
+							preserveAspectRatio="xMidYMid slice"
+							focusable="false"
+							role="img"
+						>
+							<rect fill="#007aff" width="100%" height="100%" />
+						</svg>
+						<strong class="mr-auto">Bootstrap</strong>
+						<button
+							type="button"
+							class="ml-2 mb-1 close"
+							data-dismiss="toast"
+							aria-label="Close"
+						>
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="toast-body">
+						${username} has left the room.
+					</div>
+				</div>`;
+	$(".toast").toast("show");
+	setTimeout(() => {
+		toastContainer.innerHTML = "";
+	}, 3000);
 });
 
 socket.on("user_array", (user_array) => {
