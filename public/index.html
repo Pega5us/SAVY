@@ -14,6 +14,7 @@
 			type="image/png"
 			href="https://img.icons8.com/fluent/30/000000/walter-white.png"
 		/>
+
 		<title>Savy Player</title>
 		<link rel="stylesheet" href="index.css" />
 	</head>
@@ -35,12 +36,11 @@
 			<div class="content">
 				<div class="description">
 					<div class="description_header">
-						<h1>Watch Videos With Friends</h1>
-						<h3>
-							SAVY Player provides services to watch videos with
-							friend with videos are located on local system of
-							each user
-						</h3>
+						<h2>Watch Videos With Friends</h2>
+						<h5>
+							SAVY Player provides services to watch local videos with
+							friends in a synchronised way. 
+						</h5>
 					</div>
 				</div>
 				<div class="username_input">
@@ -64,9 +64,52 @@
 							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspJoin
 						</button>
 					</div>
-					<div id="roomNotFoundErrorMessage">
-						Couldn't find the room you are trying to join. Please check the roomID and try again.
+
+					<!-- RoomNotFoundErrorMessage Toast -->
+					<link
+						href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+						rel="stylesheet"
+					/>
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+					<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+					<div
+						id="roomNotFoundErrorMessage"
+						class="toast"
+						data-autohide="false"
+					>
+						<div class="toast-header">
+							<svg
+								class="rounded mr-2"
+								width="20"
+								height="20"
+								xmlns="http://www.w3.org/2000/svg"
+								preserveAspectRatio="xMidYMid slice"
+								focusable="false"
+								role="img"
+							>
+								<rect
+									fill="#007aff"
+									width="100%"
+									height="100%"
+								/>
+							</svg>
+							<strong class="mr-auto">Error!</strong>
+							<button
+								type="button"
+								class="ml-2 mb-1 close"
+								data-dismiss="toast"
+								aria-label="Close"
+							>
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="toast-body">
+							Couldn't find the room you are trying to join.
+							Please check the roomID and try again.
+						</div>
 					</div>
+
+					<!--  -->
 				</div>
 			</div>
 			<div class="box">
@@ -82,6 +125,7 @@
 				</h3>
 			</div>
 		</div>
+
 		<script src="index.js"></script>
 		<script>
 			document.getElementById("input").onkeypress = function (e) {

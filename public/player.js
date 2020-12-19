@@ -179,7 +179,6 @@ socket.on("seeked", (data) => {
 
 const toastContainer = document.getElementById("toast-container");
 socket.on("new user", (username) => {
-	console.log("adding div for toast");
 	toastContainer.innerHTML += `<div class="toast" data-autohide="false">
 					<div class="toast-header">
 						<svg
@@ -193,7 +192,7 @@ socket.on("new user", (username) => {
 						>
 							<rect fill="#007aff" width="100%" height="100%" />
 						</svg>
-						<strong class="mr-auto">Bootstrap</strong>
+						<strong class="mr-auto">Notification</strong>
 						<button
 							type="button"
 							class="ml-2 mb-1 close"
@@ -227,7 +226,7 @@ socket.on("left room", (username) => {
 						>
 							<rect fill="#007aff" width="100%" height="100%" />
 						</svg>
-						<strong class="mr-auto">Bootstrap</strong>
+						<strong class="mr-auto">Notification</strong>
 						<button
 							type="button"
 							class="ml-2 mb-1 close"
