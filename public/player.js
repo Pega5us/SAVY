@@ -30,8 +30,20 @@ socket.on("enter room", (isAllowed) => {
 
 // For host to allow a user
 socket.on("user permission", (username, socketId) => {
-	console.log(socketId + " asking permission");
-	socket.emit("isAllowed", true, socketId);
+	document.getElementById(
+		"modal-body"
+	).innerText = `${username} wants to join the room`;
+	document.getElementById("decline-btn").onclick = () => {
+		socket.emit("isAllowed", false, socketId);
+	};
+	document.getElementById("accept-btn").onclick = () => {
+		socket.emit("isAllowed", true, socketId);
+	};
+	$("#exampleModal").modal({
+		backdrop: "static",
+		keyboard: false,
+	});
+	$("exampleModal").modal("show");
 });
 
 // const video = document.getElementById("video");
@@ -76,37 +88,6 @@ const playSelectedFile = function (event) {
 let inputNode = document.getElementById("input");
 inputNode.addEventListener("change", playSelectedFile, false);
 
-// video.ontimeupdate = function () {
-// 	var percentage = (video.currentTime / video.duration) * 100;
-// 	$("#custom-seekbar span").css("width", percentage + "%");
-// 	socket.emit("update", percentage, roomno);
-// };
-
-// $("#custom-seekbar").on("click", function (e) {
-// 	var offset = $(this).offset();
-// 	var left = e.pageX - offset.left;
-// 	var totalWidth = $("#custom-seekbar").width();
-// 	var percentage = left / totalWidth;
-// 	var vidTime = video.duration * percentage;
-// 	video.currentTime = vidTime;
-// 	playVideo();
-// });
-
-// play event added
-// function playVideo() {
-// 	socket.emit("play", roomno);
-// 	video.play();
-// 	let fraction = video.currentTime / video.duration;
-// 	video.currentTime = video.duration * fraction;
-// 	socket.emit("slider", video.currentTime, roomno);
-// }
-
-// // pause event handled
-// function pauseVideo() {
-// 	socket.emit("pause", roomno);
-// 	video.pause();
-// }
-
 let canSeek = true;
 //play event handled
 video.on("playing", (event) => {
@@ -135,12 +116,6 @@ video.on("seeked", (event) => {
 		if (was_video_playing) socket.emit("play", roomno);
 	}
 });
-
-// socket events handled
-// socket.on("update", (data) => {
-// 	console.log("Recieved data", data);
-// 	$("#custom-seekbar span").css("width", data + "%");
-// });
 
 socket.on("play", () => {
 	console.log("socket on play ", canSeek);
@@ -173,10 +148,6 @@ socket.on("seeked", (data) => {
 		console.log("after 500msec canSeek " + canSeek);
 	}, 500);
 });
-
-// socket.on("slider", (data) => {
-// 	video.currentTime = data;
-// });
 
 socket.on("new user", (username) => {
 	Notification.requestPermission().then(function () {
