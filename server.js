@@ -8,16 +8,17 @@ var PORT = process.env.PORT || 5000;
 
 app.use(express.static("public"));
 
-//Run the server
+// Run the server
 const server = app.listen(PORT, () => {
-	console.log("Server running at " + PORT);
+	console.log(`Server running at ${PORT}`);
 });
 
-// setup sockets
+// Setup sockets
 const io = socket(server);
 
 rooms = {};
 
+// Function checks if the room number is valid and username is provided
 const isAuthenticated = (req, res, next) => {
 	const queryObject = url.parse(req.url, true).query;
 	const curr_url = req.url.split("/");
@@ -25,9 +26,9 @@ const isAuthenticated = (req, res, next) => {
 	if (roomno.includes("?")) roomno = roomno.split("?")[0];
 
 	// Sending response if the room number is invalid
-	console.log("isAuthenticated");
+
+	// Checking authentication for roomno
 	if (!rooms.hasOwnProperty(roomno)) {
-		console.log(1);
 		return res.sendFile(join(__dirname, "public", "roomInvalid.html"));
 	}
 
@@ -35,49 +36,72 @@ const isAuthenticated = (req, res, next) => {
 	if (queryObject.username) {
 		return next();
 	} else {
+		// Authentication done redirecting to room
 		return res.redirect(
 			`https://sync-player666.herokuapp.com/?roomno=${roomno}`
 		);
 	}
 };
 
+// Join room route
 app.get("/room/:roomno", isAuthenticated, (req, res) => {
 	res.sendFile(join(__dirname, "public", "player.html"));
 });
 
+// Route for getting available room numbers and initialising the room object
 app.get("/getRoomNumber", (req, res) => {
 	let roomno;
 	do {
 		roomno = Math.floor(Math.random() * 10000 + 100000);
 	} while (rooms.hasOwnProperty(roomno));
+
+	// Initialising room
 	rooms[roomno] = {};
 	rooms[roomno].array = [];
+
+	// If no one joins the room kill the room in 10 mins
+	setTimeout(
+		(roomno) => {
+			console.log(`Checking if someone has joined the room ${roomno}`);
+			if (rooms[roomno].hasJoined) {
+				console.log(`Room ${roomno} killed since no joined the room`);
+				delete rooms[roomno];
+			}
+		},
+		600000,
+		roomno
+	);
+
 	res.send(`${roomno}`);
 });
 
-app.get("/getRoomList", (req, res) => {
+app.get("/getRoomList", (_req, res) => {
 	res.send(Object.keys(rooms));
 });
 
-app.get("/getPlayerCSS", (req, res) => {
+app.get("/getPlayerCSS", (_req, res) => {
 	res.sendFile(join(__dirname, "public", "player.css"));
 });
 
-app.get("/getPlayerDarkCSS", (req, res) => {
-	res.sendFile(join(__dirname, "public", "player1.css"));
-});
-
-app.get("/getPlayerJS", (req, res) => {
+app.get("/getPlayerJS", (_req, res) => {
 	res.sendFile(join(__dirname, "public", "player.js"));
 });
 
+// Code when socket makes a connection to server
 io.on("connection", (socket) => {
+	console.log(`Socket ${socket.id} is connected`);
+
+	// Permission to enter the room
 	socket.on("ask permission", (roomno, username) => {
-		console.log(socket.id + " has asked to enter the room");
+		console.log(`Socket ${socket.id} has asked to enter the room`);
+
+		// Checking if the room exist
 		if (!rooms.hasOwnProperty(roomno)) socket.emit("room does not exist");
 		else {
+			// If the socket is first
 			if (rooms[roomno].array.length === 0)
 				io.to(socket.id).emit("enter room", true);
+			// Else ask permission from host
 			else {
 				io.to(rooms[roomno].host).emit(
 					"user permission",
@@ -88,31 +112,41 @@ io.on("connection", (socket) => {
 		}
 	});
 
+	// Permission response from host
 	socket.on("isAllowed", (isAllowed, socketId) => {
-		console.log(socketId + " " + isAllowed);
 		if (isAllowed) io.to(socketId).emit("enter room", true);
 		else io.to(socketId).emit("enter room", false);
 	});
 
+	// Join room
 	socket.on("joinroom", (roomno, username) => {
+		console.log(`Socket ${socket.id} has joined the room`);
 		socket.join(roomno);
 		socket.to(roomno).emit("new user", username);
+
+		// Storing values for username and roomno in socket object
 		socket.username = username;
 		socket.roomno = roomno;
+
+		// Setting the rooms value
+		rooms[roomno].hasJoined = true; // A flag to check if someone has joined the room
 		rooms[roomno].array.push({
 			username,
 			id: socket.id,
 		});
+
+		// If the socket is first make it host
 		if (rooms[socket.roomno].array.length === 1)
 			rooms[socket.roomno].host = socket.id;
+
+		// Sending the updated username array to room
 		io.in(socket.roomno).emit(
 			"user_array",
 			rooms[socket.roomno].array.map((obj) => obj.username)
 		);
 	});
-	socket.on("update", (data, roomno) => {
-		socket.to(roomno).emit("update", data);
-	});
+
+	// Player events
 	socket.on("play", (roomno) => {
 		socket.to(roomno).emit("play");
 	});
@@ -122,27 +156,33 @@ io.on("connection", (socket) => {
 	socket.on("seeked", (data, roomno) => {
 		socket.to(roomno).emit("seeked", data);
 	});
-	socket.on("slider", (data, roomno) => {
-		socket.to(roomno).emit("slider", data);
-	});
+
+	// Code to run if the socket gets disconnected
 	socket.on("disconnect", () => {
+		console.log(`Socket ${socket.id} has left the room`);
+
 		socket.to(socket.roomno).emit("left room", socket.username);
 		if (rooms.hasOwnProperty(socket.roomno) && rooms[socket.roomno].array) {
+			// Deleting the socket
 			rooms[socket.roomno].array.splice(
 				rooms[socket.roomno].array.findIndex((x) => x.id === socket.id),
 				1
 			);
-			// Transfer host
+
+			// Transfer host if the socket left was the host
 			if (
 				rooms[socket.roomno].array.length > 0 &&
 				rooms[socket.roomno].host === socket.id
 			)
 				rooms[socket.roomno].host = rooms[socket.roomno].array[0].id;
+
+			// Sending the updated username array
 			socket.to(socket.roomno).emit(
 				"user_array",
 				rooms[socket.roomno].array.map((obj) => obj.username)
 			);
-			// If no one is in room
+
+			// If no one is in room delete the room after 10mins
 			if (rooms[socket.roomno].array.length === 0) {
 				setTimeout(
 					(roomno) => {
@@ -151,7 +191,7 @@ io.on("connection", (socket) => {
 							rooms[roomno].array.length === 0
 						) {
 							delete rooms[roomno];
-							console.log("Room deleted " + roomno);
+							console.log(`Room deleted ${roomno}`);
 						}
 					},
 					600000,
