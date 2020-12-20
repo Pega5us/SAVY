@@ -82,7 +82,6 @@ socket.on("user permission", (username, socketId) => {
 });
 
 function copyLink() {
-	console.log(room_URL);
 	let para = document.createElement("textarea");
 	para.id = "copiedLink";
 	para.value = room_URL;

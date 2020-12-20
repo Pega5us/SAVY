@@ -40,9 +40,9 @@ function join() {
 	const username = document.getElementById("username").value;
 	localStorage.setItem("username", username);
 	const roomno = document.getElementById("input").value;
-	if (username !== "" && roomno !== "") {
-		let roomList = httpGet(`${initialUrl}/getRoomList`);
-		if (roomList.includes(roomno)) {
+		if (username !== "" && roomno !== "") {
+		let checkRoomExist = httpGet(`${initialUrl}/check/:roomno`);
+		if (!checkRoomExist) {
 			console.log("room found");
 			let url = `${initialUrl}/room/${roomno}?username=${username}`;
 			window.location.href = url;

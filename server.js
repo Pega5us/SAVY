@@ -79,6 +79,12 @@ app.get("/getRoomList", (_req, res) => {
 	res.send(Object.keys(rooms));
 });
 
+app.get("/check/:roomno", (req, res) => {
+	if (rooms.hasOwnProperty(req.params.roomno))
+		res.send(true);
+	else res.send(false);
+})
+
 app.get("/getPlayerCSS", (_req, res) => {
 	res.sendFile(join(__dirname, "public", "player.css"));
 });
