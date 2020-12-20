@@ -41,7 +41,7 @@ function join() {
 	const roomno = document.getElementById("input").value;
 	if (username !== "" && roomno !== "") {
 		let checkRoomExist = httpGet(`${initialUrl}/check/:roomno`);
-		if (!checkRoomExist) {
+		if (checkRoomExist) {
 			console.log("room found");
 			let url = `${initialUrl}/room/${roomno}?username=${username}`;
 			window.location.href = url;
