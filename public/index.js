@@ -1,6 +1,6 @@
 // Client
 
-let initialUrl = "https://sync-player666.herokuapp.com";
+let initialUrl = "https://savy-player.herokuapp.com";
 
 let errorMessageToast = document.getElementById("roomNotFoundErrorMessage");
 
