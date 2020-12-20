@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
+		<script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
+		<link
+			rel="icon"
+			type="image/png"
+			href="https://img.icons8.com/fluent/30/000000/walter-white.png"
+		/>
+
+		<title>Savy Player</title>
+		<link rel="stylesheet" href="index.css" />
+	</head>
+	<body>
+		<div class="header">
+			<div class="icon">
+				<h2><i class="fas fa-play"></i></h2>
+			</div>
+			<div class="heading"><h1>SAVY Player</h1></div>
+			<div class="learn_more">
+				<a
+					target="_blank"
+					href="https://github.com/akumar98394/sync-play666"
+					>Learn More</a
+				>
+			</div>
+		</div>
+		<div class="body">
+			<div class="content">
+				<div class="description">
+					<div class="description_header">
+						<h2>Watch Videos With Friends</h2>
+						<h5>
+							SAVY Player provides services to watch local videos with
+							friends in a synchronised way. 
+						</h5>
+					</div>
+				</div>
+				<div class="username_input">
+					<div class="input_field">
+						<label>Username:</label>
+						<input
+							class="username"
+							id="username"
+							type="text"
+							placeholder="Enter Username"
+							onkeyup="manage()"
+						/>
+						<button id="new_room" onclick="create()">
+							<i class="fa fa-video"></i>&nbspNew Room
+						</button>
+					</div>
+					<div class="id_link">
+						<label>Room Id:</label>
+						<input id="input" type="text" placeholder="Enter Id" />
+						<button id="key" onclick="join()">
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspJoin
+						</button>
+					</div>
+
+					<!-- RoomNotFoundErrorMessage Toast -->
+					<link
+						href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+						rel="stylesheet"
+					/>
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+					<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+					<div
+						id="roomNotFoundErrorMessage"
+						class="toast"
+						data-autohide="false"
+					>
+						<div class="toast-header">
+							<svg
+								class="rounded mr-2"
+								width="20"
+								height="20"
+								xmlns="http://www.w3.org/2000/svg"
+								preserveAspectRatio="xMidYMid slice"
+								focusable="false"
+								role="img"
+							>
+								<rect
+									fill="#007aff"
+									width="100%"
+									height="100%"
+								/>
+							</svg>
+							<strong class="mr-auto">Error!</strong>
+							<button
+								type="button"
+								class="ml-2 mb-1 close"
+								data-dismiss="toast"
+								aria-label="Close"
+							>
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="toast-body">
+							Couldn't find the room you are trying to join.
+							Please check the roomID and try again.
+						</div>
+					</div>
+
+					<!--  -->
+				</div>
+			</div>
+			<div class="box">
+				<h3>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit.
+					Harum, sapiente? Id harum non quo maxime omnis, numquam
+					fugit aspernatur tenetur consectetur odio eos quasi quidem
+					nihil molestias amet mollitia voluptatem libero ea incidunt
+					optio assumenda. Harum optio, vel laboriosam, vero omnis ea
+					ratione non eaque pariatur nobis distinctio at
+					molestias?cboljsnrv srnong ojsnvonsgiosv 5ogfnspirs v
+					o5snlfp
+				</h3>
+			</div>
+		</div>
+
+		<script src="index.js"></script>
+		<script>
+			document.getElementById("input").onkeypress = function (e) {
+				if (e.keyCode == 13) {
+					document.getElementById("key").onclick();
+				}
+			};
+			document.getElementById("username").onkeypress = function (e) {
+				if (e.keyCode == 13) {
+					document.getElementById("new_room").onclick();
+				}
+			};
+		</script>
+	</body>
+</html>
