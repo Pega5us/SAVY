@@ -37,9 +37,7 @@ const isAuthenticated = (req, res, next) => {
 		return next();
 	} else {
 		// Authentication done redirecting to room
-		return res.redirect(
-			`https://savy-player.herokuapp.com/?roomno=${roomno}`
-		);
+		return res.redirect(`https://savy-player.herokuapp.com/?roomno=${roomno}`);
 	}
 };
 
@@ -80,10 +78,9 @@ app.get("/getRoomList", (_req, res) => {
 });
 
 app.get("/check/:roomno", (req, res) => {
-	if (rooms.hasOwnProperty(req.params.roomno))
-		res.send(true);
+	if (rooms.hasOwnProperty(req.params.roomno)) res.send(true);
 	else res.send(false);
-})
+});
 
 app.get("/getPlayerCSS", (_req, res) => {
 	res.sendFile(join(__dirname, "public", "player.css"));

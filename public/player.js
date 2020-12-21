@@ -189,18 +189,16 @@ socket.on("left room", (username) => {
 
 socket.on("user_array", (user_array) => {
 	// Getting the array of users in room
+	console.log(user_array);
 	document.getElementById("no_of_members").innerText = user_array.length;
 	let sidePanel = document.getElementById("sidePanel");
 	sidePanel.innerHTML = "";
-	let h = document.createElement("h3");
-	let txt = document.createTextNode("Connected Users:");
-	h.appendChild(txt);
-	sidePanel.appendChild(h);
 	user_array.map((users) => {
-		let para = document.createElement("p");
+		let a_tag = document.createElement("a");
 		let node = document.createTextNode(users);
-		para.appendChild(node);
-		sidePanel.appendChild(para);
+		a_tag.classList.add("dropdown-item");
+		a_tag.appendChild(node);
+		sidePanel.appendChild(a_tag);
 	});
 });
 
