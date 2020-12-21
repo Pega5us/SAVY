@@ -10,8 +10,8 @@ let current_username = new URLSearchParams(window.location.search).get(
 // Buildig room URL for copy link button
 let room_URL = `https://savy-player.herokuapp.com/room/${roomno}`;
 
-document.getElementById("roomNo").innerText += roomno;
-document.getElementById("userDetail").innerText += current_username;
+document.getElementById("roomNo").innerText = roomno;
+document.getElementById("userDetail").innerText = current_username;
 
 // Initialising socket
 const socket = io();
@@ -29,7 +29,11 @@ socket.on("room does not exist", () => {
 // Listenting for host reply
 socket.on("enter room", (isAllowed) => {
 	// allowed to enter the room
-	if (isAllowed) socket.emit("joinroom", roomno, current_username);
+	if (isAllowed) {
+		socket.emit("joinroom", roomno, current_username);
+		document.getElementById("spinner").remove();
+		document.getElementById("body-content").removeAttribute("hidden");
+	}
 	// not allowed to enter the room
 	else window.location.href = "https://savy-player.herokuapp.com";
 });
@@ -193,6 +197,7 @@ socket.on("user_array", (user_array) => {
 	document.getElementById("no_of_members").innerText = user_array.length;
 	let sidePanel = document.getElementById("sidePanel");
 	sidePanel.innerHTML = "";
+	document.getElementById("hostDetail").innerText = user_array[0];
 	user_array.map((users) => {
 		let a_tag = document.createElement("a");
 		let node = document.createTextNode(users);
@@ -230,7 +235,7 @@ function toastUserAddRemove(username, eventHappened) {
 						${username} has ${eventHappened} the room.
 					</div>
 				</div>`;
-	$(".toast").toast("show");
+	// $(".toast").toast("show");
 	setTimeout(() => {
 		toastContainer.innerHTML = "";
 	}, 5000);
