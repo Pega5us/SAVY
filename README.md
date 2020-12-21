@@ -1,9 +1,10 @@
-# A web app to play local video in sync 
+# A web app to play local video in sync
 
+![](upload.gif)
 
 ```bash
-    git clone https://github.com/akumar98394/sync-play666.git
-    cd sync-play666
+    git clone https://github.com/akumar98394/SAVY.git
+    cd SAVY
     npm install
     npm run dev
 ```
