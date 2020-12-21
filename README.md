@@ -8,4 +8,4 @@
     npm run dev
 ```
 
-`hosting` [here](http://savy-player.herokuapp.com/)
+`hosting` [here](https://savy-player.herokuapp.com/)

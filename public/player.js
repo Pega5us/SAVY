@@ -8,7 +8,7 @@ let current_username = new URLSearchParams(window.location.search).get(
 );
 
 // Buildig room URL for copy link button
-let room_URL = `http://savy-player.herokuapp.com/room/${roomno}`;
+let room_URL = `https://savy-player.herokuapp.com/room/${roomno}`;
 
 document.getElementById("roomNo").innerText += roomno;
 document.getElementById("userDetail").innerText += current_username;
@@ -21,7 +21,7 @@ socket.emit("ask permission", roomno, current_username);
 
 // Room does not exist
 socket.on("room does not exist", () => {
-	window.location.href = "http://savy-player.herokuapp.com";
+	window.location.href = "https://savy-player.herokuapp.com";
 });
 
 // $(".toast").toast("show");
@@ -31,7 +31,7 @@ socket.on("enter room", (isAllowed) => {
 	// allowed to enter the room
 	if (isAllowed) socket.emit("joinroom", roomno, current_username);
 	// not allowed to enter the room
-	else window.location.href = "http://savy-player.herokuapp.com";
+	else window.location.href = "https://savy-player.herokuapp.com";
 });
 
 // Array to hold the pending permission of user to enter the room
