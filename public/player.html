@@ -72,13 +72,39 @@
 					-webkit-transform: rotate(360deg);
 				}
 			}
+			::-webkit-scrollbar {
+				width: 10px;
+			}
+
+			/* Track */
+			::-webkit-scrollbar-track {
+				border-radius: 10px;
+				box-shadow: inset 0 0 5px #181a1b;
+			}
+
+			/* Handle */
+			::-webkit-scrollbar-thumb {
+				background: #888;
+				border-radius: 10px;
+			}
+
+			/* Handle on hover */
+			::-webkit-scrollbar-thumb:hover {
+				background: #555;
+			}
+			#sidePanel {
+				border-radius: 20px;
+			}
 		</style>
 		<!-- Custom styles for this template -->
 	</head>
 	<body>
 		<div id="body-content" hidden>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-				<a class="navbar-brand" href="https://savy-player.herokuapp.com"
+				<a
+					class="navbar-brand"
+					href="https://savy-player.herokuapp.com"
+					style="font-size: 30px"
 					><img
 						src="https://raw.githubusercontent.com/akumar98394/SAVY/ebeeff27e6fb47d03062225def42eaeec13f60b2/public/cd-player.svg"
 						style="width: 25px; height: 25px"
@@ -116,7 +142,10 @@
 								>Host:&nbsp<span id="hostDetail"></span>
 							</span>
 						</li>
-						<li class="nav-item active dropdown">
+						<li
+							class="nav-item active dropdown"
+							style="max-width: 30%"
+						>
 							<a
 								class="nav-link dropdown-toggle"
 								href="#"
@@ -132,12 +161,8 @@
 								id="sidePanel"
 								class="dropdown-menu"
 								aria-labelledby="navbarDropdown"
-							>
-								<a class="dropdown-item" href="#">Action</a>
-								<a class="dropdown-item" href="#"
-									>Another action</a
-								>
-							</div>
+								style="max-height: 200px; overflow: auto"
+							></div>
 						</li>
 					</ul>
 					<ul class="navbar-nav mr-0">
@@ -151,10 +176,11 @@
 								Copy Link
 							</button>
 						</li>
-						<li class="nav-item active">
+						<li class="nav-item active" style="margin-top: 2px">
 							<input
 								type="file"
-								class="btn btn-sm btn-outline-info"
+								class="btn btn-sm btn-outline-secondary my-2 my-sm-0"
+								style="color: #37a8e9"
 								id="input"
 								accept="video/*"
 								placeholder="Choose File.."
