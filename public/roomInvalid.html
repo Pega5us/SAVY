@@ -1,59 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- Required meta tags -->
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+		/>
 		<link
 			rel="icon"
 			type="image/png"
-			href="https://img.icons8.com/fluent/30/000000/walter-white.png"
+			href="https://raw.githubusercontent.com/akumar98394/SAVY/ebeeff27e6fb47d03062225def42eaeec13f60b2/public/cd-player.svg"
 		/>
-		<title>Savy Player</title>
-		<style>
-			body {
-				margin: 20px;
-				margin-top: 70px;
-				font-family: "Lucida Sans", "Lucida Sans Regular",
-					"Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana,
-					sans-serif;
-			}
-			h1,
-			a,
-			.ele {
-				text-align: center;
-			}
-			.ele {
-				margin-top: 20px;
-			}
-			h1 {
-				font-weight: 500;
-			}
-			button {
-				width: 201px;
-				height: 35.53px;
-				padding: 0px 24px;
-				border-radius: 5px;
-				border: none;
-				background-color: #00897b;
-				font-size: 13px;
-				color: white;
-				font-weight: 700;
-			}
-			button:hover {
-				background-color: #00796b;
-				cursor: pointer;
-			}
-		</style>
-		<script>
-			function func() {
-				window.location.href = "http://savy-player.herokuapp.com";
-			}
-		</script>
+		<!-- Bootstrap CSS -->
+		<link
+			rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+			crossorigin="anonymous"
+		/>
+		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Langar&display=swap"
+			rel="stylesheet"
+		/>
+		<title>SAVY</title>
 	</head>
-	<body>
-		<h1>Room Number Invalid</h1>
-		<div class="ele">
-			<button onclick="func()">Return to Home Screen</button>
+	<body class="text-center" style="background-color: #131516; color: white;">
+		<div
+			class="text-center jumbotron pb-4 mt-n5"
+			style="background-color: #131516"
+		>
+			<div class="container">
+				<h1 class="display-3">
+					<img
+						src="https://raw.githubusercontent.com/akumar98394/SAVY/ebeeff27e6fb47d03062225def42eaeec13f60b2/public/cd-player.svg"
+						alt="Play"
+						style="width: 60px; height: 60px"
+					/>
+					<span style="color: white; font-family: 'Langar', cursive"
+						>SAVY</span
+					>
+				</h1>
+			</div>
 		</div>
+
+		<main role="main" class="inner cover mt-3">
+			<h1 class="cover-heading mt-5">Invalid Room Number</h1>
+
+			<p class="lead mt-4">
+				<a
+					href="https://savy-player.herokuapp.com"
+					class="btn btn-lg btn-success"
+					>Return to Home Screen</a
+				>
+			</p>
+		</main>
+
+		<footer class="mastfoot fixed-bottom">
+			<div class="inner mb-5">
+				<a
+					style="text-decoration: none"
+					class="text-success nounderline"
+					href="https://github.com/akumar98394/sync-play666"
+				>
+					Learn more &raquo;
+				</a>
+
+				<span style="color: white">About SAVY</span>
+			</div>
+		</footer>
+
+		<!-- Optional JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script
+			src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+			integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+			integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+			crossorigin="anonymous"
+		></script>
 	</body>
 </html>
