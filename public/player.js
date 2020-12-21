@@ -226,7 +226,7 @@ function toastUserAddRemove(username, eventHappened) {
 						</svg>
 						<strong class="mr-auto">Notification</strong>
 					</div>
-					<div class="toast-body ml-2 mb-2">
+					<div class="toast-body ml-2 mb-3">
 						${username} has ${eventHappened} the room.
 					</div>
 				</div>`;
