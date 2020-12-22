@@ -8,7 +8,10 @@
 				name="viewport"
 				content="width=device-width, initial-scale=1, shrink-to-fit=no"
 			/>
-			<link rel="stylesheet" href="https://savy-player.herokuapp.com/getPlayerCSS" />
+			<link
+				rel="stylesheet"
+				href="https://savy-player.herokuapp.com/getPlayerCSS"
+			/>
 			<!-- Bootstrap CSS -->
 			<link
 				rel="stylesheet"
@@ -166,17 +169,22 @@
 								id="sidePanel"
 								class="dropdown-menu"
 								aria-labelledby="navbarDropdown"
-								style="max-height: 200px; overflow: auto"
+								style="
+									max-height: 200px;
+									overflow: auto;
+									background-color: #181a1b;
+									opacity: 0.6;
+								"
 							></div>
 						</li>
 					</ul>
 					<ul class="navbar-nav mr-0">
-						<li class="nav-item active mr-3 mt-1">
+						<li class="nav-item active mr-3">
 							<button
-								class="btn btn-sm btn-outline-secondary my-2 my-sm-0"
+								class="btn btn-dark btn-sm mt-1"
 								type="submit"
-								style="color: #37a8e9"
 								onclick="copyLink()"
+								style="border: 1px solid grey"
 							>
 								Copy Link
 							</button>
@@ -188,14 +196,19 @@
 								style="border: 1px solid gray"
 								onclick="chatRoom()"
 							>
-							<i class="fa fa-comments-alt"></i> ChatRoom 
+								<i class="fa fa-comments"></i>&nbsp Chat&nbsp;
 							</button>
 						</li>
-						<li class="nav-item active" style="margin-top: 2px">
+						<li class="nav-item active">
+							<label
+								class="btn btn-dark btn-sm mt-1"
+								for="input"
+								style="border: 1px solid grey"
+								>Choose File ..</label
+							>
 							<input
 								type="file"
-								class="btn btn-sm btn-outline-secondary my-2 my-sm-0"
-								style="color: #37a8e9"
+								style="display: none"
 								id="input"
 								accept="video/*"
 								placeholder="Choose File.."
@@ -279,19 +292,31 @@
 				aria-hidden="true"
 			>
 				<div class="modal-dialog" role="document">
-					<div class="modal-content">
+					<div
+						class="modal-content"
+						style="background-color: #181a1b; opacity: 0.6"
+					>
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">
+							<h5
+								class="modal-title"
+								id="exampleModalLabel"
+								style="color: white; opacity: 1"
+							>
 								Permission
 							</h5>
 						</div>
-						<div class="modal-body" id="modal-body"></div>
+						<div
+							class="modal-body"
+							id="modal-body"
+							style="color: white; opacity: 1"
+						></div>
 						<div class="modal-footer">
 							<button
 								type="button"
 								class="btn btn-secondary"
 								data-dismiss="modal"
 								id="decline-btn"
+								style="opacity: 1"
 							>
 								Decline
 							</button>
@@ -300,6 +325,7 @@
 								class="btn btn-primary"
 								data-dismiss="modal"
 								id="accept-btn"
+								style="opacity: 1"
 							>
 								Accept
 							</button>
@@ -323,7 +349,7 @@
 			<!-- Position it -->
 			<div
 				id="toast-container"
-				style="position: absolute; top: 0; right: 0"
+				style="position: absolute; top: 70px; right: 0"
 			></div>
 		</div>
 		<!-- Toast -->

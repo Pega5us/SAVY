@@ -1,3 +1,7 @@
+window.onbeforeunload = () => {
+	return "Are you sure?";
+};
+
 // Getting roomno from URL
 let temp_arr = window.location.pathname.split("/");
 let roomno = temp_arr[temp_arr.length - 1];
@@ -260,6 +264,9 @@ socket.on("user_array", (user_array) => {
 		let a_tag = document.createElement("a");
 		let node = document.createTextNode(users);
 		a_tag.classList.add("dropdown-item");
+		a_tag.style.color = "white";
+		a_tag.style.backgroundColor = "transparent";
+		a_tag.style.opacity = "1";
 		a_tag.appendChild(node);
 		sidePanel.appendChild(a_tag);
 	});
@@ -283,7 +290,8 @@ function chatRoom() {
 
 function toastUserAddRemove(username, eventHappened) {
 	toastContainer.style.padding = "10px";
-	toastContainer.style.backgroundColor = "#ffffff";
+	toastContainer.style.backgroundColor = "#181a1b";
+	toastContainer.style.opacity = "0.6";
 	toastContainer.style.borderRadius = "8px";
 	toastContainer.innerHTML += `<div class="toast" data-autohide="false">
 					<div class="toast-header">
@@ -298,9 +306,9 @@ function toastUserAddRemove(username, eventHappened) {
 						>
 							<rect fill="#007aff" width="100%" height="100%" />
 						</svg>
-						<strong class="mr-auto">Notification</strong>
+						<strong class="mr-auto" style="color:white">Notification</strong>
 					</div>
-					<div class="toast-body ml-2 mb-3">
+					<div class="toast-body ml-2 mb-3" style="color:white">
 						${username} has ${eventHappened} the room.
 					</div>
 				</div>`;
@@ -309,3 +317,9 @@ function toastUserAddRemove(username, eventHappened) {
 		toastContainer.style.padding = "0px";
 	}, 5000);
 }
+
+document.onkeypress = function (e) {
+	if (e.keyCode == 13 && inputField.value != "") {
+		sendMessageButton.onclick();
+	}
+};
