@@ -1,6 +1,6 @@
 // Client
 
-let initialUrl = "http://localhost:5000";
+let initialUrl = "https://savy-player.herokuapp.com";
 
 let errorMessageToast = document.getElementById("roomNotFoundErrorMessage");
 

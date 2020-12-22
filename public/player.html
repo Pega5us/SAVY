@@ -8,7 +8,7 @@
 				name="viewport"
 				content="width=device-width, initial-scale=1, shrink-to-fit=no"
 			/>
-			<link rel="stylesheet" href="http://localhost:5000/getPlayerCSS" />
+			<link rel="stylesheet" href="https://savy-player.herokuapp.com/getPlayerCSS" />
 			<!-- Bootstrap CSS -->
 			<link
 				rel="stylesheet"
@@ -22,11 +22,14 @@
 				href="https://raw.githubusercontent.com/akumar98394/SAVY/ebeeff27e6fb47d03062225def42eaeec13f60b2/public/cd-player.svg"
 			/>
 			<link rel="stylesheet" href="https://cdn.plyr.io/3.6.3/plyr.css" />
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+			<link
+				rel="stylesheet"
+				href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+			/>
 			<script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
 			<script
 				type="text/javascript"
-				src="http://localhost:5000/getPlayerJS"
+				src="https://savy-player.herokuapp.com/getPlayerJS"
 				defer
 			></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
@@ -105,7 +108,7 @@
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 				<a
 					class="navbar-brand"
-					href="http://localhost:5000"
+					href="https://savy-player.herokuapp.com"
 					style="font-size: 30px"
 					><img
 						src="https://raw.githubusercontent.com/akumar98394/SAVY/ebeeff27e6fb47d03062225def42eaeec13f60b2/public/cd-player.svg"
@@ -178,14 +181,14 @@
 								Copy Link
 							</button>
 						</li>
-						<li class="nav-item active mr-3 mt-1">
+						<li class="nav-item active mr-3">
 							<button
-								class="btn btn-sm btn-outline-secondary my-2 my-sm-0"
+								class="btn btn-dark btn-sm mt-1"
 								type="submit"
-								style="color: #37a8e9"
+								style="border: 1px solid gray"
 								onclick="chatRoom()"
 							>
-								ChatRoom
+							<i class="fa fa-comments-alt"></i> ChatRoom 
 							</button>
 						</li>
 						<li class="nav-item active" style="margin-top: 2px">
@@ -202,51 +205,68 @@
 					</ul>
 				</div>
 			</nav>
-			<div id="chatRoom" style="display: none">
-				chatRoom
-				<div class="container content">
-					<div class="card">
-						<div class="card-header">Chat</div>
-						<div class="card-body height3" style="max-height: 200px; overflow: auto" id = "chatpanel">
-							<ul class="chat-list" id="chatbody"></ul>
-						</div>
-					</div>
-					<div class="input-group mt-2">
-						<input
-							autocomplete="off"
-							id="inputField"
-							onkeyup="checkempty()"
-							type="text"
-							class="form-control"
-							placeholder="Type a message"
-						/>
-						<div class="input-group-append">
-							<button
-								id = "sendbutton"
-								disabled = "true" 
-								onclick="sendmessage()"
-								class="btn btn-outline-secondary"
-							>
-							<i class="fa fa-paper-plane"></i>
-							Send
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
 
 			<main
 				role="main"
 				class="container mt-2"
 				style="width: 100%; height: 100%"
 			>
-				<video
-					width="100%"
-					height="100%"
-					id="video"
-					playsinline
-					controls
-				></video>
+				<div class="row">
+					<div class="col-md-12" id="videoCol">
+						<video
+							width="100%"
+							height="100%"
+							id="video"
+							playsinline
+							controls
+						></video>
+					</div>
+					<div class="col-md-4" id="chatCol" hidden>
+						<div id="chatRoom">
+							<div class="container content">
+								<div class="card">
+									<div class="card-header">Chat</div>
+									<div
+										class="card-body height3"
+										style="
+											min-height: 200px;
+											max-height: 400px;
+											overflow: auto;
+										"
+										id="chatpanel"
+									>
+										<ul
+											class="chat-list"
+											id="chatbody"
+										></ul>
+									</div>
+								</div>
+								<div class="input-group mt-2">
+									<input
+										autocomplete="off"
+										id="inputField"
+										onkeyup="checkempty()"
+										type="text"
+										class="form-control"
+										placeholder="Type a message"
+									/>
+									<div class="input-group-append">
+										<button
+											id="sendbutton"
+											disabled="true"
+											onclick="sendmessage()"
+											class="btn btn-outline-secondary"
+										>
+											<i class="fa fa-paper-plane"></i>
+											Send
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<script src="https://cdn.plyr.io/3.6.3/plyr.js"></script>
 			</main>
 			<!-- Modal Permission-->
