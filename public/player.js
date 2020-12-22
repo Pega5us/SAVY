@@ -150,9 +150,17 @@ video.on("seeked", (event) => {
 });
 
 const inputField = document.getElementById("inputField");
+const sendMessageButton = document.getElementById("sendbutton");
+
+function checkempty() {
+	if (inputField.value === "") {
+		sendMessageButton.disabled = true;
+	} else {
+		sendMessageButton.disabled = false;
+	}
+}
 
 function sendmessage() {
-	
 	console.log("Sending Message", inputField.value);
 	chatbody.innerHTML += `								<li class="out">
 	<div class="chat-img">
@@ -163,18 +171,21 @@ function sendmessage() {
 	</div>
 	<div class="chat-body">
 		<div class="chat-message">
-			<h5>Serena</h5>
-			<p>${inputField.value}</p>
+			<h5> <b>You</b> &nbsp&nbsp ${new moment().format("h:mm a")}</h5>
+			<p>${inputField.value} </p>
 		</div> 
 	</div>
-</li>`
-	socket.emit("New Message", inputField.value, roomno);
-
+</li>`;
+	socket.emit("New Message", inputField.value, current_username, roomno);
+	let objDiv = document.getElementById("chatpanel");
+	objDiv.scrollTop = objDiv.scrollHeight;
+	inputField.value = "";
+	sendMessageButton.disabled = true;
 }
 
 const chatbody = document.getElementById("chatbody");
 
-socket.on("New Message", (message) => {
+socket.on("New Message", (message, username) => {
 	chatbody.innerHTML += `<li class="in">
 	<div class="chat-img" >
 		<img
@@ -184,14 +195,16 @@ socket.on("New Message", (message) => {
 	</div>
 	<div class="chat-body" >
 		<div class="chat-message">
-			<h5>Jimmy Willams</h5>
+			<h5> <b>${username}</b> &nbsp&nbsp ${new moment().format("h:mm a")} </h5>
 			<p>
 				${message}
 			</p>
 		</div>
 	</div>
 </li>`;
-	console.log("Listening from server", message);
+
+	let objDiv = document.getElementById("chatpanel");
+	objDiv.scrollTop = objDiv.scrollHeight;
 });
 
 socket.on("play", () => {
@@ -254,7 +267,12 @@ socket.on("user_array", (user_array) => {
 
 function chatRoom() {
 	const chatRoom = document.getElementById("chatRoom");
-	chatRoom.style.display = "block";
+	if(chatRoom.style.display=="block"){
+		chatRoom.style.display = "none";
+	}
+	else{
+		chatRoom.style.display="block";
+	}
 }
 
 function toastUserAddRemove(username, eventHappened) {

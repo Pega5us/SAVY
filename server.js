@@ -152,8 +152,8 @@ io.on("connection", (socket) => {
 	});
 
 	//Chat events
-	socket.on("New Message", (message, roomno) => {
-		socket.to(roomno).emit("New Message", message);
+	socket.on("New Message", (message, username, roomno) => {
+		socket.to(roomno).emit("New Message", message, username);
 	});
 
 	// Player events
