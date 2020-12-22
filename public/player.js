@@ -213,7 +213,8 @@ socket.on("user_array", (user_array) => {
 
 function toastUserAddRemove(username, eventHappened) {
 	toastContainer.style.padding = "10px";
-	toastContainer.style.backgroundColor = "#ffffff";
+	toastContainer.style.backgroundColor = "#181a1b";
+	toastContainer.style.opacity = "0.6";
 	toastContainer.style.borderRadius = "8px";
 	toastContainer.innerHTML += `<div class="toast" data-autohide="false">
 					<div class="toast-header">
@@ -228,9 +229,9 @@ function toastUserAddRemove(username, eventHappened) {
 						>
 							<rect fill="#007aff" width="100%" height="100%" />
 						</svg>
-						<strong class="mr-auto">Notification</strong>
+						<strong class="mr-auto" style="color:white">Notification</strong>
 					</div>
-					<div class="toast-body ml-2 mb-3">
+					<div class="toast-body ml-2 mb-3" style="color:white">
 						${username} has ${eventHappened} the room.
 					</div>
 				</div>`;
