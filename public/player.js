@@ -206,6 +206,9 @@ socket.on("user_array", (user_array) => {
 		let a_tag = document.createElement("a");
 		let node = document.createTextNode(users);
 		a_tag.classList.add("dropdown-item");
+		a_tag.style.color='white'
+		a_tag.style.backgroundColor="transparent"
+		a_tag.style.opacity="1";
 		a_tag.appendChild(node);
 		sidePanel.appendChild(a_tag);
 	});

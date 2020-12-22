@@ -161,26 +161,26 @@
 								id="sidePanel"
 								class="dropdown-menu"
 								aria-labelledby="navbarDropdown"
-								style="max-height: 200px; overflow: auto"
+								style="max-height: 200px; overflow: auto;background-color:#181a1b;opacity:0.6"
 							></div>
 						</li>
 					</ul>
 					<ul class="navbar-nav mr-0">
-						<li class="nav-item active mr-3 mt-1">
+						<li class="nav-item active mr-3" >
 							<button
-								class="btn btn-sm btn-outline-secondary my-2 my-sm-0"
+								class="btn btn-dark btn-sm mt-1"
 								type="submit"
-								style="color: #37a8e9"
 								onclick="copyLink()"
+								style="border:1px solid grey"
 							>
 								Copy Link
 							</button>
 						</li>
-						<li class="nav-item active" style="margin-top: 2px">
+						<li class="nav-item active" >
+						<label class="btn btn-dark btn-sm mt-1" for="input" style="border:1px solid grey">Choose File ..</label>
 							<input
 								type="file"
-								class="btn btn-sm btn-outline-secondary my-2 my-sm-0"
-								style="color: #37a8e9"
+								style="display:none"
 								id="input"
 								accept="video/*"
 								placeholder="Choose File.."
