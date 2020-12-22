@@ -197,6 +197,13 @@ socket.on("New Message", (message, username) => {
 
 	let objDiv = document.getElementById("chatpanel");
 	objDiv.scrollTop = objDiv.scrollHeight;
+	let x = document.getElementById("chatRoom");
+	if (chatIsHidden == true) {
+		let chatButton = document.getElementById("chat_button");
+		chatButton.style.backgroundColor = "#181a1b";
+		if(!chatButton.innerHTML.endsWith('*'))
+		chatButton.innerHTML += "*";
+	}
 });
 
 socket.on("play", () => {
@@ -264,6 +271,9 @@ let chatIsHidden = true;
 
 function chatRoom() {
 	if (chatIsHidden) {
+		let chatButton = document.getElementById("chat_button");
+		chatButton.style.backgroundColor = "transparent";
+		chatButton.innerHTML = chatButton.innerHTML.replace("*", "");
 		document.getElementById("videoCol").classList.remove("col-md-12");
 		document.getElementById("videoCol").classList.add("col-md-8");
 		document.getElementById("chatCol").removeAttribute("hidden");
