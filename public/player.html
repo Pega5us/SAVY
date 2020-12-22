@@ -77,26 +77,7 @@
 					-webkit-transform: rotate(360deg);
 				}
 			}
-			::-webkit-scrollbar {
-				width: 10px;
-			}
 
-			/* Track */
-			::-webkit-scrollbar-track {
-				border-radius: 10px;
-				box-shadow: inset 0 0 5px #181a1b;
-			}
-
-			/* Handle */
-			::-webkit-scrollbar-thumb {
-				background: #888;
-				border-radius: 10px;
-			}
-
-			/* Handle on hover */
-			::-webkit-scrollbar-thumb:hover {
-				background: #555;
-			}
 			#sidePanel {
 				border-radius: 20px;
 			}
@@ -128,13 +109,7 @@
 			.in > .chat-body > .chat-message > p {
 				color: black;
 			}
-			/* .sidenav {
-				overflow-x: hidden;
-				transition: 5s;
-			}
-			#videoCol {
-				transition: margin-right 5s;
-			} */
+
 			.col-12 {
 				flex-grow: 1;
 				transition: all 400ms ease;
@@ -143,12 +118,11 @@
 				flex-grow: 1;
 				transition: all 400ms ease;
 			}
-			
 		</style>
 		<!-- Custom styles for this template -->
 	</head>
 	<body>
-		<div id="body-content" hidden>
+		<div id="body-content">
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 				<a
 					class="navbar-brand"
@@ -263,7 +237,7 @@
 
 			<main
 				role="main"
-				class="container mt-5"
+				class="container mt-3"
 				style="width: 100%; height: 100%"
 			>
 				<div class="row">
@@ -278,51 +252,51 @@
 					</div>
 					<div class="col-4" id="chatCol" hidden>
 						<div id="chatRoom">
-							<div class="container content">
-								<div class="card">
-									<div
-										class="card-header"
-										style="background-color: #343a40"
-									>
-										Chat
-									</div>
-									<div
-										class="card-body height3"
-										style="
-											min-height: 200px;
-											max-height: 400px;
-											overflow: auto;
-											background-color: #181a1b;
-										"
-										id="chatpanel"
-									>
-										<ul
-											class="chat-list"
-											id="chatbody"
-										></ul>
-									</div>
+							<div class="card">
+								<div
+									class="card-header"
+									style="background-color: #343a40"
+								>
+									<i class="fa fa-comments"></i> &nbspChat
+									<i
+										class="fa fa-times float-right"
+										onclick="chatRoom()"
+									></i>
 								</div>
-								<div class="input-group mt-2">
-									<input
-										autocomplete="off"
-										id="inputField"
-										onkeyup="checkempty()"
-										type="text"
-										class="form-control"
-										placeholder="Type a message"
-									/>
-									<div class="input-group-append">
-										<button
-											id="sendbutton"
-											disabled="true"
-											onclick="sendmessage()"
-											class="btn btn-outline-secondary"
-											style="color: white"
-										>
-											<i class="fa fa-paper-plane"></i>
-											Send
-										</button>
-									</div>
+								<div
+									class="card-body height3"
+									style="
+										min-height: 270px;
+										max-height: 270px;
+										overflow: auto;
+										background-color: #181a1b;
+									"
+									id="chatpanel"
+								>
+									<ul class="chat-list" id="chatbody"></ul>
+								</div>
+							</div>
+							<div class="input-group mt-2">
+								<input
+									autocomplete="off"
+									id="inputField"
+									onkeyup="checkempty()"
+									type="text"
+									class="form-control"
+									placeholder="Type a message"
+									style="background-color: #181a1b;color:white"
+								/>
+								<div class="input-group-append">
+									<button
+										id="sendbutton"
+										disabled="true"
+										onclick="sendmessage()"
+										class="btn btn-outline-secondary"
+										style="color: white"
+									>
+										<i class="fa fa-paper-plane"></i>
+										Send
+									</button>
 								</div>
 							</div>
 						</div>

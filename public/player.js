@@ -10,6 +10,7 @@ let roomno = temp_arr[temp_arr.length - 1];
 let current_username = new URLSearchParams(window.location.search).get(
 	"username"
 );
+let prev_chat_user = "";
 
 // Buildig room URL for copy link button
 let room_URL = `http://localhost:5000/room/${roomno}`;
@@ -166,14 +167,24 @@ function checkempty() {
 
 function sendmessage() {
 	console.log("Sending Message", inputField.value);
-	chatbody.innerHTML += `								<li class="out">
-	<div class="chat-body">
-		<div class="chat-message" style="background-color:white">
-			<h5> <b>You</b> &nbsp&nbsp ${new moment().format("h:mm a")}</h5>
-			<p>${inputField.value} </p>
-		</div> 
-	</div>
-</li>`;
+		chatbody.innerHTML += `<li class="out">
+		<div class="chat-body">
+			<div class="chat-message" style="background-color:white">
+				<h5 class ="float-right"> &nbsp&nbsp ${new moment().format("h:mm a")}</h5>
+				<p>${inputField.value} </p>
+			</div>
+		</div>
+	</li>`;
+	// let margin = 2;
+	// if( prev_chat_user === current_username) margin =1
+
+	// chatbody.innerHTML += `
+	//  	<div class = "float-right p-2 mt-${margin}" style="background-color:#343A40 ;color:white;border-radius: 15px 15px 0px 15px;max-width:200px">
+	// 	<div >${inputField.value}</div>
+	// 	<div class="float-right">${new moment().format("h:mm a")}</div></div>`;
+	// prev_chat_user = current_username;
+
+
 	socket.emit("New Message", inputField.value, current_username, roomno);
 	let objDiv = document.getElementById("chatpanel");
 	objDiv.scrollTop = objDiv.scrollHeight;
@@ -184,25 +195,40 @@ function sendmessage() {
 const chatbody = document.getElementById("chatbody");
 
 socket.on("New Message", (message, username) => {
-	chatbody.innerHTML += `<li class="in">
-	<div class="chat-body" >
-		<div class="chat-message" style="background-color:#C0C0C0">
-			<h5> <b>${username}</b> &nbsp&nbsp ${new moment().format("h:mm a")} </h5>
-			<p>
-				${message}
-			</p>
+		chatbody.innerHTML += `<li class="in">
+		<div class="chat-body" >
+			<div class="chat-message" style="background-color:#C0C0C0">
+				<h5 class ="float-right"> <b>${username}</b> &nbsp&nbsp ${new moment().format(
+			"h:mm a"
+		)} </h5>
+				<p>
+					${message}
+				</p>
+			</div>
 		</div>
-	</div>
-</li>`;
+	</li>`;
+	// if (prev_chat_user === username) {
+	// 	chatbody.innerHTML += `
+	//  <div class = "float-left p-2 mt-1" style="background-color:#343A40;color:white;border-radius: 15px 15px 15px 0px;max-width:200px">
+	//  <div >${message}</div>
+	// <div class="float-right">${new moment().format("h:mm a")}</div></div>`;
+	// }
+	// else{
+	// 	chatbody.innerHTML += `
+	// 	 <div class = "float-left p-2 mt-2" style="background-color:#343A40;color:white;border-radius: 15px 15px 15px 0px;max-width:200px">
+	// 	<div class="float-left"><b>${username}</b></div></br>
+	// 	 <div class="mt-1">${message}</div>
+	// 	<div class="float-right">${new moment().format("h:mm a")}</div></div>`;
+	// }
 
+	prev_chat_user = username;
 	let objDiv = document.getElementById("chatpanel");
 	objDiv.scrollTop = objDiv.scrollHeight;
 	let x = document.getElementById("chatRoom");
 	if (chatIsHidden == true) {
 		let chatButton = document.getElementById("chat_button");
 		chatButton.style.backgroundColor = "#181a1b";
-		if(!chatButton.innerHTML.endsWith('*'))
-		chatButton.innerHTML += "*";
+		if (!chatButton.innerHTML.endsWith("*")) chatButton.innerHTML += "*";
 	}
 });
 
@@ -270,25 +296,25 @@ socket.on("user_array", (user_array) => {
 let chatIsHidden = true;
 
 function chatRoom() {
-setTimeout(() => {
-	if (chatIsHidden) {
-		document.getElementById("chatCol").removeAttribute("hidden");
-		chatIsHidden = false;
-	} else {
-		chatIsHidden = true;
-	}
-}, 400);
+	setTimeout(() => {
+		if (chatIsHidden) {
+			document.getElementById("chatCol").removeAttribute("hidden");
+			chatIsHidden = false;
+		} else {
+			chatIsHidden = true;
+		}
+	}, 400);
 
-if (chatIsHidden) {
-	let chatButton = document.getElementById("chat_button");
-	chatButton.style.backgroundColor = "transparent";
-	chatButton.innerHTML = chatButton.innerHTML.replace("*", "");
-	document.getElementById("videoCol").classList.remove("col-md-12");
-	document.getElementById("videoCol").classList.add("col-md-8");
-} else {
-	document.getElementById("videoCol").classList.remove("col-md-8");
-	document.getElementById("videoCol").classList.add("col-md-12");
-	document.getElementById("chatCol").setAttribute("hidden", "hidden");
+	if (chatIsHidden) {
+		let chatButton = document.getElementById("chat_button");
+		chatButton.style.backgroundColor = "transparent";
+		chatButton.innerHTML = chatButton.innerHTML.replace("*", "");
+		document.getElementById("videoCol").classList.remove("col-12");
+		document.getElementById("videoCol").classList.add("col-8");
+	} else {
+		document.getElementById("videoCol").classList.remove("col-8");
+		document.getElementById("videoCol").classList.add("col-12");
+		document.getElementById("chatCol").setAttribute("hidden", "hidden");
 	}
 }
 
