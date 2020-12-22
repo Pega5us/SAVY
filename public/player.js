@@ -1,3 +1,7 @@
+window.onbeforeunload = () => {
+	return "Are you sure?";
+};
+
 // Getting roomno from URL
 let temp_arr = window.location.pathname.split("/");
 let roomno = temp_arr[temp_arr.length - 1];
