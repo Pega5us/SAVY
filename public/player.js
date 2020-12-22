@@ -12,7 +12,7 @@ let current_username = new URLSearchParams(window.location.search).get(
 );
 
 // Buildig room URL for copy link button
-let room_URL = `https://savy-player.herokuapp.com/room/${roomno}`;
+let room_URL = `http://localhost:5000/room/${roomno}`;
 
 document.getElementById("roomNo").innerText = roomno;
 document.getElementById("userDetail").innerText = current_username;
@@ -25,7 +25,7 @@ socket.emit("ask permission", roomno, current_username);
 
 // Room does not exist
 socket.on("room does not exist", () => {
-	window.location.href = "https://savy-player.herokuapp.com";
+	window.location.href = "http://localhost:5000";
 });
 
 // $(".toast").toast("show");
@@ -39,7 +39,7 @@ socket.on("enter room", (isAllowed) => {
 		document.getElementById("body-content").removeAttribute("hidden");
 	}
 	// not allowed to enter the room
-	else window.location.href = "https://savy-player.herokuapp.com";
+	else window.location.href = "http://localhost:5000";
 });
 
 // Array to hold the pending permission of user to enter the room
@@ -167,14 +167,8 @@ function checkempty() {
 function sendmessage() {
 	console.log("Sending Message", inputField.value);
 	chatbody.innerHTML += `								<li class="out">
-	<div class="chat-img">
-		<img
-			alt="Avtar"
-			src="https://bootdey.com/img/Content/avatar/avatar6.png"
-		/>
-	</div>
 	<div class="chat-body">
-		<div class="chat-message">
+		<div class="chat-message" style="background-color:white">
 			<h5> <b>You</b> &nbsp&nbsp ${new moment().format("h:mm a")}</h5>
 			<p>${inputField.value} </p>
 		</div> 
@@ -191,14 +185,8 @@ const chatbody = document.getElementById("chatbody");
 
 socket.on("New Message", (message, username) => {
 	chatbody.innerHTML += `<li class="in">
-	<div class="chat-img" >
-		<img
-			alt="Avtar"
-			src="https://bootdey.com/img/Content/avatar/avatar1.png"
-		/>
-	</div>
 	<div class="chat-body" >
-		<div class="chat-message">
+		<div class="chat-message" style="background-color:#C0C0C0">
 			<h5> <b>${username}</b> &nbsp&nbsp ${new moment().format("h:mm a")} </h5>
 			<p>
 				${message}
@@ -291,7 +279,7 @@ function chatRoom() {
 function toastUserAddRemove(username, eventHappened) {
 	toastContainer.style.padding = "10px";
 	toastContainer.style.backgroundColor = "#181a1b";
-	toastContainer.style.opacity = "0.6";
+	toastContainer.style.opacity = "0.8";
 	toastContainer.style.borderRadius = "8px";
 	toastContainer.innerHTML += `<div class="toast" data-autohide="false">
 					<div class="toast-header">

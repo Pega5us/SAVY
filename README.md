@@ -7,4 +7,4 @@
     npm run dev
 ```
 
-`hosting` [here](https://savy-player.herokuapp.com/)
+`hosting` [here](http://localhost:5000/)
