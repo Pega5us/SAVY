@@ -12,7 +12,7 @@ let current_username = new URLSearchParams(window.location.search).get(
 );
 
 // Buildig room URL for copy link button
-let room_URL = `https://savy-player.herokuapp.com/room/${roomno}`;
+let room_URL = `http://localhost:5000/room/${roomno}`;
 
 document.getElementById("roomNo").innerText = roomno;
 document.getElementById("userDetail").innerText = current_username;
@@ -25,7 +25,7 @@ socket.emit("ask permission", roomno, current_username);
 
 // Room does not exist
 socket.on("room does not exist", () => {
-	window.location.href = "https://savy-player.herokuapp.com";
+	window.location.href = "http://localhost:5000";
 });
 
 // $(".toast").toast("show");
@@ -39,7 +39,7 @@ socket.on("enter room", (isAllowed) => {
 		document.getElementById("body-content").removeAttribute("hidden");
 	}
 	// not allowed to enter the room
-	else window.location.href = "https://savy-player.herokuapp.com";
+	else window.location.href = "http://localhost:5000";
 });
 
 // Array to hold the pending permission of user to enter the room
@@ -270,19 +270,25 @@ socket.on("user_array", (user_array) => {
 let chatIsHidden = true;
 
 function chatRoom() {
+setTimeout(() => {
 	if (chatIsHidden) {
-		let chatButton = document.getElementById("chat_button");
-		chatButton.style.backgroundColor = "transparent";
-		chatButton.innerHTML = chatButton.innerHTML.replace("*", "");
-		document.getElementById("videoCol").classList.remove("col-md-12");
-		document.getElementById("videoCol").classList.add("col-md-8");
 		document.getElementById("chatCol").removeAttribute("hidden");
 		chatIsHidden = false;
 	} else {
-		document.getElementById("videoCol").classList.remove("col-md-8");
-		document.getElementById("videoCol").classList.add("col-md-12");
-		document.getElementById("chatCol").setAttribute("hidden", "hidden");
 		chatIsHidden = true;
+	}
+}, 400);
+
+if (chatIsHidden) {
+	let chatButton = document.getElementById("chat_button");
+	chatButton.style.backgroundColor = "transparent";
+	chatButton.innerHTML = chatButton.innerHTML.replace("*", "");
+	document.getElementById("videoCol").classList.remove("col-md-12");
+	document.getElementById("videoCol").classList.add("col-md-8");
+} else {
+	document.getElementById("videoCol").classList.remove("col-md-8");
+	document.getElementById("videoCol").classList.add("col-md-12");
+	document.getElementById("chatCol").setAttribute("hidden", "hidden");
 	}
 }
 

@@ -8,10 +8,7 @@
 				name="viewport"
 				content="width=device-width, initial-scale=1, shrink-to-fit=no"
 			/>
-			<link
-				rel="stylesheet"
-				href="https://savy-player.herokuapp.com/getPlayerCSS"
-			/>
+			<link rel="stylesheet" href="http://localhost:5000/getPlayerCSS" />
 			<!-- Bootstrap CSS -->
 			<link
 				rel="stylesheet"
@@ -32,7 +29,7 @@
 			<script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
 			<script
 				type="text/javascript"
-				src="https://savy-player.herokuapp.com/getPlayerJS"
+				src="http://localhost:5000/getPlayerJS"
 				defer
 			></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
@@ -103,34 +100,50 @@
 			#sidePanel {
 				border-radius: 20px;
 			}
-			.out>.chat-body>.chat-message::before{
-				border-left:20px solid white !important;
+			.out > .chat-body > .chat-message::before {
+				border-left: 20px solid white !important;
 			}
-			.out>.chat-body>.chat-message>h5{
-				font-weight:lighter !important;
-				color:black;
+			.out > .chat-body > .chat-message > h5 {
+				font-weight: lighter !important;
+				color: black;
 			}
-			.out>.chat-body>.chat-message>h5>b{
-				font-weight:bold !important;
-				font-family:sans-serif;
+			.out > .chat-body > .chat-message > h5 > b {
+				font-weight: bold !important;
+				font-family: sans-serif;
 			}
-			.out>.chat-body>.chat-message>p{
-				color:black;
+			.out > .chat-body > .chat-message > p {
+				color: black;
 			}
-			.in>.chat-body>.chat-message::before{
-				border-right:20px solid #c0c0c0 !important;
+			.in > .chat-body > .chat-message::before {
+				border-right: 20px solid #c0c0c0 !important;
 			}
-			.in>.chat-body>.chat-message>h5{
-				font-weight:lighter !important;
-				color:black;
+			.in > .chat-body > .chat-message > h5 {
+				font-weight: lighter !important;
+				color: black;
 			}
-			.in>.chat-body>.chat-message>h5>b{
-				font-weight:bold !important;
-				font-family:sans-serif;
+			.in > .chat-body > .chat-message > h5 > b {
+				font-weight: bold !important;
+				font-family: sans-serif;
 			}
-			.in>.chat-body>.chat-message>p{
-				color:black;
+			.in > .chat-body > .chat-message > p {
+				color: black;
 			}
+			/* .sidenav {
+				overflow-x: hidden;
+				transition: 5s;
+			}
+			#videoCol {
+				transition: margin-right 5s;
+			} */
+			.col-12 {
+				flex-grow: 1;
+				transition: all 400ms ease;
+			}
+			.col-8 {
+				flex-grow: 1;
+				transition: all 400ms ease;
+			}
+			
 		</style>
 		<!-- Custom styles for this template -->
 	</head>
@@ -139,7 +152,7 @@
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 				<a
 					class="navbar-brand"
-					href="https://savy-player.herokuapp.com"
+					href="http://localhost:5000"
 					style="font-size: 30px"
 					><img
 						src="https://raw.githubusercontent.com/akumar98394/SAVY/ebeeff27e6fb47d03062225def42eaeec13f60b2/public/cd-player.svg"
@@ -250,11 +263,11 @@
 
 			<main
 				role="main"
-				class="container mt-2"
+				class="container mt-5"
 				style="width: 100%; height: 100%"
 			>
 				<div class="row">
-					<div class="col-md-12" id="videoCol">
+					<div class="col-12" id="videoCol">
 						<video
 							width="100%"
 							height="100%"
@@ -263,18 +276,23 @@
 							controls
 						></video>
 					</div>
-					<div class="col-md-4" id="chatCol" hidden>
+					<div class="col-4" id="chatCol" hidden>
 						<div id="chatRoom">
 							<div class="container content">
-								<div class="card" >
-									<div class="card-header" style="background-color:#343a40">Chat</div>
+								<div class="card">
+									<div
+										class="card-header"
+										style="background-color: #343a40"
+									>
+										Chat
+									</div>
 									<div
 										class="card-body height3"
 										style="
 											min-height: 200px;
 											max-height: 400px;
 											overflow: auto;
-											background-color:#181a1b;
+											background-color: #181a1b;
 										"
 										id="chatpanel"
 									>
@@ -299,7 +317,7 @@
 											disabled="true"
 											onclick="sendmessage()"
 											class="btn btn-outline-secondary"
-											style="color:white"
+											style="color: white"
 										>
 											<i class="fa fa-paper-plane"></i>
 											Send
