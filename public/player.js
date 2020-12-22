@@ -13,7 +13,7 @@ let current_username = new URLSearchParams(window.location.search).get(
 let prev_chat_user = "";
 
 // Buildig room URL for copy link button
-let room_URL = `http://localhost:5000/room/${roomno}`;
+let room_URL = `https://savy-player.herokuapp.com/room/${roomno}`;
 
 document.getElementById("roomNo").innerText = roomno;
 document.getElementById("userDetail").innerText = current_username;
@@ -26,7 +26,7 @@ socket.emit("ask permission", roomno, current_username);
 
 // Room does not exist
 socket.on("room does not exist", () => {
-	window.location.href = "http://localhost:5000";
+	window.location.href = "https://savy-player.herokuapp.com";
 });
 
 // $(".toast").toast("show");
@@ -40,7 +40,7 @@ socket.on("enter room", (isAllowed) => {
 		document.getElementById("body-content").removeAttribute("hidden");
 	}
 	// not allowed to enter the room
-	else window.location.href = "http://localhost:5000";
+	else window.location.href = "https://savy-player.herokuapp.com";
 });
 
 // Array to hold the pending permission of user to enter the room
@@ -167,10 +167,10 @@ function checkempty() {
 
 function sendmessage() {
 	console.log("Sending Message", inputField.value);
-		chatbody.innerHTML += `<li class="out">
+	chatbody.innerHTML += `<li class="out">
 		<div class="chat-body">
 			<div class="chat-message" style="background-color:white">
-				<h5 class ="float-right"> &nbsp&nbsp ${new moment().format("h:mm a")}</h5>
+				<h5 class ="float-right"> You&nbsp&nbsp ${new moment().format("h:mm a")}</h5>
 				<p>${inputField.value} </p>
 			</div>
 		</div>
@@ -184,7 +184,6 @@ function sendmessage() {
 	// 	<div class="float-right">${new moment().format("h:mm a")}</div></div>`;
 	// prev_chat_user = current_username;
 
-
 	socket.emit("New Message", inputField.value, current_username, roomno);
 	let objDiv = document.getElementById("chatpanel");
 	objDiv.scrollTop = objDiv.scrollHeight;
@@ -195,12 +194,12 @@ function sendmessage() {
 const chatbody = document.getElementById("chatbody");
 
 socket.on("New Message", (message, username) => {
-		chatbody.innerHTML += `<li class="in">
+	chatbody.innerHTML += `<li class="in">
 		<div class="chat-body" >
 			<div class="chat-message" style="background-color:#C0C0C0">
 				<h5 class ="float-right"> <b>${username}</b> &nbsp&nbsp ${new moment().format(
-			"h:mm a"
-		)} </h5>
+		"h:mm a"
+	)} </h5>
 				<p>
 					${message}
 				</p>

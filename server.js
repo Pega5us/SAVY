@@ -37,7 +37,9 @@ const isAuthenticated = (req, res, next) => {
 		return next();
 	} else {
 		// Authentication done redirecting to room
-		return res.redirect(`http://localhost:5000/?roomno=${roomno}`);
+		return res.redirect(
+			`https://savy-player.herokuapp.com/?roomno=${roomno}`
+		);
 	}
 };
 
