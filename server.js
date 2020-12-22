@@ -38,7 +38,7 @@ const isAuthenticated = (req, res, next) => {
 	} else {
 		// Authentication done redirecting to room
 		return res.redirect(
-			`https://savy-player.herokuapp.com/?roomno=${roomno}`
+			`http://localhost:5000/?roomno=${roomno}`
 		);
 	}
 };
@@ -149,6 +149,11 @@ io.on("connection", (socket) => {
 			"user_array",
 			rooms[socket.roomno].array.map((obj) => obj.username)
 		);
+	});
+
+	//Chat events
+	socket.on("New Message", (message, roomno) => {
+		socket.to(roomno).emit("New Message", message);
 	});
 
 	// Player events

@@ -8,7 +8,7 @@ let current_username = new URLSearchParams(window.location.search).get(
 );
 
 // Buildig room URL for copy link button
-let room_URL = `https://savy-player.herokuapp.com/room/${roomno}`;
+let room_URL = `http://localhost:5000/room/${roomno}`;
 
 document.getElementById("roomNo").innerText = roomno;
 document.getElementById("userDetail").innerText = current_username;
@@ -21,7 +21,7 @@ socket.emit("ask permission", roomno, current_username);
 
 // Room does not exist
 socket.on("room does not exist", () => {
-	window.location.href = "https://savy-player.herokuapp.com";
+	window.location.href = "http://localhost:5000";
 });
 
 // $(".toast").toast("show");
@@ -35,7 +35,7 @@ socket.on("enter room", (isAllowed) => {
 		document.getElementById("body-content").removeAttribute("hidden");
 	}
 	// not allowed to enter the room
-	else window.location.href = "https://savy-player.herokuapp.com";
+	else window.location.href = "http://localhost:5000";
 });
 
 // Array to hold the pending permission of user to enter the room
@@ -149,6 +149,51 @@ video.on("seeked", (event) => {
 	}
 });
 
+const inputField = document.getElementById("inputField");
+
+function sendmessage() {
+	
+	console.log("Sending Message", inputField.value);
+	chatbody.innerHTML += `								<li class="out">
+	<div class="chat-img">
+		<img
+			alt="Avtar"
+			src="https://bootdey.com/img/Content/avatar/avatar6.png"
+		/>
+	</div>
+	<div class="chat-body">
+		<div class="chat-message">
+			<h5>Serena</h5>
+			<p>${inputField.value}</p>
+		</div> 
+	</div>
+</li>`
+	socket.emit("New Message", inputField.value, roomno);
+
+}
+
+const chatbody = document.getElementById("chatbody");
+
+socket.on("New Message", (message) => {
+	chatbody.innerHTML += `<li class="in">
+	<div class="chat-img" >
+		<img
+			alt="Avtar"
+			src="https://bootdey.com/img/Content/avatar/avatar1.png"
+		/>
+	</div>
+	<div class="chat-body" >
+		<div class="chat-message">
+			<h5>Jimmy Willams</h5>
+			<p>
+				${message}
+			</p>
+		</div>
+	</div>
+</li>`;
+	console.log("Listening from server", message);
+});
+
 socket.on("play", () => {
 	console.log("socket on play ", canSeek);
 	canSeek = false;
@@ -206,6 +251,11 @@ socket.on("user_array", (user_array) => {
 		sidePanel.appendChild(a_tag);
 	});
 });
+
+function chatRoom() {
+	const chatRoom = document.getElementById("chatRoom");
+	chatRoom.style.display = "block";
+}
 
 function toastUserAddRemove(username, eventHappened) {
 	toastContainer.style.padding = "10px";

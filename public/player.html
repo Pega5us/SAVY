@@ -8,7 +8,7 @@
 				name="viewport"
 				content="width=device-width, initial-scale=1, shrink-to-fit=no"
 			/>
-
+			<link rel="stylesheet" href="http://localhost:5000/getPlayerCSS" />
 			<!-- Bootstrap CSS -->
 			<link
 				rel="stylesheet"
@@ -25,7 +25,7 @@
 			<script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
 			<script
 				type="text/javascript"
-				src="https://savy-player.herokuapp.com/getPlayerJS"
+				src="http://localhost:5000/getPlayerJS"
 				defer
 			></script>
 			<title>SAVY</title>
@@ -103,7 +103,7 @@
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 				<a
 					class="navbar-brand"
-					href="https://savy-player.herokuapp.com"
+					href="http://localhost:5000"
 					style="font-size: 30px"
 					><img
 						src="https://raw.githubusercontent.com/akumar98394/SAVY/ebeeff27e6fb47d03062225def42eaeec13f60b2/public/cd-player.svg"
@@ -176,6 +176,16 @@
 								Copy Link
 							</button>
 						</li>
+						<li class="nav-item active mr-3 mt-1">
+							<button
+								class="btn btn-sm btn-outline-secondary my-2 my-sm-0"
+								type="submit"
+								style="color: #37a8e9"
+								onclick="chatRoom()"
+							>
+								ChatRoom
+							</button>
+						</li>
 						<li class="nav-item active" style="margin-top: 2px">
 							<input
 								type="file"
@@ -190,6 +200,82 @@
 					</ul>
 				</div>
 			</nav>
+			<div id="chatRoom" style="display: none">
+				chatRoom
+				<div class="container content">
+					<div class="card">
+						<div class="card-header">Chat</div>
+						<div class="card-body height3">
+							<ul class="chat-list" id = "chatbody">
+								<li class="in">
+									<div class="chat-img" >
+										<img
+											alt="Avtar"
+											src="https://bootdey.com/img/Content/avatar/avatar1.png"
+										/>
+									</div>
+									<div class="chat-body" >
+										<div class="chat-message">
+											<h5>Jimmy Willams</h5>
+											<p>
+												Raw denim heard of them tofu
+												master cleanse
+											</p>
+										</div>
+									</div>
+								</li>
+								<li class="out">
+									<div class="chat-img">
+										<img
+											alt="Avtar"
+											src="https://bootdey.com/img/Content/avatar/avatar6.png"
+										/>
+									</div>
+									<div class="chat-body">
+										<div class="chat-message">
+											<h5>Serena</h5>
+											<p>Next level veard</p>
+										</div>
+									</div>
+								</li>
+								<li class="in">
+									<div class="chat-img">
+										<img
+											alt="Avtar"
+											src="https://bootdey.com/img/Content/avatar/avatar1.png"
+										/>
+									</div>
+									<div class="chat-body">
+										<div class="chat-message">
+											<h5 class="name">Jimmy Willams</h5>
+											<p>
+												Will stumptown scenes coffee
+												viral.
+											</p>
+										</div>
+									</div>
+								</li>
+								<li class="out">
+									<div class="chat-img">
+										<img
+											alt="Avtar"
+											src="https://bootdey.com/img/Content/avatar/avatar6.png"
+										/>
+									</div>
+									<div class="chat-body">
+										<div class="chat-message">
+											<h5>Serena</h5>
+											<p>Tofu master best deal</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<input type="text" id="inputField">
+				<button onclick="sendmessage()">Send</button>
+			</div>
 
 			<main
 				role="main"
