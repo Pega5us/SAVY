@@ -159,14 +159,16 @@ io.on("connection", (socket) => {
 
 	// Player events
 	socket.on("play", (roomno) => {
-		console.log("play event occurred");
-		socket.to(roomno).emit("play");
+		if (socket.id === rooms[socket.roomno].host)
+			socket.to(roomno).emit("play");
 	});
 	socket.on("pause", (roomno) => {
-		socket.to(roomno).emit("pause");
+		if (socket.id === rooms[socket.roomno].host)
+			socket.to(roomno).emit("pause");
 	});
 	socket.on("seeked", (data, roomno) => {
-		socket.to(roomno).emit("seeked", data);
+		if (socket.id === rooms[socket.roomno].host)
+			socket.to(roomno).emit("seeked", data);
 	});
 
 	// Code to run if the socket gets disconnected
