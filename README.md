@@ -5,8 +5,7 @@ SAVY Player provides service to watch local video with friends in a synchronised
 
 ---
 
-### Dependencies
-
+### Server side dependencies
 ```
  Socket.io
 
@@ -17,16 +16,20 @@ SAVY Player provides service to watch local video with friends in a synchronised
 ---
 
 ### How to run locally
+<br>
+#### How to run the server
 
-##### How to run the server
+```bash
+git clone https://github.com/abhay-666/SAVY.git
+```
 
 Install Dependencies
-```
+```bash
  npm install
 ```
 
 Run the server
-```
+```bash
  npm run dev
 ```
 Access the page by going to http://localhost:5000
