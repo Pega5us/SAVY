@@ -63,7 +63,7 @@ app.get("/getRoomNumber", (req, res) => {
 	setTimeout(
 		(roomno) => {
 			console.log(`Checking if someone has joined the room ${roomno}`);
-			if (rooms[roomno].hasJoined) {
+			if (!rooms[roomno].hasJoined) {
 				console.log(`Room ${roomno} killed since no joined the room`);
 				delete rooms[roomno];
 			}
