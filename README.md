@@ -17,6 +17,7 @@ SAVY Player provides service to watch local video with friends in a synchronised
 
 ### How to run locally
 <br>
+
 #### How to run the server
 
 ```bash
