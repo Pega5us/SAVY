@@ -183,7 +183,7 @@ function sendmessage() {
 
 const chatbody = document.getElementById("chatbody");
 
-socket.on("New Message", (message, username, userID) => {
+socket.on("New Message", (message, username) => {
 	chatbody.innerHTML += `
 		<div class="col-sm-12 my-auto">
 		 <div class = "float-left p-2 mt-2" style="background-color:#343A40;color:white;border-radius: 15px 15px 15px 0px;max-width:200px">
