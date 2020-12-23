@@ -8,10 +8,7 @@
 				name="viewport"
 				content="width=device-width, initial-scale=1, shrink-to-fit=no"
 			/>
-			<link
-				rel="stylesheet"
-				href="https://savy-player.herokuapp.com/getPlayerCSS"
-			/>
+			<link rel="stylesheet" href="https://savy-player.herokuapp.com/getPlayerCSS" />
 			<!-- Bootstrap CSS -->
 			<link
 				rel="stylesheet"
@@ -218,12 +215,28 @@
 								<i class="fa fa-comments"></i>&nbsp Chat&nbsp;
 							</button>
 						</li>
+						<li class="nav-item active mr-3">
+							<label
+								class="btn btn-dark btn-sm mt-1"
+								for="caption_input"
+								style="border: 1px solid grey"
+								>Choose caption(.vtt) + video</label
+							>
+							<input
+								type="file"
+								style="display: none"
+								id="caption_input"
+								accept=".vtt,.mp4,.ogg,.webM"
+								required
+								multiple
+							/>
+						</li>
 						<li class="nav-item active">
 							<label
 								class="btn btn-dark btn-sm mt-1"
 								for="input"
 								style="border: 1px solid grey"
-								>Choose File ..</label
+								>Choose video</label
 							>
 							<input
 								type="file"

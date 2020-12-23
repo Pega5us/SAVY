@@ -103,7 +103,10 @@ function copyLink() {
 
 let URL = window.URL || window.webkitURL;
 
-const video = new Plyr("#video");
+const video = new Plyr("#video", {
+	settings: ["captions", "quality"],
+});
+const video_HTML = document.querySelector("video");
 const playSelectedFile = function (_event) {
 	let file = this.files[0];
 	let fileURL = URL.createObjectURL(file);
@@ -119,10 +122,69 @@ const playSelectedFile = function (_event) {
 		],
 	};
 };
+const addCaptionFile = function (_event) {
+	if (this.files.length == 1) {
+		if (this.files[0].type != "video/mp4") alert("File should be a video");
+		else {
+			video.source = {
+				type: "video",
+				title: "Example title",
+				sources: [
+					{
+						src: URL.createObjectURL(this.files[0]),
+						type: "video/mp4",
+						size: 720,
+					},
+				],
+			};
+		}
+	} else if (this.files.length == 2) {
+		let file0 = this.files[0];
+		let file1 = this.files[1];
+		if (file0.type != "video/mp4" && file1.type != "video/mp4")
+			alert("One file should be video");
+		if (file0.type == "video/mp4" && file1.type == "video/mp4")
+			alert("One file should be caption");
+		else {
+			let videoURL, captionURL;
+			if (file0.type == "video/mp4") {
+				videoURL = file0;
+				captionURL = file1;
+			} else {
+				videoURL = file1;
+				captionURL = file0;
+			}
 
+			video.source = {
+				type: "video",
+				title: "Example title",
+				sources: [
+					{
+						src: URL.createObjectURL(videoURL),
+						type: "video/mp4",
+						size: 720,
+					},
+				],
+				tracks: [
+					{
+						kind: "captions",
+						label: "English",
+						srclang: "en",
+						src: URL.createObjectURL(captionURL),
+						default: true,
+					},
+				],
+			};
+		}
+	} else if (this.files.length > 2) alert("More than two files selected");
+	else alert("No file choosen");
+};
 document
 	.getElementById("input")
 	.addEventListener("change", playSelectedFile, false);
+document
+	.getElementById("caption_input")
+	.addEventListener("change", addCaptionFile);
 
 let canSeek = true;
 
