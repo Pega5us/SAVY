@@ -110,11 +110,11 @@
 				color: black;
 			}
 
-			.col-12 {
+			.col-md-12 {
 				flex-grow: 1;
 				transition: all 400ms ease;
 			}
-			.col-8 {
+			.col-md-8 {
 				flex-grow: 1;
 				transition: all 400ms ease;
 			}
@@ -122,7 +122,7 @@
 		<!-- Custom styles for this template -->
 	</head>
 	<body>
-		<div id="body-content">
+		<div id="body-content" hidden>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 				<a
 					class="navbar-brand"
@@ -257,7 +257,7 @@
 				style="width: 100%; height: 100%"
 			>
 				<div class="row">
-					<div class="col-12" id="videoCol">
+					<div class="col-md-12" id="videoCol">
 						<video
 							width="100%"
 							height="100%"
@@ -266,7 +266,7 @@
 							controls
 						></video>
 					</div>
-					<div class="col-4" id="chatCol" hidden>
+					<div class="col-md-4" id="chatCol" hidden>
 						<div id="chatRoom">
 							<div class="card">
 								<div
@@ -289,7 +289,10 @@
 									"
 									id="chatpanel"
 								>
-									<ul class="chat-list" id="chatbody"></ul>
+									<ul
+										class="chat-list row h-100"
+										id="chatbody"
+									></ul>
 								</div>
 							</div>
 							<div class="input-group mt-2">

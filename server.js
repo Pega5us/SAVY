@@ -153,11 +153,13 @@ io.on("connection", (socket) => {
 
 	//Chat events
 	socket.on("New Message", (message, username, roomno) => {
+		console.log("server side userID");
 		socket.to(roomno).emit("New Message", message, username);
 	});
 
 	// Player events
 	socket.on("play", (roomno) => {
+		console.log("play event occurred");
 		socket.to(roomno).emit("play");
 	});
 	socket.on("pause", (roomno) => {
