@@ -158,7 +158,7 @@ io.on("connection", (socket) => {
 
 	// Sync video from host
 	socket.on("sync video", () => {
-		if (rooms[socket.roomno].host != null)
+		if (rooms[socket.roomno] != null && rooms[socket.roomno].host != null)
 			io.to(rooms[socket.roomno].host).emit(
 				"get time from host",
 				socket.id
@@ -176,7 +176,7 @@ io.on("connection", (socket) => {
 	socket.on("make me host", () => {
 		rooms[socket.roomno].host = socket.id;
 		rooms[socket.roomno].hostUsername = socket.username;
-		if (rooms[socket.roomno].host != null)
+		if (rooms[socket.roomno] != null && rooms[socket.roomno].host != null)
 			io.in(socket.roomno).emit(
 				"current host",
 				rooms[socket.roomno].hostUsername
@@ -190,17 +190,17 @@ io.on("connection", (socket) => {
 
 	// Player events
 	socket.on("play", (roomno) => {
-		if (rooms[socket.roomno].host != null)
+		if (rooms[socket.roomno] != null && rooms[socket.roomno].host != null)
 			if (socket.id === rooms[socket.roomno].host)
 				socket.to(roomno).emit("play");
 	});
 	socket.on("pause", (roomno) => {
-		if (rooms[socket.roomno].host != null)
+		if (rooms[socket.roomno] != null && rooms[socket.roomno].host != null)
 			if (socket.id === rooms[socket.roomno].host)
 				socket.to(roomno).emit("pause");
 	});
 	socket.on("seeked", (data, roomno) => {
-		if (rooms[socket.roomno].host != null)
+		if (rooms[socket.roomno] != null && rooms[socket.roomno].host != null)
 			if (socket.id === rooms[socket.roomno].host)
 				socket.to(roomno).emit("seeked", data);
 	});
@@ -218,7 +218,7 @@ io.on("connection", (socket) => {
 			);
 
 			// Transfer host if the socket left was the host
-			if (rooms[socket.roomno].host != null)
+			if (rooms[socket.roomno] != null && rooms[socket.roomno].host != null)
 				if (
 					rooms[socket.roomno].array.length > 0 &&
 					rooms[socket.roomno].host === socket.id
