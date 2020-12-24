@@ -62,12 +62,6 @@ body {
 	width: 70%;
 }
 
-.chat-list .in .chat-message:before {
-	left: -12px;
-	border-bottom: 20px solid transparent;
-	border-right: 20px solid #5a99ee;
-}
-
 .chat-list .out .chat-img {
 	float: right;
 }
@@ -76,16 +70,6 @@ body {
 	float: right;
 	margin-right: 20px;
 	text-align: right;
-}
-
-.chat-list .out .chat-message {
-	background: #fc6d4c;
-}
-
-.chat-list .out .chat-message:before {
-	right: -12px;
-	border-bottom: 20px solid transparent;
-	border-left: 20px solid #fc6d4c;
 }
 
 .card .card-header:first-child {

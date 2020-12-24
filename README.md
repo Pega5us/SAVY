@@ -33,4 +33,4 @@ Run the server
 ```bash
  npm run dev
 ```
-Access the page by going to http://localhost:5000
+Server will be running on your PORT environment variable || PORT 5000

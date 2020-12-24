@@ -9,7 +9,6 @@ window.onbeforeunload = () => {
 // Getting roomno from URL
 let temp_arr = window.location.pathname.split("/");
 let roomno = temp_arr[temp_arr.length - 1];
-
 // Getting username from URL
 let current_username = new URLSearchParams(window.location.search).get(
 	"username"
@@ -20,6 +19,8 @@ let room_URL = `https://savy-player.herokuapp.com/room/${roomno}`;
 
 document.getElementById("roomNo").innerText = roomno;
 document.getElementById("userDetail").innerText = current_username;
+
+const navbarToggle = document.getElementsByClassName("navbar-toggler")[0];
 
 //Asking permission to enter the room
 socket.emit("ask permission", roomno, current_username);
@@ -88,7 +89,6 @@ function Utility() {
 	$("#exampleModal").modal("show");
 }
 
-
 // Sync video
 socket.on("get time from host", (socketId) => {
 	socket.emit(
@@ -102,11 +102,14 @@ socket.on("get time from host", (socketId) => {
 //Function to manually sync
 function syncVideo() {
 	socket.emit("sync video");
+	console.log(window.innerWidth);
+	if (window.innerWidth < 995) navbarToggle.click();
 }
 
-//Function to change host 
+//Function to change host
 function makeMeHost() {
 	socket.emit("make me host");
+	if (window.innerWidth < 995) navbarToggle.click();
 }
 
 //Copy Link button functionality to share link
@@ -119,14 +122,16 @@ function copyLink() {
 	ele.select();
 	document.execCommand("copy");
 	document.body.removeChild(para);
+	if (window.innerWidth < 995) navbarToggle.click();
 }
 
 let URL = window.URL || window.webkitURL;
-
+//Initialising Player
 const video = new Plyr("#video", {
 	settings: ["captions", "quality"],
 });
 const video_HTML = document.querySelector("video");
+
 //Choose File button implementation
 const playSelectedFile = function (_event) {
 	let file = this.files[0];
@@ -143,6 +148,7 @@ const playSelectedFile = function (_event) {
 		],
 	};
 };
+
 //Choose File and Caption button implementation
 const addCaptionFile = function (_event) {
 	if (this.files.length == 1) {
@@ -226,78 +232,24 @@ video.on("seeked", (event) => {
 	if (was_video_playing) socket.emit("play", roomno);
 });
 
-const inputField = document.getElementById("inputField");
-const sendMessageButton = document.getElementById("sendbutton");
-
-function checkempty() {
-	if (inputField.value === "") {
-		sendMessageButton.disabled = true;
-	} else {
-		sendMessageButton.disabled = false;
-	}
-}
-
-function sendmessage() {
-	console.log("Sending Message", inputField.value);
-
-	chatbody.innerHTML += `
-	<div class="col-sm-12 my-auto" >
-	 	<div class = "float-right p-2 mt-2" style="background-color:#343A40 ;color:white;border-radius: 15px 15px 0px 15px;max-width:200px">
-		<div class="float-left"><b>You</b></div></br>
-		 <div >${inputField.value}</div>
-		<div class="float-right">${new moment().format("h:mm a")}</div></div></div>`;
-
-	socket.emit("New Message", inputField.value, current_username, roomno);
-	let objDiv = document.getElementById("chatpanel");
-	objDiv.scrollTop = objDiv.scrollHeight;
-	inputField.value = "";
-	sendMessageButton.disabled = true;
-}
-
-const chatbody = document.getElementById("chatbody");
-
-socket.on("New Message", (message, username) => {
-	chatbody.innerHTML += `
-		<div class="col-sm-12 my-auto">
-		 <div class = "float-left p-2 mt-2" style="background-color:#343A40;color:white;border-radius: 15px 15px 15px 0px;max-width:200px">
-		<div class="float-left"><b>${username}</b></div></br>
-		 <div class="mt-1">${message}</div>
-		<div class="float-right">${new moment().format("h:mm a")}</div></div></div>`;
-
-	let objDiv = document.getElementById("chatpanel");
-	objDiv.scrollTop = objDiv.scrollHeight;
-	let x = document.getElementById("chatRoom");
-	if (chatIsHidden == true) {
-		let chatButton = document.getElementById("chat_button");
-		chatButton.style.backgroundColor = "#181a1b";
-		if (!chatButton.innerHTML.endsWith("*")) chatButton.innerHTML += "*";
-	}
-});
-
+//Play video
 socket.on("play", () => {
 	video.play();
 });
 
+//Pause video
 socket.on("pause", () => {
 	video.pause();
 });
 
+//Seek Video
 socket.on("seeked", (data) => {
 	let was_video_playing = video.playing;
 	video.currentTime = data;
 	if (was_video_playing) video.play();
 });
 
-let toastContainer = document.getElementById("toast-container");
-
-socket.on("new user", (username) => {
-	toastUserAddRemove(username, "joined");
-});
-
-socket.on("left room", (username) => {
-	toastUserAddRemove(username, "left");
-});
-
+//List the members present in the room
 socket.on("user_array", (user_array) => {
 	// Getting the array of users in room
 	console.log(user_array);
@@ -316,35 +268,105 @@ socket.on("user_array", (user_array) => {
 	});
 });
 
+//Detail about the host of the room
 socket.on("current host", (username) => {
 	document.getElementById("hostDetail").innerText = username;
 });
 
+//Chat Implementation
+const inputField = document.getElementById("inputField");
+const sendMessageButton = document.getElementById("sendbutton");
+let chatPanel = document.getElementById("chatpanel");
 let chatIsHidden = true;
+let chatButton = document.getElementById("chat_button");
+let videoCol = document.getElementById("videoCol");
+let chatCol = document.getElementById("chatCol");
+const chatbody = document.getElementById("chatbody");
 
-function chatRoom() {
+//Check whether message input field is empty and disable button accordingly
+function checkempty() {
+	if (inputField.value === "") {
+		sendMessageButton.disabled = true;
+	} else {
+		sendMessageButton.disabled = false;
+	}
+}
+
+//Function to handle messaging
+function sendmessage() {
+	console.log("Sending Message", inputField.value);
+
+	chatbody.innerHTML += `
+	<div class="col-sm-12 my-auto" >
+	 	<div class = "float-right p-2 mt-2" style="background-color:#343A40 ;color:white;border-radius: 15px 15px 0px 15px;max-width:200px">
+		<div class="float-left"><b>You</b></div></br>
+		 <div >${inputField.value}</div>
+		<div class="float-right">${new moment().format("h:mm a")}</div></div></div>`;
+
+	socket.emit("New Message", inputField.value, current_username, roomno);
+	let objDiv = chatPanel;
+	objDiv.scrollTop = objDiv.scrollHeight;
+	inputField.value = "";
+	sendMessageButton.disabled = true;
+}
+
+socket.on("New Message", (message, username) => {
+	chatbody.innerHTML += `
+		<div class="col-sm-12 my-auto">
+		 <div class = "float-left p-2 mt-2" style="background-color:#343A40;color:white;border-radius: 15px 15px 15px 0px;max-width:200px">
+		<div class="float-left"><b>${username}</b></div></br>
+		 <div class="mt-1">${message}</div>
+		<div class="float-right">${new moment().format("h:mm a")}</div></div></div>`;
+
+	let objDiv = chatPanel;
+	objDiv.scrollTop = objDiv.scrollHeight;
+	let x = document.getElementById("chatRoom");
+	if (chatIsHidden == true) {
+		chatButton.style.backgroundColor = "#181a1b";
+		if (!chatButton.innerHTML.endsWith("*")) chatButton.innerHTML += "*";
+	}
+});
+
+function chatToggle() {
 	setTimeout(() => {
 		if (chatIsHidden) {
-			document.getElementById("chatCol").removeAttribute("hidden");
+			chatCol.removeAttribute("hidden");
 			chatIsHidden = false;
 		} else {
 			chatIsHidden = true;
 		}
 	}, 400);
-
+	
 	if (chatIsHidden) {
-		let chatButton = document.getElementById("chat_button");
 		chatButton.style.backgroundColor = "transparent";
 		chatButton.innerHTML = chatButton.innerHTML.replace("*", "");
-		document.getElementById("videoCol").classList.remove("col-md-12");
-		document.getElementById("videoCol").classList.add("col-md-8");
+		videoCol.classList.remove("col-md-12");
+		videoCol.classList.add("col-md-8");
 	} else {
-		document.getElementById("videoCol").classList.remove("col-md-8");
-		document.getElementById("videoCol").classList.add("col-md-12");
-		document.getElementById("chatCol").setAttribute("hidden", "hidden");
+		videoCol.classList.remove("col-md-8");
+		videoCol.classList.add("col-md-12");
+		chatCol.setAttribute("hidden", "hidden");
 	}
 }
 
+function chatRoom() {
+	chatToggle();
+	if (window.innerWidth < 995) navbarToggle.click();
+}
+//Handling Notification Events
+let toastContainer = document.getElementById("toast-container");
+
+//Notification on new user entry
+socket.on("new user", (username) => {
+	toastUserAddRemove(username, "joined");
+});
+
+//Notification on user leaving room
+socket.on("left room", (username) => {
+	toastUserAddRemove(username, "left");
+});
+
+//Function to handle notification events
 function toastUserAddRemove(username, eventHappened) {
 	toastContainer.style.padding = "10px";
 	toastContainer.style.backgroundColor = "#181a1b";
@@ -375,6 +397,7 @@ function toastUserAddRemove(username, eventHappened) {
 	}, 5000);
 }
 
+//Send Message on pressing enter key
 document.onkeypress = function (e) {
 	if (e.keyCode == 13 && inputField.value != "") {
 		sendMessageButton.onclick();

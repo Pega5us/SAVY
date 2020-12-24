@@ -2,8 +2,8 @@ const express = require("express");
 const socket = require("socket.io");
 const join = require("path").join;
 const url = require("url");
-
 const app = express();
+
 var PORT = process.env.PORT || 5000;
 
 app.use(express.static("public"));
@@ -73,10 +73,7 @@ app.get("/getRoomNumber", (req, res) => {
 	res.send(`${roomno}`);
 });
 
-app.get("/getRoomList", (_req, res) => {
-	res.send(Object.keys(rooms));
-});
-
+//Check whether room exists or not
 app.get("/check/:roomno", (req, res) => {
 	if (rooms.hasOwnProperty(req.params.roomno)) res.send(true);
 	else res.send(false);
@@ -150,6 +147,7 @@ io.on("connection", (socket) => {
 			rooms[socket.roomno].array.map((obj) => obj.username)
 		);
 
+		//Sending update on room host
 		io.in(socket.roomno).emit(
 			"current host",
 			rooms[socket.roomno].hostUsername
@@ -161,6 +159,7 @@ io.on("connection", (socket) => {
 		io.to(rooms[socket.roomno].host).emit("get time from host", socket.id);
 	});
 
+	//get current video state
 	socket.on("video current state", (curr_time, isPlaying, socketId) => {
 		io.to(socketId).emit("seeked", curr_time);
 		if (isPlaying) io.to(socketId).emit("play");
@@ -178,7 +177,6 @@ io.on("connection", (socket) => {
 
 	//Chat events
 	socket.on("New Message", (message, username, roomno) => {
-		console.log("server side userID");
 		socket.to(roomno).emit("New Message", message, username);
 	});
 
@@ -221,6 +219,7 @@ io.on("connection", (socket) => {
 					rooms[socket.roomno].hostUsername
 				);
 			}
+
 			// Sending the updated username array
 			socket.to(socket.roomno).emit(
 				"user_array",
