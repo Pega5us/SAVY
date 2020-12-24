@@ -158,11 +158,7 @@ io.on("connection", (socket) => {
 
 	// Sync video from host
 	socket.on("sync video", () => {
-		if (rooms[socket.roomno] != null && rooms[socket.roomno].host != null)
-			io.to(rooms[socket.roomno].host).emit(
-				"get time from host",
-				socket.id
-			);
+		io.to(rooms[socket.roomno].host).emit("get time from host", socket.id);
 	});
 
 	//get current video state
@@ -176,11 +172,10 @@ io.on("connection", (socket) => {
 	socket.on("make me host", () => {
 		rooms[socket.roomno].host = socket.id;
 		rooms[socket.roomno].hostUsername = socket.username;
-		if (rooms[socket.roomno] != null && rooms[socket.roomno].host != null)
-			io.in(socket.roomno).emit(
-				"current host",
-				rooms[socket.roomno].hostUsername
-			);
+		io.in(socket.roomno).emit(
+			"current host",
+			rooms[socket.roomno].hostUsername
+		);
 	});
 
 	//Chat events
@@ -190,19 +185,16 @@ io.on("connection", (socket) => {
 
 	// Player events
 	socket.on("play", (roomno) => {
-		if (rooms[socket.roomno] != null && rooms[socket.roomno].host != null)
-			if (socket.id === rooms[socket.roomno].host)
-				socket.to(roomno).emit("play");
+		if (socket.id === rooms[socket.roomno].host)
+			socket.to(roomno).emit("play");
 	});
 	socket.on("pause", (roomno) => {
-		if (rooms[socket.roomno] != null && rooms[socket.roomno].host != null)
-			if (socket.id === rooms[socket.roomno].host)
-				socket.to(roomno).emit("pause");
+		if (socket.id === rooms[socket.roomno].host)
+			socket.to(roomno).emit("pause");
 	});
 	socket.on("seeked", (data, roomno) => {
-		if (rooms[socket.roomno] != null && rooms[socket.roomno].host != null)
-			if (socket.id === rooms[socket.roomno].host)
-				socket.to(roomno).emit("seeked", data);
+		if (socket.id === rooms[socket.roomno].host)
+			socket.to(roomno).emit("seeked", data);
 	});
 
 	// Code to run if the socket gets disconnected
@@ -218,20 +210,18 @@ io.on("connection", (socket) => {
 			);
 
 			// Transfer host if the socket left was the host
-			if (rooms[socket.roomno] != null && rooms[socket.roomno].host != null)
-				if (
-					rooms[socket.roomno].array.length > 0 &&
-					rooms[socket.roomno].host === socket.id
-				) {
-					rooms[socket.roomno].host =
-						rooms[socket.roomno].array[0].id;
-					rooms[socket.roomno].hostUsername =
-						rooms[socket.roomno].array[0].username;
-					io.in(socket.roomno).emit(
-						"current host",
-						rooms[socket.roomno].hostUsername
-					);
-				}
+			if (
+				rooms[socket.roomno].array.length > 0 &&
+				rooms[socket.roomno].host === socket.id
+			) {
+				rooms[socket.roomno].host = rooms[socket.roomno].array[0].id;
+				rooms[socket.roomno].hostUsername =
+					rooms[socket.roomno].array[0].username;
+				io.in(socket.roomno).emit(
+					"current host",
+					rooms[socket.roomno].hostUsername
+				);
+			}
 
 			// Sending the updated username array
 			socket.to(socket.roomno).emit(
