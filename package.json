@@ -6,7 +6,8 @@
 	"scripts": {
 		"dev": "fuser -k 5000/tcp & nodemon server.js",
 		"start": "node server.js",
-		"logs": "heroku logs -t --app savy-player"
+		"logs": "heroku logs -t --app savy-player",
+		"restart": "heroku restart --app savy-player"
 	},
 	"author": "",
 	"license": "ISC",
