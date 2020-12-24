@@ -1,11 +1,11 @@
 // Client
 
 let initialUrl = "https://savy-player.herokuapp.com";
-//Input Username
+// Input Username
 let userId = document.getElementById("username");
-//Room No
+// Room No
 let roomNo = document.getElementById("inputRoomNo");
-//get Room No
+// get Room No
 let current_roomno = new URLSearchParams(window.location.search).get("roomno");
 
 if (current_roomno) {
@@ -22,17 +22,17 @@ if (username_local !== null) {
 	userId.value = username_local;
 }
 
-//Create New Room
+// Create New Room
 function create() {
 	const username = userId.value;
 	localStorage.setItem("username", username);
-	//If Username field is not empty new room will be created
+	// If Username field is not empty new room will be created
 	if (username !== "") {
 		let response = httpGet(`${initialUrl}/getRoomNumber`);
 		let url = `${initialUrl}/room/${response}?username=${username}`;
 		window.location.href = url;
 	}
-	//Else it will highlight the required field
+	// Else it will highlight the required field
 	else {
 		userId.style.boxShadow = "5px 5px 18px #00897b";
 		setTimeout(function () {
@@ -41,7 +41,7 @@ function create() {
 	}
 }
 
-//Joining an existing Room
+// Joining an existing Room
 function join() {
 	const username = userId.value;
 	localStorage.setItem("username", username);
@@ -80,7 +80,7 @@ function join() {
 	}
 }
 
-//Get Room No from Server
+// Utility function for sending request to server
 function httpGet(theUrl) {
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.open("GET", theUrl, false); // false for synchronous request
@@ -88,14 +88,14 @@ function httpGet(theUrl) {
 	return xmlHttp.responseText;
 }
 
-//Joining Room on Enter Key Press
+// Joining Room on Enter Key Press
 roomNo.onkeypress = function (e) {
 	if (e.keyCode == 13) {
 		document.getElementById("key").onclick();
 	}
 };
 
-//Creating Room on Enter Key Press
+// Creating Room on Enter Key Press
 userId.onkeypress = function (e) {
 	if (e.keyCode == 13) {
 		document.getElementById("new_room").onclick();

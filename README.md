@@ -33,4 +33,4 @@ Run the server
 ```bash
  npm run dev
 ```
-Access the page by going to https://savy-player.herokuapp.com
+Access the page by going to http://localhost:5000
