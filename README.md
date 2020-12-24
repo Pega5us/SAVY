@@ -22,6 +22,9 @@ SAVY Player provides service to watch local video with friends in a synchronised
 
 ```bash
 git clone https://github.com/abhay-666/SAVY.git
+
+cd SAVY
+
 ```
 
 Install Dependencies
