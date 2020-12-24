@@ -13,6 +13,11 @@ const server = app.listen(PORT, () => {
 	console.log(`Server running at ${PORT}`);
 });
 
+// Exception handled
+process.on("uncaughtException", (exception) => {
+	console.log(exception);
+});
+
 // Setup sockets
 const io = socket(server);
 
@@ -228,7 +233,7 @@ io.on("connection", (socket) => {
 				"user_array",
 				rooms[socket.roomno].array.map((obj) => obj.username)
 			);
-
+			
 			// If no one is in room delete the room after 10mins
 			if (rooms[socket.roomno].array.length === 0) {
 				setTimeout(
