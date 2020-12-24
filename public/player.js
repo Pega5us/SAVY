@@ -89,6 +89,24 @@ socket.on("user permission", (username, socketId) => {
 	}, 500);
 });
 
+// Sync video
+socket.on("get time from host", (socketId) => {
+	socket.emit(
+		"video current state",
+		video.currentTime,
+		video.playing,
+		socketId
+	);
+});
+
+function syncVideo() {
+	socket.emit("sync video");
+}
+
+function makeMeHost() {
+	socket.emit("make me host");
+}
+
 function copyLink() {
 	let para = document.createElement("textarea");
 	para.id = "copiedLink";
@@ -185,34 +203,22 @@ document
 	.getElementById("caption_input")
 	.addEventListener("change", addCaptionFile);
 
-let canSeek = true;
-
 //play event
 video.on("playing", (event) => {
-	console.log("video on playing ", canSeek);
-
-	if (canSeek) {
-		socket.emit("play", roomno);
-		socket.emit("seeked", video.currentTime, roomno);
-	}
+	socket.emit("play", roomno);
+	socket.emit("seeked", video.currentTime, roomno);
 });
 
 // pause event
 video.on("pause", (event) => {
-	console.log("video on pause ", canSeek);
-
-	if (canSeek) socket.emit("pause", roomno);
+	socket.emit("pause", roomno);
 });
 
 // seeking event
 video.on("seeked", (event) => {
-	console.log("video on seeked " + canSeek);
-	if (canSeek) {
-		console.log("Manually seek happened");
-		let was_video_playing = video.playing;
-		socket.emit("seeked", video.currentTime, roomno);
-		if (was_video_playing) socket.emit("play", roomno);
-	}
+	let was_video_playing = video.playing;
+	socket.emit("seeked", video.currentTime, roomno);
+	if (was_video_playing) socket.emit("play", roomno);
 });
 
 const inputField = document.getElementById("inputField");
@@ -264,35 +270,17 @@ socket.on("New Message", (message, username) => {
 });
 
 socket.on("play", () => {
-	console.log("socket on play ", canSeek);
-	canSeek = false;
-	setTimeout(() => {
-		canSeek = true;
-		console.log("socket on play after 500msec canSeek " + canSeek);
-	}, 500);
 	video.play();
 });
 
 socket.on("pause", () => {
-	console.log("socket on pause ", canSeek);
-	canSeek = false;
-	setTimeout(() => {
-		canSeek = true;
-		console.log("socket on pause after 500msec canSeek " + canSeek);
-	}, 500);
 	video.pause();
 });
 
 socket.on("seeked", (data) => {
-	console.log("socket on seeked");
-	canSeek = false;
 	let was_video_playing = video.playing;
 	video.currentTime = data;
 	if (was_video_playing) video.play();
-	setTimeout(() => {
-		canSeek = true;
-		console.log("after 500msec canSeek " + canSeek);
-	}, 500);
 });
 
 let toastContainer = document.getElementById("toast-container");
@@ -311,7 +299,6 @@ socket.on("user_array", (user_array) => {
 	document.getElementById("no_of_members").innerText = user_array.length;
 	let sidePanel = document.getElementById("sidePanel");
 	sidePanel.innerHTML = "";
-	document.getElementById("hostDetail").innerText = user_array[0];
 	user_array.map((users) => {
 		let a_tag = document.createElement("a");
 		let node = document.createTextNode(users);
@@ -322,6 +309,10 @@ socket.on("user_array", (user_array) => {
 		a_tag.appendChild(node);
 		sidePanel.appendChild(a_tag);
 	});
+});
+
+socket.on("current host", (username) => {
+	document.getElementById("hostDetail").innerText = username;
 });
 
 let chatIsHidden = true;

@@ -8,10 +8,7 @@
 				name="viewport"
 				content="width=device-width, initial-scale=1, shrink-to-fit=no"
 			/>
-			<link
-				rel="stylesheet"
-				href="https://savy-player.herokuapp.com/getPlayerCSS"
-			/>
+			<link rel="stylesheet" href="https://savy-player.herokuapp.com/getPlayerCSS" />
 			<!-- Bootstrap CSS -->
 			<link
 				rel="stylesheet"
@@ -200,6 +197,24 @@
 						<li class="nav-item active mr-3">
 							<button
 								class="btn btn-dark btn-sm mt-1"
+								onclick="syncVideo()"
+								style="border: 1px solid grey"
+							>
+								Sync
+							</button>
+						</li>
+						<li class="nav-item active mr-3">
+							<button
+								class="btn btn-dark btn-sm mt-1"
+								onclick="makeMeHost()"
+								style="border: 1px solid grey"
+							>
+								Make me Host
+							</button>
+						</li>
+						<li class="nav-item active mr-3">
+							<button
+								class="btn btn-dark btn-sm mt-1"
 								type="submit"
 								onclick="copyLink()"
 								style="border: 1px solid grey"
@@ -266,7 +281,6 @@
 							height="100%"
 							id="video"
 							playsinline
-							controls
 						></video>
 					</div>
 					<div class="col-md-4" id="chatCol" hidden>

@@ -37,9 +37,7 @@ const isAuthenticated = (req, res, next) => {
 		return next();
 	} else {
 		// Authentication done redirecting to room
-		return res.redirect(
-			`https://savy-player.herokuapp.com/?roomno=${roomno}`
-		);
+		return res.redirect(`https://savy-player.herokuapp.com/?roomno=${roomno}`);
 	}
 };
 
@@ -141,13 +139,40 @@ io.on("connection", (socket) => {
 		});
 
 		// If the socket is first make it host
-		if (rooms[socket.roomno].array.length === 1)
+		if (rooms[socket.roomno].array.length === 1) {
 			rooms[socket.roomno].host = socket.id;
+			rooms[socket.roomno].hostUsername = socket.username;
+		}
 
 		// Sending the updated username array to room
 		io.in(socket.roomno).emit(
 			"user_array",
 			rooms[socket.roomno].array.map((obj) => obj.username)
+		);
+
+		io.in(socket.roomno).emit(
+			"current host",
+			rooms[socket.roomno].hostUsername
+		);
+	});
+
+	// Sync video from host
+	socket.on("sync video", () => {
+		io.to(rooms[socket.roomno].host).emit("get time from host", socket.id);
+	});
+
+	socket.on("video current state", (curr_time, isPlaying, socketId) => {
+		io.to(socketId).emit("seeked", curr_time);
+		if (isPlaying) io.to(socketId).emit("play");
+	});
+
+	// Host change event
+	socket.on("make me host", () => {
+		rooms[socket.roomno].host = socket.id;
+		rooms[socket.roomno].hostUsername = socket.username;
+		io.in(socket.roomno).emit(
+			"current host",
+			rooms[socket.roomno].hostUsername
 		);
 	});
 
@@ -187,9 +212,15 @@ io.on("connection", (socket) => {
 			if (
 				rooms[socket.roomno].array.length > 0 &&
 				rooms[socket.roomno].host === socket.id
-			)
+			) {
 				rooms[socket.roomno].host = rooms[socket.roomno].array[0].id;
-
+				rooms[socket.roomno].hostUsername =
+					rooms[socket.roomno].array[0].username;
+				io.in(socket.roomno).emit(
+					"current host",
+					rooms[socket.roomno].hostUsername
+				);
+			}
 			// Sending the updated username array
 			socket.to(socket.roomno).emit(
 				"user_array",
