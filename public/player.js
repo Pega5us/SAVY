@@ -135,7 +135,6 @@ const playSelectedFile = function (_event) {
 	let file = this.files[0];
 	let fileURL = URL.createObjectURL(file);
 	document.getElementById("video").src = fileURL;
-	video.play();
 };
 
 //Choose File and Caption button implementation
