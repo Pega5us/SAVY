@@ -24,7 +24,6 @@
 				type="image/png"
 				href="https://raw.githubusercontent.com/akumar98394/SAVY/ebeeff27e6fb47d03062225def42eaeec13f60b2/public/cd-player.svg"
 			/>
-			<link rel="stylesheet" href="https://cdn.plyr.io/3.6.3/plyr.css" />
 			<link
 				rel="stylesheet"
 				href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -221,7 +220,7 @@
 								class="btn btn-dark btn-sm mt-1"
 								for="caption_input"
 								style="border: 1px solid grey"
-								>Choose Caption(.vtt) + Video</label
+								>Choose Caption(.vtt)</label
 							>
 							<input
 								type="file"
@@ -260,11 +259,19 @@
 				<div class="row">
 					<div class="col-md-12" id="videoCol">
 						<video
+							controls
 							width="100%"
 							height="100%"
 							id="video"
 							playsinline
-						></video>
+						>
+							<track
+								id="video_track"
+								kind="subtitles"
+								srclang="en"
+								label="English"
+							/>
+						</video>
 					</div>
 					<div class="col-md-4" id="chatCol" hidden>
 						<div id="chatRoom">
@@ -324,8 +331,6 @@
 						</div>
 					</div>
 				</div>
-
-				<script src="https://cdn.plyr.io/3.6.3/plyr.js"></script>
 			</main>
 			<!-- Modal Permission-->
 			<div

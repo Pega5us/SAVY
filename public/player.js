@@ -94,7 +94,7 @@ socket.on("get time from host", (socketId) => {
 	socket.emit(
 		"video current state",
 		video.currentTime,
-		video.playing,
+		!video.paused,
 		socketId
 	);
 });
@@ -126,87 +126,25 @@ function copyLink() {
 }
 
 let URL = window.URL || window.webkitURL;
+
 //Initialising Player
-const video = new Plyr("#video", {
-	settings: ["captions", "quality"],
-});
-const video_HTML = document.querySelector("video");
+const video_HTML = document.getElementById("video");
 
 //Choose File button implementation
 const playSelectedFile = function (_event) {
 	let file = this.files[0];
 	let fileURL = URL.createObjectURL(file);
-	video.source = {
-		type: "video",
-		title: "Example title",
-		sources: [
-			{
-				src: fileURL,
-				type: file.type,
-				size: 720,
-			},
-		],
-	};
+	document.getElementById("video").src = fileURL;
+	video.play();
 };
 
 //Choose File and Caption button implementation
 const addCaptionFile = function (_event) {
-	if (this.files.length == 1) {
-		if (this.files[0].type != "video/mp4") alert("File should be a video");
-		else {
-			video.source = {
-				type: "video",
-				title: "Example title",
-				sources: [
-					{
-						src: URL.createObjectURL(this.files[0]),
-						type: "video/mp4",
-						size: 720,
-					},
-				],
-			};
-		}
-	} else if (this.files.length == 2) {
-		let file0 = this.files[0];
-		let file1 = this.files[1];
-		if (file0.type != "video/mp4" && file1.type != "video/mp4")
-			alert("One file should be video");
-		if (file0.type == "video/mp4" && file1.type == "video/mp4")
-			alert("One file should be caption");
-		else {
-			let videoURL, captionURL;
-			if (file0.type == "video/mp4") {
-				videoURL = file0;
-				captionURL = file1;
-			} else {
-				videoURL = file1;
-				captionURL = file0;
-			}
-
-			video.source = {
-				type: "video",
-				title: "Example title",
-				sources: [
-					{
-						src: URL.createObjectURL(videoURL),
-						type: "video/mp4",
-						size: 720,
-					},
-				],
-				tracks: [
-					{
-						kind: "captions",
-						label: "English",
-						srclang: "en",
-						src: URL.createObjectURL(captionURL),
-						default: true,
-					},
-				],
-			};
-		}
-	} else if (this.files.length > 2) alert("More than two files selected");
-	else alert("No file choosen");
+	let file = this.files[0];
+	let fileURL = URL.createObjectURL(file);
+	document.getElementById("video_track").setAttribute("src", fileURL);
 };
+
 document
 	.getElementById("video_input")
 	.addEventListener("change", playSelectedFile, false);
@@ -214,23 +152,23 @@ document
 	.getElementById("caption_input")
 	.addEventListener("change", addCaptionFile);
 
-//play event
-video.on("playing", (event) => {
+// play event
+video.onplaying = (event) => {
 	socket.emit("play", roomno);
 	socket.emit("seeked", video.currentTime, roomno);
-});
+};
 
 // pause event
-video.on("pause", (event) => {
+video.onpause = (event) => {
 	socket.emit("pause", roomno);
-});
+};
 
 // seeking event
-video.on("seeked", (event) => {
-	let was_video_playing = video.playing;
+video.onseeked = (event) => {
+	let was_video_playing = !video.paused;
 	socket.emit("seeked", video.currentTime, roomno);
 	if (was_video_playing) socket.emit("play", roomno);
-});
+};
 
 //Play video
 socket.on("play", () => {
@@ -244,7 +182,7 @@ socket.on("pause", () => {
 
 //Seek Video
 socket.on("seeked", (data) => {
-	let was_video_playing = video.playing;
+	let was_video_playing = !video.paused;
 	video.currentTime = data;
 	if (was_video_playing) video.play();
 });

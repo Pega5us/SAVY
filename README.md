@@ -1,7 +1,7 @@
 # SAVY: A web app to play local videos in sync
 Access application [here!](https://savy-player.herokuapp.com/)
 
-SAVY Player provides service to watch local video with friends in a synchronised way.
+SAVY Player provides service to watch local video in a synchronised way.
 
 ---
 
