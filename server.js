@@ -37,7 +37,9 @@ const isAuthenticated = (req, res, next) => {
 		return next();
 	} else {
 		// Authentication done redirecting to room
-		return res.redirect(`https://savy-player.herokuapp.com/?roomno=${roomno}`);
+		return res.redirect(
+			`https://savy-player.herokuapp.com/?roomno=${roomno}`
+		);
 	}
 };
 
@@ -163,6 +165,7 @@ io.on("connection", (socket) => {
 	socket.on("video current state", (curr_time, isPlaying, socketId) => {
 		io.to(socketId).emit("seeked", curr_time);
 		if (isPlaying) io.to(socketId).emit("play");
+		else io.to(socketId).emit("pause");
 	});
 
 	// Host change event
