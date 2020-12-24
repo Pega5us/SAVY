@@ -101,7 +101,7 @@ io.on("connection", (socket) => {
 		// Checking if the room exist
 		if (!rooms.hasOwnProperty(roomno)) socket.emit("room does not exist");
 		else {
-			// If the socket is first
+			// If current person is the first person to enter the room,no permission required
 			if (rooms[roomno].array.length === 0)
 				io.to(socket.id).emit("enter room", true);
 			// Else ask permission from host

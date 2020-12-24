@@ -1,3 +1,7 @@
+// Initialising socket
+const socket = io();
+
+//Confirming on leaving/reloading the page
 window.onbeforeunload = () => {
 	return "Are you sure?";
 };
@@ -17,9 +21,6 @@ let room_URL = `https://savy-player.herokuapp.com/room/${roomno}`;
 document.getElementById("roomNo").innerText = roomno;
 document.getElementById("userDetail").innerText = current_username;
 
-// Initialising socket
-const socket = io();
-
 //Asking permission to enter the room
 socket.emit("ask permission", roomno, current_username);
 
@@ -27,8 +28,6 @@ socket.emit("ask permission", roomno, current_username);
 socket.on("room does not exist", () => {
 	window.location.href = "https://savy-player.herokuapp.com";
 });
-
-// $(".toast").toast("show");
 
 // Listenting for host reply
 socket.on("enter room", (isAllowed) => {
@@ -68,7 +67,15 @@ document.getElementById("accept-btn").onclick = () => {
 	permissionSpliceAndCheckPermission(true);
 };
 
-// Utility function to show new permission to the host
+// New user permission
+socket.on("user permission", (username, socketId) => {
+	askingPermissionUsers.push({ username, socketId });
+	setTimeout(() => {
+		Utility();
+	}, 500);
+});
+
+// Modal displayed to ask permission from host
 function Utility() {
 	document.getElementById(
 		"modal-body"
@@ -81,13 +88,6 @@ function Utility() {
 	$("#exampleModal").modal("show");
 }
 
-// New user permission
-socket.on("user permission", (username, socketId) => {
-	askingPermissionUsers.push({ username, socketId });
-	setTimeout(() => {
-		Utility();
-	}, 500);
-});
 
 // Sync video
 socket.on("get time from host", (socketId) => {
@@ -99,14 +99,17 @@ socket.on("get time from host", (socketId) => {
 	);
 });
 
+//Function to manually sync
 function syncVideo() {
 	socket.emit("sync video");
 }
 
+//Function to change host 
 function makeMeHost() {
 	socket.emit("make me host");
 }
 
+//Copy Link button functionality to share link
 function copyLink() {
 	let para = document.createElement("textarea");
 	para.id = "copiedLink";
@@ -124,6 +127,7 @@ const video = new Plyr("#video", {
 	settings: ["captions", "quality"],
 });
 const video_HTML = document.querySelector("video");
+//Choose File button implementation
 const playSelectedFile = function (_event) {
 	let file = this.files[0];
 	let fileURL = URL.createObjectURL(file);
@@ -139,6 +143,7 @@ const playSelectedFile = function (_event) {
 		],
 	};
 };
+//Choose File and Caption button implementation
 const addCaptionFile = function (_event) {
 	if (this.files.length == 1) {
 		if (this.files[0].type != "video/mp4") alert("File should be a video");
@@ -197,7 +202,7 @@ const addCaptionFile = function (_event) {
 	else alert("No file choosen");
 };
 document
-	.getElementById("input")
+	.getElementById("video_input")
 	.addEventListener("change", playSelectedFile, false);
 document
 	.getElementById("caption_input")
