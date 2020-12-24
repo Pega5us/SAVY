@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "app.js",
 	"scripts": {
-		"dev": "nodemon server.js",
+		"dev": "fuser -k 5000/tcp & nodemon server.js",
 		"start": "node server.js",
 		"logs": "heroku logs -t --app savy-player"
 	},

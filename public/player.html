@@ -8,7 +8,10 @@
 				name="viewport"
 				content="width=device-width, initial-scale=1, shrink-to-fit=no"
 			/>
-			<link rel="stylesheet" href="https://savy-player.herokuapp.com/getPlayerCSS" />
+			<link
+				rel="stylesheet"
+				href="https://savy-player.herokuapp.com/getPlayerCSS"
+			/>
 			<!-- Bootstrap CSS -->
 			<link
 				rel="stylesheet"
@@ -78,34 +81,6 @@
 			#sidePanel {
 				border-radius: 20px;
 			}
-			.out > .chat-body > .chat-message::before {
-				border-left: 20px solid white !important;
-			}
-			.out > .chat-body > .chat-message > h5 {
-				font-weight: lighter !important;
-				color: black;
-			}
-			.out > .chat-body > .chat-message > h5 > b {
-				font-weight: bold !important;
-				font-family: sans-serif;
-			}
-			.out > .chat-body > .chat-message > p {
-				color: black;
-			}
-			.in > .chat-body > .chat-message::before {
-				border-right: 20px solid #c0c0c0 !important;
-			}
-			.in > .chat-body > .chat-message > h5 {
-				font-weight: lighter !important;
-				color: black;
-			}
-			.in > .chat-body > .chat-message > h5 > b {
-				font-weight: bold !important;
-				font-family: sans-serif;
-			}
-			.in > .chat-body > .chat-message > p {
-				color: black;
-			}
 			.col-md-12 {
 				flex-grow: 1;
 				transition: all 400ms ease;
@@ -113,6 +88,18 @@
 			.col-md-8 {
 				flex-grow: 1;
 				transition: all 400ms ease;
+			}
+			::-webkit-scrollbar {
+				width: 8px;
+				border-radius: 10px;
+			}
+			::-webkit-scrollbar-track {
+				box-shadow: inset 0 0 2px #343a40 !important;
+				border-radius: 10px !important;
+			}
+			::-webkit-scrollbar-thumb {
+				background: #888 !important;
+				border-radius: 10px !important;
 			}
 		</style>
 		<!-- Custom styles for this template -->

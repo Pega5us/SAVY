@@ -298,7 +298,7 @@ function sendmessage() {
 
 	chatbody.innerHTML += `
 	<div class="col-sm-12 my-auto" >
-	 	<div class = "float-right p-2 mt-2" style="background-color:#343A40 ;color:white;border-radius: 15px 15px 0px 15px;max-width:200px">
+	 	<div class = "float-right p-2 mt-2" style="background-color:#343A40 ;color:white;border-radius: 15px 15px 0px 15px;max-width:200px;min-width:100px">
 		<div class="float-left"><b>You</b></div></br>
 		 <div >${inputField.value}</div>
 		<div class="float-right">${new moment().format("h:mm a")}</div></div></div>`;
@@ -313,7 +313,7 @@ function sendmessage() {
 socket.on("New Message", (message, username) => {
 	chatbody.innerHTML += `
 		<div class="col-sm-12 my-auto">
-		 <div class = "float-left p-2 mt-2" style="background-color:#343A40;color:white;border-radius: 15px 15px 15px 0px;max-width:200px">
+		 <div class = "float-left p-2 mt-2" style="background-color:#C0C0C0;color:#000000;border-radius: 15px 15px 15px 0px;max-width:200px;min-width:100px">
 		<div class="float-left"><b>${username}</b></div></br>
 		 <div class="mt-1">${message}</div>
 		<div class="float-right">${new moment().format("h:mm a")}</div></div></div>`;
@@ -336,7 +336,7 @@ function chatToggle() {
 			chatIsHidden = true;
 		}
 	}, 400);
-	
+
 	if (chatIsHidden) {
 		chatButton.style.backgroundColor = "transparent";
 		chatButton.innerHTML = chatButton.innerHTML.replace("*", "");
