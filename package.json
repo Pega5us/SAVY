@@ -8,12 +8,15 @@
 		"start": "node server.js",
 		"logs": "heroku logs -t --app savy-player",
 		"restart": "heroku restart --app savy-player",
-		"app-logs": "heroku logs -t --app savy-player --source app"
+		"app-logs": "heroku logs -t --app savy-player --source app",
+		"check-env-var": "heroku config --app savy-player"
 	},
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"dotenv": "^8.2.0",
 		"express": "^4.16.3",
+		"mediaserver": "^0.1.1",
 		"socket.io": "^2.1.1"
 	}
 }

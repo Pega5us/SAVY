@@ -3,6 +3,8 @@ const socket = require("socket.io");
 const join = require("path").join;
 const url = require("url");
 const app = express();
+const ms = require("mediaserver");
+require("dotenv").config();
 
 var PORT = process.env.PORT || 5000;
 
@@ -42,9 +44,7 @@ const isAuthenticated = (req, res, next) => {
 		return next();
 	} else {
 		// Authentication done redirecting to room
-		return res.redirect(
-			`https://savy-player.herokuapp.com/?roomno=${roomno}`
-		);
+		return res.redirect(`https://savy-player.herokuapp.com/?roomno=${roomno}`);
 	}
 };
 
@@ -92,6 +92,33 @@ app.get("/getPlayerCSS", (_req, res) => {
 
 app.get("/getPlayerJS", (_req, res) => {
 	res.sendFile(join(__dirname, "public", "player.js"));
+});
+
+app.get("/notifJoin.mp3", (req, res) => {
+	ms.pipe(
+		req,
+		res,
+		join(__dirname, "public", "notif_sounds", "notif_join.mp3")
+	);
+});
+app.get("/notifChat.mp3", (req, res) => {
+	ms.pipe(
+		req,
+		res,
+		join(__dirname, "public", "notif_sounds", "notif_chat.mp3")
+	);
+});
+app.get("/notifPermission.mp3", (req, res) => {
+	ms.pipe(
+		req,
+		res,
+		join(__dirname, "public", "notif_sounds", "notif_permission.mp3")
+	);
+});
+
+app.get("/checkRoomStatus/:key", (req, res) => {
+	if (process.env.SAVY_API_KEY == req.params.key) res.send(rooms);
+	else res.sendStatus(401);
 });
 
 // Code when socket makes a connection to server
@@ -233,7 +260,7 @@ io.on("connection", (socket) => {
 				"user_array",
 				rooms[socket.roomno].array.map((obj) => obj.username)
 			);
-			
+
 			// If no one is in room delete the room after 10mins
 			if (rooms[socket.roomno].array.length === 0) {
 				setTimeout(

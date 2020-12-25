@@ -1,5 +1,11 @@
+const notifChat = document.getElementById("notif_chat");
+const notifJoin = document.getElementById("notif_join");
+const notifPermission = document.getElementById("notif_permission");
+
 // Initialising socket
-const socket = io();
+const socket = io("https://savy-player.herokuapp.com", {
+	reconnect: false,
+});
 
 //Confirming on leaving/reloading the page
 window.onbeforeunload = () => {
@@ -70,6 +76,7 @@ document.getElementById("accept-btn").onclick = () => {
 
 // New user permission
 socket.on("user permission", (username, socketId) => {
+	notifPermission.play();
 	askingPermissionUsers.push({ username, socketId });
 	setTimeout(() => {
 		Utility();
@@ -248,6 +255,7 @@ function sendmessage() {
 }
 
 socket.on("New Message", (message, username) => {
+	if (chatIsHidden) notifChat.play();
 	chatbody.innerHTML += `
 		<div class="col-sm-12 my-auto">
 		 <div class = "float-left p-2 mt-2" style="background-color:#C0C0C0;color:#000000;border-radius: 15px 15px 15px 0px;max-width:200px;min-width:100px">
@@ -295,6 +303,7 @@ let toastContainer = document.getElementById("toast-container");
 
 //Notification on new user entry
 socket.on("new user", (username) => {
+	notifJoin.play();
 	toastUserAddRemove(username, "joined");
 });
 
