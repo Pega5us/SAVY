@@ -184,7 +184,8 @@ io.on("connection", (socket) => {
 		//Sending update on room host
 		io.in(socket.roomno).emit(
 			"current host",
-			rooms[socket.roomno].hostUsername
+			rooms[socket.roomno].hostUsername,
+			rooms[socket.roomno].host
 		);
 	});
 
@@ -206,7 +207,8 @@ io.on("connection", (socket) => {
 		rooms[socket.roomno].hostUsername = socket.username;
 		io.in(socket.roomno).emit(
 			"current host",
-			rooms[socket.roomno].hostUsername
+			rooms[socket.roomno].hostUsername,
+			rooms[socket.roomno].host
 		);
 	});
 
@@ -217,16 +219,13 @@ io.on("connection", (socket) => {
 
 	// Player events
 	socket.on("play", (roomno) => {
-		if (socket.id === rooms[socket.roomno].host)
-			socket.to(roomno).emit("play");
+		socket.to(roomno).emit("play");
 	});
 	socket.on("pause", (roomno) => {
-		if (socket.id === rooms[socket.roomno].host)
-			socket.to(roomno).emit("pause");
+		socket.to(roomno).emit("pause");
 	});
 	socket.on("seeked", (data, roomno) => {
-		if (socket.id === rooms[socket.roomno].host)
-			socket.to(roomno).emit("seeked", data);
+		socket.to(roomno).emit("seeked", data);
 	});
 
 	// Code to run if the socket gets disconnected
@@ -251,7 +250,8 @@ io.on("connection", (socket) => {
 					rooms[socket.roomno].array[0].username;
 				io.in(socket.roomno).emit(
 					"current host",
-					rooms[socket.roomno].hostUsername
+					rooms[socket.roomno].hostUsername,
+					rooms[socket.roomno].host
 				);
 			}
 

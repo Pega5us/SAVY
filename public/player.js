@@ -7,6 +7,12 @@ const socket = io("https://savy-player.herokuapp.com", {
 	reconnect: false,
 });
 
+let curr_socketId;
+let areYouHost = false;
+socket.on("connect", () => {
+	curr_socketId = socket.id;
+});
+
 //Confirming on leaving/reloading the page
 window.onbeforeunload = () => {
 	return "Are you sure?";
@@ -160,20 +166,26 @@ document
 
 // play event
 video.onplaying = (event) => {
-	socket.emit("play", roomno);
-	socket.emit("seeked", video.currentTime, roomno);
+	if (areYouHost) {
+		socket.emit("play", roomno);
+		socket.emit("seeked", video.currentTime, roomno);
+	}
 };
 
 // pause event
 video.onpause = (event) => {
-	socket.emit("pause", roomno);
+	if (areYouHost) {
+		socket.emit("pause", roomno);
+	}
 };
 
 // seeking event
 video.onseeked = (event) => {
-	let was_video_playing = !video.paused;
-	socket.emit("seeked", video.currentTime, roomno);
-	if (was_video_playing) socket.emit("play", roomno);
+	if (areYouHost) {
+		let was_video_playing = !video.paused;
+		socket.emit("seeked", video.currentTime, roomno);
+		if (was_video_playing) socket.emit("play", roomno);
+	}
 };
 
 //Play video
@@ -213,7 +225,9 @@ socket.on("user_array", (user_array) => {
 });
 
 //Detail about the host of the room
-socket.on("current host", (username) => {
+socket.on("current host", (username, hostID) => {
+	if (curr_socketId == hostID) areYouHost = true;
+	else areYouHost = false;
 	document.getElementById("hostDetail").innerText = username;
 });
 
