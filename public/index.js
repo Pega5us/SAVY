@@ -54,9 +54,13 @@ function join() {
 			window.location.href = url;
 		} else {
 			roomNo.classList.add("is-invalid");
+			document.getElementById("inputGroupPrepend4").style.borderColor =
+				"red";
 		}
 		setTimeout(() => {
 			roomNo.classList.remove("is-invalid");
+			document.getElementById("inputGroupPrepend4").style.borderColor =
+				"white";
 		}, 1500);
 	} else {
 		if (username == "" && roomno == "") {
