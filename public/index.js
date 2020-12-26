@@ -101,3 +101,25 @@ userId.onkeypress = function (e) {
 		document.getElementById("new_room").onclick();
 	}
 };
+
+//Modifying CSS of span field before input field
+function applyShadow1() {
+	var ele = document.getElementById("inputGroupPrepend4");
+	ele.style.boxShadow = "-2px 0 0 2px #368755";
+	ele.style.backgroundColor = "#181a1b";
+}
+function removeShadow1() {
+	var ele = document.getElementById("inputGroupPrepend4");
+	ele.style.boxShadow = "none";
+	ele.style.backgroundColor = "none";
+}
+function removeShadow() {
+	var ele = document.getElementById("inputGroupPrepend3");
+	ele.style.boxShadow = "none";
+	ele.style.backgroundColor = "none";
+}
+function applyShadow() {
+	var ele = document.getElementById("inputGroupPrepend3");
+	ele.style.boxShadow = "-2px 0 0 2px #368755";
+	ele.style.backgroundColor = "#181a1b";
+}

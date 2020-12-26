@@ -47,7 +47,7 @@
 				color: white;
 			}
 			input[type="text"]:focus {
-				box-shadow: 0 0 0 2px #368755;
+				box-shadow: 2px 0 0 2px #368755;
 				background-color: #181a1b;
 				color: white;
 			}
@@ -103,6 +103,9 @@
 								id="username"
 								aria-describedby="basic-addon2"
 								style="border-left: none"
+								autocomplete="off"
+								onfocus="applyShadow()"
+								onfocusout="removeShadow()"
 							/>
 							<div class="input-group-append">
 								&nbsp&nbsp&nbsp&nbsp&nbsp
@@ -135,7 +138,7 @@
 							<div class="input-group-prepend">
 								<span
 									class="input-group-text"
-									id="inputGroupPrepend3"
+									id="inputGroupPrepend4"
 									style="
 										background-color: #181a1b;
 										color: #368755;
@@ -151,6 +154,9 @@
 								placeholder="Room Number"
 								aria-describedby="basic-addon2"
 								style="border-left: none"
+								autocomplete="off"
+								onfocus="applyShadow1()"
+								onfocusout="removeShadow1()"
 							/>
 							<div class="input-group-append">
 								&nbsp&nbsp&nbsp&nbsp&nbsp
