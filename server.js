@@ -5,6 +5,8 @@ const url = require("url");
 const app = express();
 const ms = require("mediaserver");
 require("dotenv").config();
+const cors = require("cors");
+app.use(cors());
 
 var PORT = process.env.PORT || 5000;
 
@@ -44,7 +46,9 @@ const isAuthenticated = (req, res, next) => {
 		return next();
 	} else {
 		// Authentication done redirecting to room
-		return res.redirect(`https://savy-player.herokuapp.com/?roomno=${roomno}`);
+		return res.redirect(
+			`https://savy-player.herokuapp.com/?roomno=${roomno}`
+		);
 	}
 };
 
