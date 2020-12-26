@@ -116,8 +116,8 @@ app.get("/notifPermission.mp3", (req, res) => {
 	);
 });
 
-app.get("/checkRoomStatus/:key", (req, res) => {
-	if (process.env.SAVY_API_KEY == req.params.key) res.send(rooms);
+app.get("/checkRoomStatus", (req, res) => {
+	if (process.env.SAVY_API_KEY == req.headers.authorization) res.send(rooms);
 	else res.sendStatus(401);
 });
 
