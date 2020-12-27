@@ -9,22 +9,27 @@ const socket = io("https://savy-player.herokuapp.com", {
 
 let curr_socketId;
 let areYouHost = false;
+
+// Getting roomno from URL
+let temp_arr = window.location.pathname.split("/");
+var roomno = temp_arr[temp_arr.length - 1];
+
+// Getting username from URL
+var current_username = new URLSearchParams(window.location.search).get(
+	"username"
+);
+
 socket.on("connect", () => {
 	curr_socketId = socket.id;
+
+	//Asking permission to enter the room
+	socket.emit("ask permission", roomno, current_username);
 });
 
 //Confirming on leaving/reloading the page
 window.onbeforeunload = () => {
 	return "Are you sure?";
 };
-
-// Getting roomno from URL
-let temp_arr = window.location.pathname.split("/");
-let roomno = temp_arr[temp_arr.length - 1];
-// Getting username from URL
-let current_username = new URLSearchParams(window.location.search).get(
-	"username"
-);
 
 // Buildig room URL for copy link button
 let room_URL = `https://savy-player.herokuapp.com/room/${roomno}`;
@@ -33,9 +38,6 @@ document.getElementById("roomNo").innerText = roomno;
 document.getElementById("userDetail").innerText = current_username;
 
 const navbarToggle = document.getElementsByClassName("navbar-toggler")[0];
-
-//Asking permission to enter the room
-socket.emit("ask permission", roomno, current_username);
 
 // Room does not exist
 socket.on("room does not exist", () => {
@@ -115,7 +117,6 @@ socket.on("get time from host", (socketId) => {
 //Function to manually sync
 function syncVideo() {
 	socket.emit("sync video");
-	console.log(window.innerWidth);
 	if (window.innerWidth < 995) navbarToggle.click();
 }
 
@@ -208,7 +209,6 @@ socket.on("seeked", (data) => {
 //List the members present in the room
 socket.on("user_array", (user_array) => {
 	// Getting the array of users in room
-	console.log(user_array);
 	document.getElementById("no_of_members").innerText = user_array.length;
 	let sidePanel = document.getElementById("sidePanel");
 	sidePanel.innerHTML = "";
@@ -252,8 +252,6 @@ function checkempty() {
 
 //Function to handle messaging
 function sendmessage() {
-	console.log("Sending Message", inputField.value);
-
 	chatbody.innerHTML += `
 	<div class="col-sm-12 my-auto" >
 	 	<div class = "float-right p-2 mt-2" style="background-color:#343A40 ;color:white;border-radius: 15px 15px 0px 15px;max-width:200px;min-width:100px">
