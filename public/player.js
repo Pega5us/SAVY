@@ -145,10 +145,11 @@ let URL = window.URL || window.webkitURL;
 const video_HTML = document.getElementById("video");
 
 //Choose File button implementation
-const playSelectedFile = function (_event) {
+const addVideoFile = function (_event) {
 	let file = this.files[0];
 	let fileURL = URL.createObjectURL(file);
 	document.getElementById("video").src = fileURL;
+	if (!areYouHost) syncVideo();
 };
 
 //Choose File and Caption button implementation
@@ -160,7 +161,7 @@ const addCaptionFile = function (_event) {
 
 document
 	.getElementById("video_input")
-	.addEventListener("change", playSelectedFile, false);
+	.addEventListener("change", addVideoFile, false);
 document
 	.getElementById("caption_input")
 	.addEventListener("change", addCaptionFile);
