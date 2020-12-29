@@ -1,3 +1,6 @@
+// New Peer
+const peer = new Peer();
+
 const notifChat = document.getElementById("notif_chat");
 const notifJoin = document.getElementById("notif_join");
 const notifPermission = document.getElementById("notif_permission");
@@ -28,7 +31,6 @@ socket.on("connect", () => {
 
 
 /* peer connection for audio chat */
-const peer = new Peer();
 let myPeerId;
 peer.on("open", (id) => {
 	myPeerId = id;
@@ -64,17 +66,11 @@ socket.on("enter room", (isAllowed) => {
 	else window.location.href = "https://savy-player.herokuapp.com";
 });
 
-// Creating stream of audio
-const myAudio = document.createElement("audio");
-myAudio.muted = true;
-
 navigator.mediaDevices
 	.getUserMedia({
 		audio: true,
 	})
 	.then((stream) => {
-		addAudioStream(myAudio, stream);
-
 		peer.on("call", (call) => {
 			call.answer(stream);
 			const newAudio = document.createElement("audio");
