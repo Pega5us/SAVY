@@ -34,7 +34,6 @@ window.onbeforeunload = () => {
 // Buildig room URL for copy link button
 let room_URL = `https://savy-player.herokuapp.com/room/${roomno}`;
 
-document.getElementById("roomNo").innerText = roomno;
 document.getElementById("userDetail").innerText = current_username;
 
 const navbarToggle = document.getElementsByClassName("navbar-toggler")[0];
