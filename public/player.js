@@ -244,7 +244,7 @@ const chatbody = document.getElementById("chatbody");
 
 //Check whether message input field is empty and disable button accordingly
 function checkempty() {
-	if (inputField.value === "") {
+	if (inputField.value.trim() == "") {
 		sendMessageButton.disabled = true;
 	} else {
 		sendMessageButton.disabled = false;
@@ -358,7 +358,7 @@ function toastUserAddRemove(username, eventHappened) {
 
 //Send Message on pressing enter key
 document.onkeypress = function (e) {
-	if (e.keyCode == 13 && inputField.value != "") {
+	if (e.keyCode == 13 && inputField.value.trim() != "") {
 		sendMessageButton.onclick();
 	}
 };
