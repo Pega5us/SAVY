@@ -59,6 +59,7 @@
 				<a
 					href="https://savy-player.herokuapp.com"
 					class="btn btn-lg btn-success"
+					id="return_to_home"
 					>Return to Home Screen</a
 				>
 			</p>
@@ -86,10 +87,13 @@
 			crossorigin="anonymous"
 		></script>
 		<script>
+			const return_btn = document.getElementById("return_to_home");
 			function redirect() {
 				window.location.href = "https://savy-player.herokuapp.com";
-				console.log("clicked");
 			}
+			document.onkeypress = (e) => {
+				if (e.keyCode == 13) return_btn.click();
+			};
 		</script>
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
