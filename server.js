@@ -155,14 +155,15 @@ io.on("connection", (socket) => {
 	});
 
 	// Join room
-	socket.on("joinroom", (roomno, username) => {
+	socket.on("joinroom", (roomno, username, peerId) => {
 		console.log(`Socket ${socket.id} has joined the room`);
 		socket.join(roomno);
-		socket.to(roomno).emit("new user", username);
+		socket.to(roomno).emit("new user", username, peerId);
 
 		// Storing values for username and roomno in socket object
 		socket.username = username;
 		socket.roomno = roomno;
+		socket.peerId = peerId;
 
 		// Setting the rooms value
 		rooms[roomno].hasJoined = true; // A flag to check if someone has joined the room
@@ -234,7 +235,7 @@ io.on("connection", (socket) => {
 	socket.on("disconnect", () => {
 		console.log(`Socket ${socket.id} has left the room`);
 
-		socket.to(socket.roomno).emit("left room", socket.username);
+		socket.to(socket.roomno).emit("left room", socket.username, socket.peerId);
 		if (rooms.hasOwnProperty(socket.roomno) && rooms[socket.roomno].array) {
 			// Deleting the socket
 			rooms[socket.roomno].array.splice(

@@ -26,6 +26,15 @@ socket.on("connect", () => {
 	socket.emit("ask permission", roomno, current_username);
 });
 
+
+/* peer connection for audio chat */
+const peer = new Peer();
+let myPeerId;
+peer.on("open", (id) => {
+	myPeerId = id;
+});
+const peers = {};
+
 //Confirming on leaving/reloading the page
 window.onbeforeunload = () => {
 	return "Are you sure?";
@@ -47,13 +56,61 @@ socket.on("room does not exist", () => {
 socket.on("enter room", (isAllowed) => {
 	// allowed to enter the room
 	if (isAllowed) {
-		socket.emit("joinroom", roomno, current_username);
+		socket.emit("joinroom", roomno, current_username, myPeerId);
 		document.getElementById("spinner").remove();
 		document.getElementById("body-content").removeAttribute("hidden");
 	}
 	// not allowed to enter the room
 	else window.location.href = "https://savy-player.herokuapp.com";
 });
+
+// Creating stream of audio
+const myAudio = document.createElement("audio");
+myAudio.muted = true;
+
+navigator.mediaDevices
+	.getUserMedia({
+		audio: true,
+	})
+	.then((stream) => {
+		addAudioStream(myAudio, stream);
+
+		peer.on("call", (call) => {
+			call.answer(stream);
+			const newAudio = document.createElement("audio");
+			call.on("stream", (userAudioStream) => {
+				addAudioStream(newAudio, userAudioStream);
+			});
+		});
+
+		//Notification on new user entry and add audio stream
+		socket.on("new user", (username, peerId) => {
+			notifJoin.play();
+			toastUserAddRemove(username, "joined");
+			console.log(peerId);
+			connectToNewUser(peerId, stream);
+		});
+	});
+
+function connectToNewUser(userId, stream) {
+	const call = peer.call(userId, stream);
+	const audio = document.createElement("audio");
+	call.on("stream", (userAudioStream) => {
+		addAudioStream(audio, userAudioStream);
+	});
+	call.on("close", () => {
+		audio.remove();
+	});
+
+	peers[userId] = call;
+}
+
+function addAudioStream(audio, stream) {
+	audio.srcObject = stream;
+	audio.addEventListener("loadedmetadata", () => {
+		audio.play();
+	});
+}
 
 // Array to hold the pending permission of user to enter the room
 askingPermissionUsers = [];
@@ -339,14 +396,9 @@ function chatRoom() {
 //Handling Notification Events
 let toastContainer = document.getElementById("toast-container");
 
-//Notification on new user entry
-socket.on("new user", (username) => {
-	notifJoin.play();
-	toastUserAddRemove(username, "joined");
-});
-
 //Notification on user leaving room
-socket.on("left room", (username) => {
+socket.on("left room", (username, peerId) => {
+	peers[peerId].close();
 	toastUserAddRemove(username, "left");
 });
 
