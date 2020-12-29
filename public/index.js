@@ -29,6 +29,7 @@ function create() {
 	const username = userId.value;
 	localStorage.setItem("username", username);
 	// If Username field is not empty new room will be created
+
 	if (username !== "") {
 		let response = httpGet(`${initialUrl}/getRoomNumber`);
 		let url = `${initialUrl}/room/${response}?username=${username}`;
@@ -126,7 +127,11 @@ roomNo.onkeypress = function (e) {
 // Creating Room on Enter Key Press
 userId.onkeypress = function (e) {
 	if (e.keyCode == 13) {
-		document.getElementById("new_room").onclick();
+		if (roomNo.value != "") {
+			document.getElementById("key").onclick();
+		} else {
+			document.getElementById("new_room").onclick();
+		}
 	}
 };
 
