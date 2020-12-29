@@ -7,6 +7,7 @@ const ms = require("mediaserver");
 require("dotenv").config();
 const cors = require("cors");
 app.use(cors());
+const { v4: uuidv4 } = require("uuid");
 
 var PORT = process.env.PORT || 5000;
 
@@ -59,10 +60,7 @@ app.get("/room/:roomno", isAuthenticated, (req, res) => {
 
 // Route for getting available room numbers and initialising the room object
 app.get("/getRoomNumber", (req, res) => {
-	let roomno;
-	do {
-		roomno = Math.floor(Math.random() * 10000 + 100000);
-	} while (rooms.hasOwnProperty(roomno));
+	let roomno = uuidv4();
 
 	// Initialising room
 	rooms[roomno] = {};
