@@ -109,6 +109,7 @@ function addAudioStream(audio, stream) {
 	audio.srcObject = stream;
 	audio.addEventListener("loadedmetadata", () => {
 		audio.play();
+		audio.muted = !isSpeakerOn;
 	});
 	audioTracks.push(audio);
 }
@@ -128,10 +129,11 @@ function muteToggle() {
 }
 
 const speakerIcon = speakerButton.childNodes[1];
-
+let isSpeakerOn = true;
 function speakerToggle() {
-	audioTracks.map((audio) => (audio.muted ^= 1));
-	if (audioTracks[0].muted) {
+	isSpeakerOn = !isSpeakerOn;
+	audioTracks.map((audio) => (audio.muted = !isSpeakerOn));
+	if (!isSpeakerOn) {
 		speakerButton.style.backgroundColor = "red";
 		speakerIcon.classList.remove("fa-volume-up");
 		speakerIcon.classList.add("fa-volume-off");
