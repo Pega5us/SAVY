@@ -8,10 +8,7 @@
 				name="viewport"
 				content="width=device-width, initial-scale=1, shrink-to-fit=no"
 			/>
-			<link
-				rel="stylesheet"
-				href="https://savy-player.herokuapp.com/getPlayerCSS"
-			/>
+			<link rel="stylesheet" href="https://savy-player.herokuapp.com/getPlayerCSS" />
 			<!-- Bootstrap CSS -->
 			<link
 				rel="stylesheet"
@@ -34,9 +31,9 @@
 				src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"
 			></script>
 			<script
+				defer
 				type="text/javascript"
 				src="https://savy-player.herokuapp.com/getPlayerJS"
-				defer
 			></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
 			<title>SAVY</title>
@@ -394,6 +391,30 @@
 				Please wait while someone takes you in
 			</h4>
 		</div>
+		<footer>
+			<nav class="navbar navbar-expand-sm navbar-dark">
+				<div class="container  text-center justify-content-center">
+					<ul class="nav navbar-nav navbar-center justify-content-center">
+						<li class="nav-item active">
+							<button
+								class="btn btn-outline-dark btn-sm"
+								onclick="muteToggle()"
+							>
+								Mute Toggle
+							</button>
+						</li>
+						<li class="nav-item active">
+							<button
+								class="btn btn-outline-dark btn-sm"
+								onclick="speakerToggle()"
+							>
+								Speaker Toggle
+							</button>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</footer>
 		<!-- Modal -->
 
 		<div aria-live="polite" aria-atomic="true">

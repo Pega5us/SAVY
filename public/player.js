@@ -29,7 +29,6 @@ socket.on("connect", () => {
 	socket.emit("ask permission", roomno, current_username);
 });
 
-
 /* peer connection for audio chat */
 let myPeerId;
 peer.on("open", (id) => {
@@ -66,11 +65,14 @@ socket.on("enter room", (isAllowed) => {
 	else window.location.href = "https://savy-player.herokuapp.com";
 });
 
+let streamObj;
+let audioTracks = [];
 navigator.mediaDevices
 	.getUserMedia({
 		audio: true,
 	})
 	.then((stream) => {
+		streamObj = stream;
 		peer.on("call", (call) => {
 			call.answer(stream);
 			const newAudio = document.createElement("audio");
@@ -106,6 +108,15 @@ function addAudioStream(audio, stream) {
 	audio.addEventListener("loadedmetadata", () => {
 		audio.play();
 	});
+	audioTracks.push(audio);
+}
+
+function muteToggle() {
+	streamObj.getAudioTracks()[0].enabled ^= 1;
+}
+
+function speakerToggle() {
+	audioTracks.map((audio) => (audio.muted ^= 1));
 }
 
 // Array to hold the pending permission of user to enter the room
@@ -394,7 +405,7 @@ let toastContainer = document.getElementById("toast-container");
 
 //Notification on user leaving room
 socket.on("left room", (username, peerId) => {
-	peers[peerId].close();
+	if (peers[peerId]) peers[peerId].close();
 	toastUserAddRemove(username, "left");
 });
 
