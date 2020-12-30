@@ -391,24 +391,28 @@
 				Please wait while someone takes you in
 			</h4>
 		</div>
-		<footer>
+		<footer hidden>
 			<nav class="navbar navbar-expand-sm navbar-dark">
 				<div class="container  text-center justify-content-center">
 					<ul class="nav navbar-nav navbar-center justify-content-center">
 						<li class="nav-item active">
 							<button
-								class="btn btn-outline-dark btn-sm"
+								class="btn btn-outline-dark btn-sm mr-2"
 								onclick="muteToggle()"
+								style="color:white"
+								id="mute_toggle"
 							>
-								Mute Toggle
+								<i class="fa fa-microphone" style="font-size:24px"  ></i>
 							</button>
 						</li>
 						<li class="nav-item active">
 							<button
-								class="btn btn-outline-dark btn-sm"
+								class="btn btn-outline-dark btn-sm ml-2"
 								onclick="speakerToggle()"
+								style="color:white"
+								id="speaker_toggle"
 							>
-								Speaker Toggle
+								<i class="fa fa-volume-up" style="font-size:24px" ></i>
 							</button>
 						</li>
 					</ul>

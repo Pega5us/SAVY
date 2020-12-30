@@ -4,7 +4,8 @@ const peer = new Peer();
 const notifChat = document.getElementById("notif_chat");
 const notifJoin = document.getElementById("notif_join");
 const notifPermission = document.getElementById("notif_permission");
-
+const muteButton = document.getElementById("mute_toggle");
+const speakerButton = document.getElementById("speaker_toggle");
 // Initialising socket
 const socket = io("https://savy-player.herokuapp.com", {
 	reconnect: false,
@@ -60,6 +61,7 @@ socket.on("enter room", (isAllowed) => {
 		socket.emit("joinroom", roomno, current_username, myPeerId);
 		document.getElementById("spinner").remove();
 		document.getElementById("body-content").removeAttribute("hidden");
+		document.getElementsByTagName("footer")[0].removeAttribute("hidden");
 	}
 	// not allowed to enter the room
 	else window.location.href = "https://savy-player.herokuapp.com";
@@ -111,12 +113,33 @@ function addAudioStream(audio, stream) {
 	audioTracks.push(audio);
 }
 
+const muteIcon = muteButton.childNodes[1];
 function muteToggle() {
 	streamObj.getAudioTracks()[0].enabled ^= 1;
+	if (streamObj.getAudioTracks()[0].enabled) {
+		muteButton.style.backgroundColor = "#181a1b";
+		muteIcon.classList.remove("fa-microphone-slash");
+		muteIcon.classList.add("fa-microphone");
+	} else {
+		muteButton.style.backgroundColor = "red";
+		muteIcon.classList.remove("fa-microphone");
+		muteIcon.classList.add("fa-microphone-slash");
+	}
 }
+
+const speakerIcon = speakerButton.childNodes[1];
 
 function speakerToggle() {
 	audioTracks.map((audio) => (audio.muted ^= 1));
+	if (audioTracks[0].muted) {
+		speakerButton.style.backgroundColor = "red";
+		speakerIcon.classList.remove("fa-volume-up");
+		speakerIcon.classList.add("fa-volume-off");
+	} else {
+		speakerButton.style.backgroundColor = "#181a1b";
+		speakerIcon.classList.remove("fa-volume-off");
+		speakerIcon.classList.add("fa-volume-up");
+	}
 }
 
 // Array to hold the pending permission of user to enter the room
