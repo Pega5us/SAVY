@@ -8,7 +8,10 @@
 				name="viewport"
 				content="width=device-width, initial-scale=1, shrink-to-fit=no"
 			/>
-			<link rel="stylesheet" href="https://savy-player.herokuapp.com/getPlayerCSS" />
+			<link
+				rel="stylesheet"
+				href="https://savy-player.herokuapp.com/getPlayerCSS"
+			/>
 			<!-- Bootstrap CSS -->
 			<link
 				rel="stylesheet"
@@ -160,18 +163,18 @@
 								aria-expanded="false"
 							>
 								Members: <span id="no_of_members"></span>
+								<div
+									id="sidePanel"
+									class="dropdown-menu"
+									aria-labelledby="navbarDropdown"
+									style="
+										max-height: 200px;
+										overflow: auto;
+										background-color: #181a1b;
+										opacity: 0.8;
+									"
+								></div>
 							</a>
-							<div
-								id="sidePanel"
-								class="dropdown-menu"
-								aria-labelledby="navbarDropdown"
-								style="
-									max-height: 200px;
-									overflow: auto;
-									background-color: #181a1b;
-									opacity: 0.8;
-								"
-							></div>
 						</li>
 					</ul>
 					<ul class="navbar-nav mr-0">
@@ -399,18 +402,24 @@
 							<button
 								class="btn btn-outline-dark btn-sm mr-2"
 								onclick="muteToggle()"
-								style="color:white"
+								style="color: white"
 								id="mute_toggle"
 							>
-								<i class="fa fa-microphone" style="font-size:24px"  ></i>
+								<i
+									class="fa fa-microphone"
+									style="font-size: 24px"
+								></i>
 							</button>
 							<button
 								class="btn btn-outline-dark btn-sm ml-2"
 								onclick="speakerToggle()"
-								style="color:white"
+								style="color: white"
 								id="speaker_toggle"
 							>
-								<i class="fa fa-volume-up" style="font-size:24px" ></i>
+								<i
+									class="fa fa-volume-up"
+									style="font-size: 24px"
+								></i>
 							</button>
 						</li>
 					</ul>
