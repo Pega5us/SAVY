@@ -32,12 +32,11 @@
 			style="background-color: #131516"
 		>
 			<div class="container">
-				<h1 class="display-3">
+				<h1 class="display-3" onclick="redirect()">
 					<img
 						src="https://raw.githubusercontent.com/akumar98394/SAVY/ebeeff27e6fb47d03062225def42eaeec13f60b2/public/cd-player.svg"
 						alt="Play"
 						style="width: 60px; height: 60px; cursor: pointer"
-						onclick="redirect()"
 					/>
 					<span
 						style="
@@ -45,7 +44,6 @@
 							font-family: 'Langar', cursive;
 							cursor: pointer;
 						"
-						onclick="redirect()"
 						>SAVY</span
 					>
 				</h1>
@@ -56,10 +54,7 @@
 			<h1 class="cover-heading mt-5">Invalid Room Number</h1>
 
 			<p class="lead mt-4">
-				<a
-					href="https://savy-player.herokuapp.com"
-					class="btn btn-lg btn-success"
-					id="return_to_home"
+				<a href="/" class="btn btn-lg btn-success" id="return_to_home"
 					>Return to Home Screen</a
 				>
 			</p>
@@ -89,7 +84,7 @@
 		<script>
 			const return_btn = document.getElementById("return_to_home");
 			function redirect() {
-				window.location.href = "https://savy-player.herokuapp.com";
+				window.location.href = "/";
 			}
 			document.onkeypress = (e) => {
 				if (e.keyCode == 13) return_btn.click();

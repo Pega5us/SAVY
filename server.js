@@ -47,9 +47,7 @@ const isAuthenticated = (req, res, next) => {
 		return next();
 	} else {
 		// Authentication done redirecting to room
-		return res.redirect(
-			`https://savy-player.herokuapp.com/?roomno=${roomno}`
-		);
+		return res.redirect(`/?roomno=${roomno}`);
 	}
 };
 
@@ -61,6 +59,7 @@ app.get("/room/:roomno", isAuthenticated, (req, res) => {
 // Route for getting available room numbers and initialising the room object
 app.get("/getRoomNumber", (req, res) => {
 	let roomno = nanoid(10);
+	console.log("Creating room RoomNumber:", roomno);
 
 	// Initialising room
 	rooms[roomno] = {};

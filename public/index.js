@@ -1,6 +1,5 @@
 // Client
 
-let initialUrl = "https://savy-player.herokuapp.com";
 // Input Username
 let userId = document.getElementById("username");
 // Room No
@@ -13,7 +12,7 @@ let grp2 = document.getElementById("inputGroupPrepend4");
 if (current_roomno) {
 	let username = localStorage.getItem("username");
 	if (username !== null) {
-		const redirect_url = `${initialUrl}/room/${current_roomno}?username=${username}`;
+		const redirect_url = `/room/${current_roomno}?username=${username}`;
 		window.location.href = redirect_url;
 	}
 	roomNo.value = current_roomno;
@@ -31,8 +30,8 @@ function create() {
 	// If Username field is not empty new room will be created
 
 	if (username !== "") {
-		let response = httpGet(`${initialUrl}/getRoomNumber`);
-		let url = `${initialUrl}/room/${response}?username=${username}`;
+		let response = httpGet(`/getRoomNumber`);
+		let url = `/room/${response}?username=${username}`;
 		window.location.href = url;
 	}
 	// Else it will highlight the required field
@@ -56,10 +55,10 @@ function join() {
 	const x = grp2.style.boxShadow;
 	const y = roomNo.style.boxShadow;
 	if (username !== "" && roomno !== "") {
-		let checkRoomExist = httpGet(`${initialUrl}/check/${roomno}`);
+		let checkRoomExist = httpGet(`/check/${roomno}`);
 		if (checkRoomExist === "true") {
 			console.log("room found");
-			let url = `${initialUrl}/room/${roomno}?username=${username}`;
+			let url = `/room/${roomno}?username=${username}`;
 			window.location.href = url;
 		} else {
 			roomNo.classList.add("is-invalid");

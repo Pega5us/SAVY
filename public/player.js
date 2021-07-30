@@ -7,7 +7,7 @@ const notifPermission = document.getElementById("notif_permission");
 const muteButton = document.getElementById("mute_toggle");
 const speakerButton = document.getElementById("speaker_toggle");
 // Initialising socket
-const socket = io("https://savy-player.herokuapp.com", {
+const socket = io("/", {
 	reconnect: false,
 });
 
@@ -51,7 +51,7 @@ const navbarToggle = document.getElementsByClassName("navbar-toggler")[0];
 
 // Room does not exist
 socket.on("room does not exist", () => {
-	window.location.href = "https://savy-player.herokuapp.com";
+	window.location.href = "/";
 });
 
 // Listenting for host reply
@@ -64,7 +64,7 @@ socket.on("enter room", (isAllowed) => {
 		document.getElementsByTagName("footer")[0].removeAttribute("hidden");
 	}
 	// not allowed to enter the room
-	else window.location.href = "https://savy-player.herokuapp.com";
+	else window.location.href = "/";
 });
 
 let streamObj;
