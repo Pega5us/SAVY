@@ -43,7 +43,8 @@ window.onbeforeunload = () => {
 };
 
 // Buildig room URL for copy link button
-let room_URL = `https://savy-player.herokuapp.com/room/${roomno}`;
+const {protocol, host, pathname} = window.location;
+let room_URL = `${protocol}//${host}${pathname}`
 
 document.getElementById("userDetail").innerText = current_username;
 
