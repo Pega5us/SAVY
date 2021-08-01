@@ -2,15 +2,18 @@ const express = require("express");
 const socket = require("socket.io");
 const join = require("path").join;
 const url = require("url");
-const app = express();
 const ms = require("mediaserver");
-require("dotenv").config();
 const cors = require("cors");
-app.use(cors());
 const { nanoid } = require("nanoid");
+
+require("dotenv").config();
+
+const app = express();
+app.use(cors());
 
 var PORT = process.env.PORT || 5000;
 
+// For the homepage /
 app.use(express.static("public"));
 
 // Run the server
@@ -36,17 +39,19 @@ const isAuthenticated = (req, res, next) => {
 	if (roomno.includes("?")) roomno = roomno.split("?")[0];
 
 	// Sending response if the room number is invalid
+	if (roomno == undefined)
+		return res.sendFile(join(__dirname, "public", "roomInvalid.html"));
 
 	// Checking authentication for roomno
 	if (!rooms.hasOwnProperty(roomno)) {
 		return res.sendFile(join(__dirname, "public", "roomInvalid.html"));
 	}
 
-	// Sending response if the username is not provided
 	if (queryObject.username) {
+		// Authentication done redirecting to room
 		return next();
 	} else {
-		// Authentication done redirecting to room
+		// Sending response if the username is not provided
 		return res.redirect(`/?roomno=${roomno}`);
 	}
 };
@@ -78,7 +83,7 @@ app.get("/getRoomNumber", (req, res) => {
 		roomno
 	);
 
-	res.send(`${roomno}`);
+	res.send(roomno);
 });
 
 //Check whether room exists or not
@@ -234,7 +239,10 @@ io.on("connection", (socket) => {
 	socket.on("disconnect", () => {
 		console.log(`Socket ${socket.id} has left the room`);
 
-		socket.to(socket.roomno).emit("left room", socket.username, socket.peerId);
+		socket
+			.to(socket.roomno)
+			.emit("left room", socket.username, socket.peerId);
+
 		if (rooms.hasOwnProperty(socket.roomno) && rooms[socket.roomno].array) {
 			// Deleting the socket
 			rooms[socket.roomno].array.splice(
