@@ -151,7 +151,7 @@ askingPermissionUsers = [];
 // then delete the permission
 // and check for new permission
 function permissionSpliceAndCheckPermission(isAllowed) {
-	socket.emit("isAllowed", isAllowed, askingPermissionUsers[0].socketId);
+	socket.emit("isAllowed", roomno, isAllowed, askingPermissionUsers[0].socketId);
 	askingPermissionUsers.splice(0, 1);
 	if (askingPermissionUsers.length !== 0) {
 		setTimeout(() => {

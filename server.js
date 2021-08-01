@@ -70,6 +70,9 @@ app.get("/getRoomNumber", (req, res) => {
 	rooms[roomno] = {};
 	rooms[roomno].array = [];
 
+	// Stores which sockets are allowed to enter the room
+	rooms[roomno].isAllowed = {};
+
 	// If no one joins the room kill the room in 10 mins
 	setTimeout(
 		(roomno) => {
@@ -139,8 +142,10 @@ io.on("connection", (socket) => {
 		if (!rooms.hasOwnProperty(roomno)) socket.emit("room does not exist");
 		else {
 			// If current person is the first person to enter the room,no permission required
-			if (rooms[roomno].array.length === 0)
+			if (rooms[roomno].array.length === 0) {
+				rooms[roomno].isAllowed[socket.id] = true;
 				io.to(socket.id).emit("enter room", true);
+			}
 			// Else ask permission from host
 			else {
 				io.to(rooms[roomno].host).emit(
@@ -153,13 +158,25 @@ io.on("connection", (socket) => {
 	});
 
 	// Permission response from host
-	socket.on("isAllowed", (isAllowed, socketId) => {
-		if (isAllowed) io.to(socketId).emit("enter room", true);
-		else io.to(socketId).emit("enter room", false);
+	socket.on("isAllowed", (roomno, isAllowed, socketId) => {
+		if (isAllowed) {
+			io.to(socketId).emit("enter room", true);
+			// Add the socketId to allow list
+			if (rooms.hasOwnProperty(roomno)) {
+				rooms[roomno].isAllowed[socketId] = true;
+			}
+		} else io.to(socketId).emit("enter room", false);
 	});
 
 	// Join room
 	socket.on("joinroom", (roomno, username, peerId) => {
+		// Check if the current socket is allowed in the room
+		console.log(
+			`Socket ${socket.id} is trying to join room ${roomno}`,
+			rooms[roomno].isAllowed[socket.id]
+		);
+		if (!rooms[roomno].isAllowed[socket.id]) return;
+
 		console.log(`Socket ${socket.id} has joined the room`);
 		socket.join(roomno);
 		socket.to(roomno).emit("new user", username, peerId);
